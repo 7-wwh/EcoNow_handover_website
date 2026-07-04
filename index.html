@@ -1,6 +1,18 @@
 <!DOCTYPE html><html lang='en'><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          glass: 'rgba(255, 255, 255, 0.12)',
+        }
+      }
+    }
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -9,17 +21,17 @@
 </head>
 <body onload="document.addEventListener('DOMContentLoaded', () => {})">
 
-<nav class="navbar">
-  <div class="nav-brand">EcoNow 25/26</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="history/">History</a>
-    <a href="state/">Current State</a>
-    <a href="ceiling/">The Ceiling</a>
-    <a href="plan/">My Plan</a>
-    <a href="notes/">Craft Notes</a>
-    <a href="extension/">Extension</a>
-    <a href="closing/">Closing</a>
+<nav class="fixed z-[1000] top-5 left-1/2 -translate-x-1/2 flex items-center gap-4 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg nav-glass">
+  <div class="font-bold px-4 whitespace-nowrap text-stone-800">EcoNow 25/26</div>
+  <div class="flex items-center gap-1">
+    <a href="index.html" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Home</a>
+    <a href="history/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">History</a>
+    <a href="state/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Current State</a>
+    <a href="ceiling/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">The Ceiling</a>
+    <a href="plan/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">My Plan</a>
+    <a href="notes/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Craft Notes</a>
+    <a href="extension/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Extension</a>
+    <a href="closing/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Closing</a>
   </div>
   <!-- Theme Switcher -->
   <fieldset class="switcher">
