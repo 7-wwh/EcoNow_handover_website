@@ -85,6 +85,74 @@
   }
   @media (max-width:900px){ #burnRail{display:none;} }
 
+  /* ---------- liquid glass nav ---------- */
+  .glass-defs{position:absolute;width:0;height:0;overflow:hidden;}
+
+  .liquid-nav{
+    position:fixed;
+    z-index:200;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:2px;
+    max-width:min(92vw, 620px);
+    padding:6px;
+    border-radius:999px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    background-color:color-mix(in srgb, var(--wax-pale) 16%, transparent);
+    backdrop-filter:blur(9px) url(#liquidGlass) saturate(160%);
+    -webkit-backdrop-filter:blur(9px) saturate(160%);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--cream) 14%, transparent),
+      inset 1.6px 2.6px 0px -2px color-mix(in srgb, var(--cream) 75%, transparent),
+      inset -2px -2px 0px -2px color-mix(in srgb, var(--cream) 55%, transparent),
+      inset -0.4px -1px 4px 0px color-mix(in srgb, var(--wick) 30%, transparent),
+      inset 0px 3px 4px -2px color-mix(in srgb, var(--wick) 24%, transparent),
+      0px 10px 26px -6px rgba(0,0,0,0.5);
+  }
+  .liquid-nav::-webkit-scrollbar{display:none;}
+
+  .liquid-nav__indicator{
+    position:absolute;
+    top:6px; bottom:6px; left:6px;
+    width:0;
+    border-radius:999px;
+    background-color:color-mix(in srgb, var(--wax) 60%, transparent);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--wax-light) 40%, transparent),
+      0 2px 8px -2px rgba(0,0,0,0.4);
+    transform:translateX(0);
+    transition:transform 420ms cubic-bezier(0.65,0,0.35,1), width 420ms cubic-bezier(0.65,0,0.35,1);
+    z-index:1;
+    pointer-events:none;
+  }
+
+  .liquid-nav__link{
+    position:relative;
+    z-index:2;
+    padding:9px 15px;
+    border-radius:999px;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    color:var(--paper-deep);
+    text-decoration:none;
+    transition:color 220ms ease;
+  }
+  .liquid-nav__link:hover{color:#fff;}
+  .liquid-nav__link.active{color:var(--ink);font-weight:700;}
+
+  @media (max-width:640px){
+    .liquid-nav{top:12px;padding:5px;gap:0;}
+    .liquid-nav__link{padding:8px 12px;font-size:10.5px;}
+  }
+
   /* ---------- layout shells ---------- */
   .wrap{max-width:760px;margin:0 auto;padding:0 28px;}
   section{padding:88px 0;}
@@ -349,265 +417,6 @@
     border-radius:6px;
     padding:24px 24px 20px;
   }
-  .split .col.do{background:rgba(109,122,86,0.10);border:1px solid rgba(109,122,86,0.3);}
-  .split .col.dont{background:rgba(165,61,43,0.07);border:1px solid rgba(165,61,43,0.22);}
-  .split h4{
-    font-family:'Space Mono',monospace;
-    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
-    margin:0 0 12px;
-  }
-  .split .col.do h4{color:var(--sage-dark);}
-  .split .col.dont h4{color:#a53d2b;}
-
-  /* ---------- divider ---------- */
-  .wax-divider{
-    display:flex;align-items:center;gap:16px;
-    margin:6px 0 0;
-    color:var(--wax);
-    opacity:0.7;
-  }
-  .wax-divider::before,.wax-divider::after{content:"";flex:1;height:1px;background:currentColor;opacity:0.3;}
-
-  /* ---------- closing / seal ---------- */
-  .closing{
-    background:var(--ink);
-    color:var(--paper);
-    text-align:center;
-    padding:110px 0 90px;
-  }
-  .seal{
-    width:96px;height:96px;
-    border-radius:50%;
-    border:2px solid var(--wax);
-    display:flex;align-items:center;justify-content:center;
-    margin:0 auto 30px;
-    font-family:'Big Shoulders Display',sans-serif;
-    font-weight:900;
-    font-size:22px;
-    color:var(--wax-light);
-    letter-spacing:0.02em;
-    box-shadow:0 0 0 6px rgba(224,164,80,0.08), 0 0 30px rgba(224,164,80,0.25);
-  }
-  .closing h2{font-size:clamp(26px,4vw,36px);max-width:20ch;margin:0 auto 20px;}
-  .closing .lede{max-width:44ch;margin:0 auto 8px;color:var(--paper-deep);font-style:italic;}
-
-  footer{
-    background:var(--ink);
-    color:var(--paper-deep);
-    text-align:center;
-    font-family:'Space Mono',monospace;
-    font-size:11px;
-    letter-spacing:0.08em;
-    padding:22px 0 34px;
-    opacity:0.6;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    #burnRail .stick .burned{transition:none;}
-  }
-</style>
-</head>
-<body>
-
-<div id="burnRail" aria-hidden="true">
-  <div class="flame"></div>
-  <div class="stick"><div class="burned" id="burnedFill"></div></div>
-</div>
-
-<!-- ===================== HERO ===================== -->
-<header class="hero">
-  <div class="wrap">
-    <p class="kicker">EcoNow · Operational Manager Handover · 25/26 → 26/27</p>
-    <h1>You don't know<br>what you <em>don't</em> know.</h1>
-    <p class="lede">Notes passed down from one OM to the next — the real history, the actual constraints, and what I'd do differently. Written from my understanding, not the official version.</p>
-    <span class="stamp"><span class="dot"></span>For the incoming Operational Manager</span>
-  </div>
-</header>
-
-<!-- ===================== 01 HISTORY ===================== -->
-<section>
-  <div class="wrap">
-    <p class="eyebrow">01 — Where It Started</p>
-    <h2 class="section-title">The History of EcoNow</h2>
-    <p class="section-sub">If you think you already know this, read it anyway.</p>
-
-    <p>EcoNow began with one problem: children who are forced to leave the homes they've lived in for years, once they hit legal age, because there simply isn't enough space or resources to keep supporting them. EcoNow set out to tackle this by giving them real, hands-on entrepreneurial skills — something to actually stand on once they're out.</p>
-
-    <p>The whole thing started almost by accident — a sudden idea to recycle used cooking oil into candles, born during a summer summit. From there, the product line kept moving:</p>
-
-    <div class="timeline">
-      <div class="tl-item" data-n="1">
-        <h3>Candles <span class="tag">Founding idea</span></h3>
-        <p>Used cooking oil, repurposed into candles. The original concept EcoNow was built on.</p>
-      </div>
-      <div class="tl-item" data-n="2">
-        <h3>EcoSoap <span class="tag">Discontinued</span></h3>
-        <p>An expansion into soap-making. Discontinued afterward — the working environment turned out to be highly acidic and difficult to sustain.</p>
-      </div>
-      <div class="tl-item" data-n="3">
-        <h3>Mini Candles</h3>
-        <p>A scaled-down product line, easier to produce and sell.</p>
-      </div>
-      <div class="tl-item active" data-n="4">
-        <h3>Air Diffuser, Perfume &amp; New Scents <span class="tag">My term</span></h3>
-        <p>Under my term, R&amp;D pushed further — trialing air diffusers, perfume, and new candle scents.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 02 CURRENT STATE ===================== -->
-<section class="dark">
-  <div class="wrap">
-    <p class="eyebrow">02 — Where It Stands Now</p>
-    <h2 class="section-title">The Current State of EcoNow</h2>
-    <p class="section-sub">This is the part you actually need to sit with.</p>
-
-    <p>EcoNow has lost its original focus. That's not just my opinion — it's Dr Roy's, and I agree with it. We've drifted toward <strong>profiting</strong> instead of <strong>educating and equipping the children</strong> with skills, which was the entire point of starting this in the first place.</p>
-
-    <p>But it's worth saying: EcoNow's mission hasn't drifted for no reason. It's run into real constraints and ceilings — the kind that push a student club toward "just sell more product" because that's the path of least resistance. I'll get into those next.</p>
-
-    <blockquote
-      >
-      The organizer deviated from the original idea of the competition — supporting university students with Social Entrepreneurship — and instead pushed students to register and start an independent Social Enterprise through SSM and related government bodies.
-      <cite>— According to Dr Roy, on how MOHE's framing of the UCSE competition changed</cite>
-    </blockquote>
-
-    <p>You can trace the goal misorientation back to EcoNow's participation in the <strong>UCSE competition</strong>, run by the Ministry of Higher Education (MOHE), which granted us RM 40,000. Dr Roy strongly disagrees with the idea of formally registering and running a social enterprise off the back of that — because we're a student-run club. We don't have the time, manpower, or operational capability to run a <em>consistently profitable</em> enterprise on top of everything else.</p>
-  </div>
-</section>
-
-<!-- ===================== 03 THE CEILING ===================== -->
-<section>
-  <div class="wrap">
-    <p class="eyebrow">03 — The Fundamentals</p>
-    <h2 class="section-title">The Ceiling of EcoNow</h2>
-    <p class="section-sub">Some things just wouldn't work. Before you become the OM, you need to know why.</p>
-
-    <p>Before you take over as Operational Manager, understand this: EcoNow has hit a ceiling, and it needs restructuring. Let me show you the math first — it explains more than any conversation could.</p>
-
-    <div class="receipt-frame mono">
-      <h4>Production Reality Check</h4>
-      <div class="sub">1 semester · 12 weeks · max capacity</div>
-
-      <div class="receipt-line"><span>Sessions / month</span><span>1</span></div>
-      <div class="receipt-line"><span>Batches / session</span><span>4</span></div>
-      <div class="receipt-line"><span>Candles / batch</span><span>8</span></div>
-      <div class="receipt-line"><span>Candles / month</span><span>32</span></div>
-      <div class="receipt-line"><span>Candles / semester (3mo)</span><span>96</span></div>
-      <div class="receipt-line"><span>Price / candle</span><span>RM 30</span></div>
-      <div class="receipt-line"><span>Gross revenue</span><span>RM 2,880</span></div>
-      <div class="receipt-line neg"><span>Material cost (40%)</span><span>− RM 1,152</span></div>
-      <div class="receipt-line total"><span>Left over</span><span>RM 1,728</span></div>
-      <div class="receipt-line neg"><span>Booth rental (2 wks)</span><span>≈ − RM 1,000</span></div>
-      <div class="receipt-line neg"><span>Transport + R&amp;D</span><span>− ???</span></div>
-    </div>
-
-    <p style="margin-top:34px;">RM 1,728 sounds fine until you remember rental, transport, and R&amp;D still have to come out of it. That's the ceiling, in numbers. Now here's the ceiling in practice.</p>
-
-    <div class="card">
-      <h4>Constraint 1 — Production</h4>
-      <ul>
-        <li>Can our beneficiaries even produce every single month? Things get repetitive fast — and at that point, where's the educational value we're supposed to be giving them?</li>
-        <li>Production sessions with beneficiaries can get chaotic and need tight coordination. The candles that come out of it aren't always up to standard.</li>
-        <li>Beneficiaries can't handle complex candle formulas — some are already struggling with basic math.</li>
-        <li>Every production session takes real time: clean-up, teaching, coordination, transport. Doing this even once a month requires serious member dedication.</li>
-      </ul>
-    </div>
-
-    <div class="fillin">
-      <span class="ft-label">Constraint 2 — Costing &amp; Product Value</span>
-      <p>— left blank in the original outline. Fill this in with your own read on pricing, margins, and whether the product line actually reflects its value.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 04 MY 25/26 PLAN ===================== -->
-<section class="dark">
-  <div class="wrap">
-    <p class="eyebrow">04 — My Term</p>
-    <h2 class="section-title">My 25/26 Plan</h2>
-    <p class="section-sub">What I set out to do, and what actually happened.</p>
-
-    <div class="fillin" style="border-color:rgba(224,164,80,0.5); background:repeating-linear-gradient(135deg, rgba(224,164,80,0.08) 0 10px, transparent 10px 20px); color:var(--wax-light);">
-      <span class="ft-label">Initial Idealization</span>
-      <p>— not yet written. Capture what you originally set out to build before reality got involved.</p>
-    </div>
-
-    <div class="fillin" style="border-color:rgba(224,164,80,0.5); background:repeating-linear-gradient(135deg, rgba(224,164,80,0.08) 0 10px, transparent 10px 20px); color:var(--wax-light);">
-      <span class="ft-label">The Actual Execution</span>
-      <p>— not yet written. Include: problems faced → root cause → how it was resolved, and honestly, what could've been done better.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 05 CANDLE KNOWLEDGE ===================== -->
-<section>
-  <div class="wrap">
-    <p class="eyebrow">05 — Craft Notes</p>
-    <h2 class="section-title">My Knowledge on Candle Making</h2>
-    <p class="section-sub">The technical know-how nobody hands you on day one.</p>
-
-    <div class="fillin">
-      <span class="ft-label">Not yet written</span>
-      <p>This is where your actual formulas, wax ratios, scent-load ratios, wick sizing, common failure modes, and supplier notes should live — the stuff you had to learn the hard way so the next OM doesn't have to.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== 06 EXTENSION ===================== -->
-<section class="dark">
-  <div class="wrap">
-    <p class="eyebrow">06 — Handing It Forward</p>
-    <h2 class="section-title">Extending the 25/26 Plan</h2>
-    <p class="section-sub">What continues into 26/27 — and what shouldn't.</p>
-
-    <div class="split">
-      <div class="col do">
-        <h4>What I Will Do</h4>
-        <div class="fillin" style="margin:0;border-color:rgba(109,122,86,0.6);">
-          <p>— not yet written.</p>
-        </div>
-      </div>
-      <div class="col dont">
-        <h4>What I Will Not Do</h4>
-        <div class="fillin" style="margin:0;border-color:rgba(165,61,43,0.4);">
-          <p>— not yet written.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CLOSING ===================== -->
-<section class="closing">
-  <div class="wrap">
-    <div class="wax-divider" style="justify-content:center;margin-bottom:36px;"><span class="mono" style="opacity:.8;font-size:12px;letter-spacing:.15em;">FINAL WORD</span></div>
-    <div class="seal">EN</div>
-    <h2>Good Luck, and Final Advice</h2>
-    <p class="lede">— not yet written. This is your closing word to whoever reads this next: what you want them to carry forward, and what you want them to let go of.</p>
-  </div>
-</section>
-
-<footer>EcoNow · Handover Report · 2025/2026 → 2026/2027</footer>
-
-<script>
-  (function(){
-    var fill = document.getElementById('burnedFill');
-    if(!fill) return;
-    function update(){
-      var doc = document.documentElement;
-      var scrollTop = doc.scrollTop || document.body.scrollTop;
-      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
-      var pct = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
-      fill.style.height = pct + '%';
-    }
-    document.addEventListener('scroll', update, {passive:true});
-    window.addEventListener('resize', update);
-    update();
-  })();
-</script>
-
-</body>
+  .split .col.do{background:rgba(109,122,86,0.10);border:1px solid rgba(109,122,8 la l l laC l'original.
+</body
 </html>
