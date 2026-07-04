@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoNow 25/26 — Handover Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241d15;
+    --oil:#3c2f20;
+    --wick:#150f0a;
+    --wax:#c07a2e;
+    --wax-light:#e3a758;
+    --wax-pale:#f2c98a;
+    --sage:#6d7a56;
+    --sage-dark:#4d5940;
+    --paper:#ece2cd;
+    --paper-deep:#ddcfae;
+    --cream:#f6efdf;
+    --receipt:#fbf6ea;
+    --line:rgba(36,29,21,0.16);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Literata',serif;
+    font-size:17px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--wax-pale);color:var(--ink);}
+
+  h1,h2,h3,.label{
+    font-family:'Big Shoulders Display',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+
+  .mono{font-family:'Space Mono',monospace;}
+
+  a{color:var(--sage-dark);}
+
+  /* ---------- burn rail (scroll progress) ---------- */
+  #burnRail{
+    position:fixed;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    width:14px;
+    height:220px;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  #burnRail .flame{
+    width:8px;height:8px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:radial-gradient(circle at 50% 30%, #fff2c9, var(--wax-light) 60%, var(--wax) 100%);
+    box-shadow:0 0 8px 2px rgba(224,164,80,0.55);
+    margin-bottom:2px;
+    flex-shrink:0;
+  }
+  #burnRail .stick{
+    width:6px;
+    flex:1;
+    background:linear-gradient(var(--wax-pale), var(--cream));
+    border:1px solid var(--line);
+    border-radius:3px;
+    position:relative;
+    overflow:hidden;
+  }
+  #burnRail .stick .burned{
+    position:absolute;bottom:0;left:0;right:0;
+    background:var(--wick);
+    height:0%;
+    transition:height 0.15s linear;
+  }
+  @media (max-width:900px){ #burnRail{display:none;} }
+
+  /* ---------- layout shells ---------- */
+  .wrap{max-width:760px;margin:0 auto;padding:0 28px;}
+  section{padding:88px 0;}
+  .dark{background:var(--ink);color:var(--paper);}
+  .dark .wrap{color:var(--paper);}
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--wax);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--wax);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(224,164,80,0.35), transparent 55%),
+      var(--ink);
+    color:var(--paper);
+    padding:120px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:auto 0 0 0;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--wax), transparent);
+  }
+  .hero .kicker{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--wax-light);
+    margin:0 0 26px;
+  }
+  .hero h1{
+    font-size:clamp(38px, 7vw, 68px);
+    font-weight:900;
+    line-height:0.98;
+    margin:0 0 30px;
+    max-width:11ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--wax-light);
+  }
+  .hero p.lede{
+    font-family:'Literata',serif;
+    font-size:19px;
+    max-width:46ch;
+    color:var(--paper-deep);
+    margin:0 0 40px;
+  }
+  .stamp{
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:var(--paper-deep);
+    border:1px solid rgba(236,226,205,0.28);
+    padding:10px 16px;
+    border-radius:2px;
+  }
+  .stamp .dot{width:6px;height:6px;border-radius:50%;background:var(--wax);}
+
+  /* ---------- headings ---------- */
+  h2.section-title{
+    font-size:clamp(30px, 4.5vw, 44px);
+    font-weight:700;
+    line-height:1.02;
+    margin:0 0 10px;
+  }
+  .section-sub{
+    font-family:'Literata',serif;
+    font-style:italic;
+    color:var(--oil);
+    opacity:0.75;
+    font-size:16px;
+    margin:0 0 44px;
+  }
+  .dark .section-sub{color:var(--paper-deep);opacity:0.85;}
+
+  p{margin:0 0 20px;}
+  strong{color:var(--wax);font-weight:600;}
+  .dark strong{color:var(--wax-light);}
+
+  /* ---------- quote callout ---------- */
+  blockquote{
+    margin:34px 0;
+    padding:22px 26px;
+    border-left:3px solid var(--wax);
+    background:rgba(224,164,80,0.08);
+    font-style:italic;
+    font-size:18px;
+    border-radius:0 4px 4px 0;
+  }
+  blockquote cite{
+    display:block;
+    margin-top:10px;
+    font-family:'Space Mono',monospace;
+    font-style:normal;
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--sage-dark);
+  }
+
+  /* ---------- timeline (real chronology → numbered is earned) ---------- */
+  .timeline{margin:44px 0 0;position:relative;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:19px;top:6px;bottom:6px;
+    width:1px;
+    background:linear-gradient(var(--wax), var(--sage) 60%, transparent);
+  }
+  .tl-item{
+    position:relative;
+    padding:0 0 40px 56px;
+  }
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:attr(data-n);
+    position:absolute;left:0;top:-2px;
+    width:40px;height:40px;
+    border-radius:50%;
+    background:var(--paper);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Mono',monospace;
+    font-size:12px;color:var(--oil);
+  }
+  .tl-item.active::before{
+    background:var(--wax);
+    border-color:var(--wax);
+    color:#fff;
+  }
+  .tl-item h3{
+    font-size:22px;
+    margin:2px 0 8px;
+    font-weight:700;
+    text-transform:none;
+  }
+  .tl-item .tag{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--sage-dark);
+    background:rgba(109,122,86,0.12);
+    padding:3px 8px;
+    border-radius:20px;
+    margin-left:10px;
+  }
+
+  /* ---------- receipt / signature element ---------- */
+  .receipt-frame{
+    margin:44px auto 0;
+    max-width:420px;
+    background:var(--receipt);
+    color:var(--ink);
+    padding:30px 26px 26px;
+    box-shadow:0 22px 44px -18px rgba(0,0,0,0.45);
+    position:relative;
+    transform:rotate(-1.1deg);
+  }
+  .receipt-frame::before,
+  .receipt-frame::after{
+    content:"";
+    position:absolute;left:0;right:0;height:10px;
+    background:
+      radial-gradient(circle at 6px 5px, var(--ink) 5px, transparent 5.5px) repeat-x;
+    background-size:16px 10px;
+  }
+  .receipt-frame::before{top:-5px;}
+  .receipt-frame::after{bottom:-5px;transform:scaleY(-1);}
+  .receipt-frame h4{
+    font-family:'Space Mono',monospace;
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin:0 0 4px;
+  }
+  .receipt-frame .sub{
+    text-align:center;font-family:'Space Mono',monospace;
+    font-size:11px;color:#7a6f5c;margin-bottom:18px;
+  }
+  .receipt-line{
+    display:flex;justify-content:space-between;gap:12px;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    padding:7px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .receipt-line span:first-child{color:#5a5040;}
+  .receipt-line.total{
+    border-bottom:none;
+    border-top:2px solid var(--ink);
+    margin-top:6px;
+    padding-top:12px;
+    font-size:15px;
+    font-weight:700;
+  }
+  .receipt-line.neg span:last-child{color:#a53d2b;}
+
+  /* ---------- constraint cards ---------- */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 28px;
+    margin:22px 0;
+  }
+  .card h4{
+    margin:0 0 14px;
+    font-size:13px;
+    font-family:'Space Mono',monospace;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--sage-dark);
+    display:flex;align-items:center;gap:10px;
+  }
+  .card h4::before{content:"";width:8px;height:8px;background:var(--sage);border-radius:2px;flex-shrink:0;}
+  .card ul{margin:0;padding-left:20px;}
+  .card li{margin-bottom:10px;}
+  .card li:last-child{margin-bottom:0;}
+
+  /* ---------- fill-in placeholder ---------- */
+  .fillin{
+    border:1.5px dashed rgba(109,122,86,0.55);
+    border-radius:6px;
+    padding:22px 24px;
+    margin:22px 0;
+    color:var(--sage-dark);
+    background:repeating-linear-gradient(135deg, rgba(109,122,86,0.05) 0 10px, transparent 10px 20px);
+  }
+  .fillin .ft-label{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+    display:block;
+  }
+  .fillin p{margin:0;font-style:italic;opacity:0.85;}
+
+  /* ---------- two-column do / don't ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:28px 0;}
+  @media (max-width:640px){.split{grid-template-columns:1fr;}}
+  .split .col{
+    border-radius:6px;
+    padding:24px 24px 20px;
+  }
+  .split .col.do{background:rgba(109,122,86,0.10);border:1px solid rgba(109,122,86,0.3);}
+  .split .col.dont{background:rgba(165,61,43,0.07);border:1px solid rgba(165,61,43,0.22);}
+  .split h4{
+    font-family:'Space Mono',monospace;
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .split .col.do h4{color:var(--sage-dark);}
+  .split .col.dont h4{color:#a53d2b;}
+
+  /* ---------- divider ---------- */
+  .wax-divider{
+    display:flex;align-items:center;gap:16px;
+    margin:6px 0 0;
+    color:var(--wax);
+    opacity:0.7;
+  }
+  .wax-divider::before,.wax-divider::after{content:"";flex:1;height:1px;background:currentColor;opacity:0.3;}
+
+  /* ---------- closing / seal ---------- */
+  .closing{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:center;
+    padding:110px 0 90px;
+  }
+  .seal{
+    width:96px;height:96px;
+    border-radius:50%;
+    border:2px solid var(--wax);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 30px;
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    font-size:22px;
+    color:var(--wax-light);
+    letter-spacing:0.02em;
+    box-shadow:0 0 0 6px rgba(224,164,80,0.08), 0 0 30px rgba(224,164,80,0.25);
+  }
+  .closing h2{font-size:clamp(26px,4vw,36px);max-width:20ch;margin:0 auto 20px;}
+  .closing .lede{max-width:44ch;margin:0 auto 8px;color:var(--paper-deep);font-style:italic;}
+
+  footer{
+    background:var(--ink);
+    color:var(--paper-deep);
+    text-align:center;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    padding:22px 0 34px;
+    opacity:0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    #burnRail .stick .burned{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="burnRail" aria-hidden="true">
+  <div class="flame"></div>
+  <div class="stick"><div class="burned" id="burnedFill"></div></div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">EcoNow · Operational Manager Handover · 25/26 → 26/27</p>
+    <h1>You don't know<br>what you <em>don't</em> know.</h1>
+    <p class="lede">Notes passed down from one OM to the next — the real history, the actual constraints, and what I'd do differently. Written from my understanding, not the official version.</p>
+    <span class="stamp"><span class="dot"></span>For the incoming Operational Manager</span>
+  </div>
+</header>
+
+<!-- ===================== 01 HISTORY ===================== -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">01 — Where It Started</p>
+    <h2 class="section-title">The History of EcoNow</h2>
+    <p class="section-sub">If you think you already know this, read it anyway.</p>
+
+    <p>EcoNow began with one problem: children who are forced to leave the homes they've lived in for years, once they hit legal age, because there simply isn't enough space or resources to keep supporting them. EcoNow set out to tackle this by giving them real, hands-on entrepreneurial skills — something to actually stand on once they're out.</p>
+
+    <p>The whole thing started almost by accident — a sudden idea to recycle used cooking oil into candles, born during a summer summit. From there, the product line kept moving:</p>
+
+    <div class="timeline">
+      <div class="tl-item" data-n="1">
+        <h3>Candles <span class="tag">Founding idea</span></h3>
+        <p>Used cooking oil, repurposed into candles. The original concept EcoNow was built on.</p>
+      </div>
+      <div class="tl-item" data-n="2">
+        <h3>EcoSoap <span class="tag">Discontinued</span></h3>
+        <p>An expansion into soap-making. Discontinued afterward — the working environment turned out to be highly acidic and difficult to sustain.</p>
+      </div>
+      <div class="tl-item" data-n="3">
+        <h3>Mini Candles</h3>
+        <p>A scaled-down product line, easier to produce and sell.</p>
+      </div>
+      <div class="tl-item active" data-n="4">
+        <h3>Air Diffuser, Perfume &amp; New Scents <span class="tag">My term</span></h3>
+        <p>Under my term, R&amp;D pushed further — trialing air diffusers, perfume, and new candle scents.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 CURRENT STATE ===================== -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">02 — Where It Stands Now</p>
+    <h2 class="section-title">The Current State of EcoNow</h2>
+    <p class="section-sub">This is the part you actually need to sit with.</p>
+
+    <p>EcoNow has lost its original focus. That's not just my opinion — it's Dr Roy's, and I agree with it. We've drifted toward <strong>profiting</strong> instead of <strong>educating and equipping the children</strong> with skills, which was the entire point of starting this in the first place.</p>
+
+    <p>But it's worth saying: EcoNow's mission hasn't drifted for no reason. It's run into real constraints and ceilings — the kind that push a student club toward "just sell more product" because that's the path of least resistance. I'll get into those next.</p>
+
+    <blockquote
+      >
+      The organizer deviated from the original idea of the competition — supporting university students with Social Entrepreneurship — and instead pushed students to register and start an independent Social Enterprise through SSM and related government bodies.
+      <cite>— According to Dr Roy, on how MOHE's framing of the UCSE competition changed</cite>
+    </blockquote>
+
+    <p>You can trace the goal misorientation back to EcoNow's participation in the <strong>UCSE competition</strong>, run by the Ministry of Higher Education (MOHE), which granted us RM 40,000. Dr Roy strongly disagrees with the idea of formally registering and running a social enterprise off the back of that — because we're a student-run club. We don't have the time, manpower, or operational capability to run a <em>consistently profitable</em> enterprise on top of everything else.</p>
+  </div>
+</section>
+
+<!-- ===================== 03 THE CEILING ===================== -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 — The Fundamentals</p>
+    <h2 class="section-title">The Ceiling of EcoNow</h2>
+    <p class="section-sub">Some things just wouldn't work. Before you become the OM, you need to know why.</p>
+
+    <p>Before you take over as Operational Manager, understand this: EcoNow has hit a ceiling, and it needs restructuring. Let me show you the math first — it explains more than any conversation could.</p>
+
+    <div class="receipt-frame mono">
+      <h4>Production Reality Check</h4>
+      <div class="sub">1 semester · 12 weeks · max capacity</div>
+
+      <div class="receipt-line"><span>Sessions / month</span><span>1</span></div>
+      <div class="receipt-line"><span>Batches / session</span><span>4</span></div>
+      <div class="receipt-line"><span>Candles / batch</span><span>8</span></div>
+      <div class="receipt-line"><span>Candles / month</span><span>32</span></div>
+      <div class="receipt-line"><span>Candles / semester (3mo)</span><span>96</span></div>
+      <div class="receipt-line"><span>Price / candle</span><span>RM 30</span></div>
+      <div class="receipt-line"><span>Gross revenue</span><span>RM 2,880</span></div>
+      <div class="receipt-line neg"><span>Material cost (40%)</span><span>− RM 1,152</span></div>
+      <div class="receipt-line total"><span>Left over</span><span>RM 1,728</span></div>
+      <div class="receipt-line neg"><span>Booth rental (2 wks)</span><span>≈ − RM 1,000</span></div>
+      <div class="receipt-line neg"><span>Transport + R&amp;D</span><span>− ???</span></div>
+    </div>
+
+    <p style="margin-top:34px;">RM 1,728 sounds fine until you remember rental, transport, and R&amp;D still have to come out of it. That's the ceiling, in numbers. Now here's the ceiling in practice.</p>
+
+    <div class="card">
+      <h4>Constraint 1 — Production</h4>
+      <ul>
+        <li>Can our beneficiaries even produce every single month? Things get repetitive fast — and at that point, where's the educational value we're supposed to be giving them?</li>
+        <li>Production sessions with beneficiaries can get chaotic and need tight coordination. The candles that come out of it aren't always up to standard.</li>
+        <li>Beneficiaries can't handle complex candle formulas — some are already struggling with basic math.</li>
+        <li>Every production session takes real time: clean-up, teaching, coordination, transport. Doing this even once a month requires serious member dedication.</li>
+      </ul>
+    </div>
+
+    <div class="fillin">
+      <span class="ft-label">Constraint 2 — Costing &amp; Product Value</span>
+      <p>— left blank in the original outline. Fill this in with your own read on pricing, margins, and whether the product line actually reflects its value.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 MY 25/26 PLAN ===================== -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">04 — My Term</p>
+    <h2 class="section-title">My 25/26 Plan</h2>
+    <p class="section-sub">What I set out to do, and what actually happened.</p>
+
+    <div class="fillin" style="border-color:rgba(224,164,80,0.5); background:repeating-linear-gradient(135deg, rgba(224,164,80,0.08) 0 10px, transparent 10px 20px); color:var(--wax-light);">
+      <span class="ft-label">Initial Idealization</span>
+      <p>— not yet written. Capture what you originally set out to build before reality got involved.</p>
+    </div>
+
+    <div class="fillin" style="border-color:rgba(224,164,80,0.5); background:repeating-linear-gradient(135deg, rgba(224,164,80,0.08) 0 10px, transparent 10px 20px); color:var(--wax-light);">
+      <span class="ft-label">The Actual Execution</span>
+      <p>— not yet written. Include: problems faced → root cause → how it was resolved, and honestly, what could've been done better.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 CANDLE KNOWLEDGE ===================== -->
+<section>
+  <div class="wrap">
+    <p class="eyebrow">05 — Craft Notes</p>
+    <h2 class="section-title">My Knowledge on Candle Making</h2>
+    <p class="section-sub">The technical know-how nobody hands you on day one.</p>
+
+    <div class="fillin">
+      <span class="ft-label">Not yet written</span>
+      <p>This is where your actual formulas, wax ratios, scent-load ratios, wick sizing, common failure modes, and supplier notes should live — the stuff you had to learn the hard way so the next OM doesn't have to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 EXTENSION ===================== -->
+<section class="dark">
+  <div class="wrap">
+    <p class="eyebrow">06 — Handing It Forward</p>
+    <h2 class="section-title">Extending the 25/26 Plan</h2>
+    <p class="section-sub">What continues into 26/27 — and what shouldn't.</p>
+
+    <div class="split">
+      <div class="col do">
+        <h4>What I Will Do</h4>
+        <div class="fillin" style="margin:0;border-color:rgba(109,122,86,0.6);">
+          <p>— not yet written.</p>
+        </div>
+      </div>
+      <div class="col dont">
+        <h4>What I Will Not Do</h4>
+        <div class="fillin" style="margin:0;border-color:rgba(165,61,43,0.4);">
+          <p>— not yet written.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section class="closing">
+  <div class="wrap">
+    <div class="wax-divider" style="justify-content:center;margin-bottom:36px;"><span class="mono" style="opacity:.8;font-size:12px;letter-spacing:.15em;">FINAL WORD</span></div>
+    <div class="seal">EN</div>
+    <h2>Good Luck, and Final Advice</h2>
+    <p class="lede">— not yet written. This is your closing word to whoever reads this next: what you want them to carry forward, and what you want them to let go of.</p>
+  </div>
+</section>
+
+<footer>EcoNow · Handover Report · 2025/2026 → 2026/2027</footer>
+
+<script>
+  (function(){
+    var fill = document.getElementById('burnedFill');
+    if(!fill) return;
+    function update(){
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+      fill.style.height = pct + '%';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+</body>
+</html>
