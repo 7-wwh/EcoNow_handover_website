@@ -5,22 +5,63 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/nav.css">
+<style>
+  .liquid-nav{
+    position:fixed;
+    z-index:200;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:2px;
+    max-width:min(92vw, 620px);
+    padding:6px;
+    border-radius:999px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    background-color:color-mix(in srgb, var(--wax-pale) 16%, transparent);
+    backdrop-filter:blur(9px) url(#liquidGlass) saturate(160%);
+    -webkit-backdrop-filter:blur(9px) saturate(160%);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--cream) 14%, transparent),
+      inset 1.6px 2.6px 0px -2px color-mix(in srgb, var(--cream) 75%, transparent),
+      inset -2px -2px 0px -2px color-mix(in srgb, var(--cream) 55%, transparent),
+      inset -0.4px -1px 4px 0px color-mix(in srgb, var(--wick) 30%, transparent),
+      inset 0px 3px 4px -2px color-mix(in srgb, var(--wick) 24%, transparent),
+      0px 10px 26px -6px rgba(0,0,0,0.5);
+  }
+  .liquid-nav__link{
+    position:relative;
+    z-index:2;
+    padding:9px 15px;
+    border-radius:999px;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    color:var(--paper-deep);
+    text-decoration:none;
+    transition:color 220ms ease;
+  }
+  .liquid-nav__link:hover{color:#fff;}
+  .liquid-nav__link.active{color:var(--ink);font-weight:700;}
+</style>
 </head>
 <body onload="document.addEventListener('DOMContentLoaded', () => {})">
 
-<nav class="navbar">
-  <div class="nav-brand">EcoNow 25/26</div>
-  <div class="nav-links">
-    <a href="../index.html">Home</a>
-    <a href="../history/">History</a>
-    <a href="../state/">Current State</a>
-    <a href="../ceiling/">The Ceiling</a>
-    <a href="../plan/">My Plan</a>
-    <a href="../notes/">Craft Notes</a>
-    <a href="../extension/">Extension</a>
-    <a href="../closing/">Closing</a>
-  </div>
+<nav class="liquid-nav" id="liquidNav" aria-label="Section navigation">
+  <div class="liquid-nav__indicator" id="navIndicator"></div>
+  <a class="liquid-nav__link" href="../index.html">Start</a>
+  <a class="liquid-nav__link" href="../history/">History</a>
+  <a class="liquid-nav__link" href="../state/">Now</a>
+  <a class="liquid-nav__link" href="../ceiling/">Ceiling</a>
+  <a class="liquid-nav__link" href="../plan/">Plan</a>
+  <a class="liquid-nav__link" href="../notes/">Craft</a>
+  <a class="liquid-nav__link" href="../extension/">Ahead</a>
+  <a class="liquid-nav__link" href="../closing/">Close</a>
 </nav>
 
 
@@ -39,10 +80,11 @@
 
 <footer>EcoNow · Handover Report · 2025/2026 → 2026/2027</footer>
 <script src="../assets/js/main.js"></script>
-<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
-  <filter id="liquid-glass">
-    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" result="noise" />
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+<svg class="glass-defs" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+  <filter id="liquidGlass" primitiveUnits="objectBoundingBox">
+    <feImage result="map" width="100%" height="100%" x="0" y="0" href="data:image/webp;base64,UklGRq4vAABXRUJQVlA4WAoAAAAQAAAA5wEAhwAAQUxQSOYWAAABHAVpGzCrf9t7EiJCYdIGTDpvURGm9n7K+YS32rZ1W8q0LSSEBCQgAQlIwEGGA3CQOAAHSEDCJSEk4KDvUmL31vrYkSX3ufgXEb4gSbKt2LatxlqIgNBBzbM3ikHVkvUvq7btKpaOBCQgIRIiAQeNg46DwgE4oB1QDuKgS0IcXBykXieHkwdjX/4iAhZtK3ErSBYGEelp+4aM/5/+z14+//jLlz/++s/Xr4//kl9C8Ns8DaajU+lPX/74+viv/eWxOXsO+eHL3/88/ut/2b0zref99evjX8NLmNt1fP7178e/jJcw9k3G//XP49/Iy2qaa7328Xkk9ZnWx0VUj3bcyCY4Pi7C6reeEagEohnRCbQQwFmUp9ggYQj8MChjTSI0Ck7G/bh6P5ykNU9yP+10G8I2UAwXeQ96DQwNjqyPu/c4tK+5CtGOK0oM7AH5f767lHpotXVYYI66B+HjMhHj43C5wok3YDH4/vZFZRkB7rNnEfC39WS2Q3K78y525wFNTPf5f+/fN9YI1YyDvjuzV5rQtsfn1Ez1ka3PkeGxOZ6IODxDJqCLpF7vdb9Z3s/ufLr6jf/55zbW3LodwwVVg7Lmao+p3eGcqDFDGuuKnlBZAPSbnkYtTX+mZl2y57Gq85F3tDv7m7/yzpjXHoVA3YUObsHz80W3IUK1E8yRqggxTMzD4If2230ys7RDxWrLu9o9GdSWNwNRC2yMIg+HkTVT3BOZER49XLBMdljemLFMjw8VwZ8OdBti4lWdt7c7dzaSc5yILtztsTMT1GFGn/tysM23nF3xbOsnh/eQGKkxhWGEalljCvWZ+LDE+9t97uqEfb08rdYwZGhheLzG2SJzKS77OIAVgPDjf9jHt6c+0mjinS/v13iz9RV3vsPdmbNG1E+nD6s83jBrBEnlBiTojuJogGJNtzxtsIoD2CFuXYipzhGWHhWqCBSqd7l7GMrnuHzH6910FO+XYwgcDxoFRJNk2GUcpQ6I/GhLmqisuBS6uSFpfAz3Yb9Yatyed7r781ZYfr3+3FfXs1MykSbVcg4GiOKX19SZ9xFRwhG+UZGiROjsXhePVu12fCZTJ3CJ4Z3uXnyxz28RutHa5yCKG6jgfTBPuA9jHL7YdlAa2trNEr7BLANd3qNYcWZqnkvlDe8+F5Q/9k8jCFk17ObrIf0O/5U/iDnqcqA70mURr8FUN5pmQEzDcxuWvOPd1+KrbO4fd0vXK5OTtYEy5C2TA5L4ok6Y31WHR9ZR9lQr6IjwruSd775W6NVa2zz1fir2k1GWnT573Eu3mfMjIikYZkM4MDCnTWbmLrpK/Hs0KD5C8rZ3n0tnw0j76WuU8P1YBIjsvcESbnOQMY+gGC/sd/gG+hKKtDijJHhrcSj/GHa/FZ8oGLXeLx1IW+cgU8pqD0PzMzU3oG5lQ/ZaDPDMYq+aAPSEmHN+JiVIp0haHTvPt77732z5ed2K7NHs9FtCIk4BdNkKLRLvOKlFcw+UiovM4OB5sGgepyML+a4TEu/I29/dFtjJulojJR4Tg71ybApEdca0TSnaumNJyCWH2pjENASlQS/NIXMWtiPV9CHsvuftev08/lemYIcUnHSu6XEMvaBq41tqf/m0siLj7xeXsnBmhxY5z+nCwX4Iu4euTPaE4EQorgogisHrBtsAMdX+Huje7nlx3hMpKovdf+YftDQqytChXfEh7D5nyC8rzNTICINmpK5Ni0ngcAMzpmiYDwOMtmUTiCjvx2S2dIeSguP/QHZ3xYIeGhTt1CsCOIiEuVw8pGjVznDJppuojl30i9RvXccXzmXGj2b3H3XM38c/PZseyeOdplXhFekzZMZ2fUGuIBsKCc... (line truncated to 2000 chars)
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur"/>
+    <feDisplacementMap in="blur" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 </svg>
 </body>
