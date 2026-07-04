@@ -21,34 +21,16 @@
 </head>
 <body onload="document.addEventListener('DOMContentLoaded', () => {})">
 
-<nav class="fixed z-[1000] top-5 left-1/2 -translate-x-1/2 flex items-center gap-4 p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg nav-glass">
-  <div class="font-bold px-4 whitespace-nowrap text-stone-800">EcoNow 25/26</div>
-  <div class="flex items-center gap-1">
-    <a href="index.html" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Home</a>
-    <a href="history/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">History</a>
-    <a href="state/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Current State</a>
-    <a href="ceiling/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">The Ceiling</a>
-    <a href="plan/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">My Plan</a>
-    <a href="notes/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Craft Notes</a>
-    <a href="extension/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Extension</a>
-    <a href="closing/" class="px-4 py-2 rounded-full hover:bg-white/20 transition-colors text-stone-700">Closing</a>
-  </div>
-  <!-- Theme Switcher -->
-  <fieldset class="switcher">
-    <legend class="switcher__legend">Theme</legend>
-    <label class="switcher__option">
-      <input class="switcher__input" type="radio" name="theme" value="light" c-option="1" checked>
-      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-    </label>
-    <label class="switcher__option">
-      <input class="switcher__input" type="radio" name="theme" value="dark" c-option="2">
-      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </label>
-    <label class="switcher__option">
-      <input class="switcher__input" type="radio" name="theme" value="dim" c-option="3">
-      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
-    </label>
-  </fieldset>
+<nav class="fixed z-[1000] top-5 left-1/2 -translate-x-1/2 flex items-center gap-2">
+  <div class="glass-nav-btn font-bold px-4 whitespace-nowrap text-stone-800">EcoNow 25/26</div>
+  <a href="index.html" class="glass-nav-btn">Home</a>
+  <a href="history/" class="glass-nav-btn">History</a>
+  <a href="state/" class="glass-nav-btn">Current State</a>
+  <a href="ceiling/" class="glass-nav-btn">The Ceiling</a>
+  <a href="plan/" class="glass-nav-btn">My Plan</a>
+  <a href="notes/" class="glass-nav-btn">Craft Notes</a>
+  <a href="extension/" class="glass-nav-btn">Extension</a>
+  <a href="closing/" class="glass-nav-btn">Closing</a>
 </nav>
 
 
