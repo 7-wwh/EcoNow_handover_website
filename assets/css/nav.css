@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
 
-:root {
+body {
   --c-glass: #bbbbbc;
   --c-light: #fff;
   --c-dark: #000;
@@ -14,62 +14,121 @@
   --glass-reflex-light: 1;
   
   --saturation: 150%;
+  
+  font-size: 20px;
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  background: var(--c-bg);
+  color: var(--c-content);
+  
+  transition: background 400ms cubic-bezier(1, 0.0, 0.4, 1), color 400ms cubic-bezier(1, 0.0, 0.4, 1);
 }
 
-/* Updated Navigation Container */
+body:has(input[value="dark"]:checked) {
+  --c-glass: #bbbbbc;
+  --c-light: #fff;
+  --c-dark: #000;
+  
+  --c-content: #e1e1e1;
+  --c-action: #03d5ff;
+  
+  --c-bg: #1b1b1d;
+  
+  --glass-reflex-dark: 2;
+  --glass-reflex-light: 0.3;
+  
+  --saturation: 150%;
+}
+
+body:has(input[value="dim"]:checked) {
+  --c-light: #99deff;
+  --c-dark: #20001b;
+  --c-glass: hsl(335 250% 74% / 1);
+  
+  --c-content: #d5dbe2;
+  --c-action: #ff48a9;
+  
+  --c-bg: #152433;
+  
+  --glass-reflex-dark: 2;
+  --glass-reflex-light: 0.7;
+  
+  --saturation: 200%;
+}
+
+/* Updated Nav */
 .navbar {
   position: fixed;
   z-index: 1000;
-  top: 40px;
+  top: 20px;
   left: 50%;
   translate: -50%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  max-width: 800px;
-  height: 70px;
+  gap: 16px;
   box-sizing: border-box;
-  padding: 8px 24px;
-  margin: 0 auto;
+  padding: 8px;
   border-radius: 99em;
   background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
   backdrop-filter: blur(8px) saturate(var(--saturation));
-  -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
-  box-shadow: 
-    inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-    0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent);
-  transition: background-color 400ms, box-shadow 400ms;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .nav-brand {
-  font-family: "DM Sans", sans-serif;
   font-weight: 700;
-  color: var(--c-content);
-  margin-right: 20px;
+  padding: 0 16px;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
 .nav-links a {
   color: var(--c-content);
-  font-family: "DM Sans", sans-serif;
-  font-size: 14px;
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 99em;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 
 .nav-links a:hover {
   background: color-mix(in srgb, var(--c-glass) 20%, transparent);
-  color: var(--c-action);
 }
 
-.burger-menu {
-  display: none; /* Hide burger if not needed with this nav, or handle responsive differently */
+/* Switcher Styles */
+.switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 99em;
+  background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+}
+
+.switcher__legend { display: none; }
+.switcher__input { display: none; }
+
+.switcher__option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 99em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.switcher__option:hover {
+  background: color-mix(in srgb, var(--c-glass) 20%, transparent);
+}
+
+.switcher__icon {
+  width: 20px;
+  height: 20px;
 }

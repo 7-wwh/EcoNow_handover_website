@@ -70,5 +70,11 @@
 
 <footer>EcoNow · Handover Report · 2025/2026 → 2026/2027</footer>
 <script src="../assets/js/main.js"></script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+  <filter id="liquid-glass">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
 </body>
 </html>

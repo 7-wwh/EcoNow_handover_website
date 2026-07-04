@@ -298,11 +298,14 @@
 
   /* ---------- constraint cards ---------- */
   .card{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:26px 28px;
-    margin:22px 0;
+    background: rgba(237, 220, 174, 0.4); /* Warm glass based on --paper */
+    backdrop-filter: blur(12px) url(#liquid-glass);
+    -webkit-backdrop-filter: blur(12px) url(#liquid-glass);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin: 22px 0;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
   .card h4{
     margin:0 0 14px;

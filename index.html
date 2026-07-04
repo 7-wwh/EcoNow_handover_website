@@ -21,6 +21,22 @@
     <a href="extension/">Extension</a>
     <a href="closing/">Closing</a>
   </div>
+  <!-- Theme Switcher -->
+  <fieldset class="switcher">
+    <legend class="switcher__legend">Theme</legend>
+    <label class="switcher__option">
+      <input class="switcher__input" type="radio" name="theme" value="light" c-option="1" checked>
+      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </label>
+    <label class="switcher__option">
+      <input class="switcher__input" type="radio" name="theme" value="dark" c-option="2">
+      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </label>
+    <label class="switcher__option">
+      <input class="switcher__input" type="radio" name="theme" value="dim" c-option="3">
+      <svg class="switcher__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+    </label>
+  </fieldset>
 </nav>
 
 
@@ -35,5 +51,11 @@
 
 <footer>EcoNow · Handover Report · 2025/2026 → 2026/2027</footer>
 <script src="assets/js/main.js"></script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+  <filter id="liquid-glass">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
 </body>
 </html>
