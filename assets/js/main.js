@@ -1,4 +1,26 @@
 (function(){
+  // Brand Logo Scroll Effect
+  const logo = document.getElementById('brand-logo');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      logo.style.opacity = '0';
+      logo.style.pointerEvents = 'none';
+    } else {
+      logo.style.opacity = '1';
+      logo.style.pointerEvents = 'auto';
+    }
+  });
+
+  // Mobile Burger Menu
+  const burger = document.getElementById('burger-menu');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+  }
+
   // Burn Rail (Scroll Progress)
   var fill = document.getElementById('burnedFill');
   if(!fill) return;
