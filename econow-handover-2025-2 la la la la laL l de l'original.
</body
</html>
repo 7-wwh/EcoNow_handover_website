@@ -417,6 +417,69 @@
     border-radius:6px;
     padding:24px 24px 20px;
   }
-  .split .col.do{background:rgba(109,122,86,0.10);border:1px solid rgba(109,122,8 la l l laC l'original.
+  .split .col.do{background:rgba(109,122,86,0.10);border:1px solid rgba(109,122,86,0.3);}
+  .split .col.dont{background:rgba(165,61,43,0.07);border:1px solid rgba(165,61,43,0.22);}
+  .split h4{
+    font-family:'Space Mono',monospace;
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+    margin:0 0 12px;
+  }
+  .split .col.do h4{color:var(--sage-dark);}
+  .split .col.dont h4{color:#a53d2b;}
+
+  /* ---------- divider ---------- */
+  .wax-divider{
+    display:flex;align-items:center;gap:16px;
+    margin:6px 0 0;
+    color:var(--wax);
+    opacity:0.7;
+  }
+  .wax-divider::before,.wax-divider::after{content:"";flex:1;height:1px;background:currentColor;opacity:0.3;}
+
+  /* ---------- closing / seal ---------- */
+  .closing{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:center;
+    padding:110px 0 90px;
+  }
+  .seal{
+    width:96px;height:96px;
+    border-radius:50%;
+    border:2px solid var(--wax);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 30px;
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    font-size:22px;
+    color:var(--wax-light);
+    letter-spacing:0.02em;
+    box-shadow:0 0 0 6px rgba(224,164,80,0.08), 0 0 30px rgba(224,164,80,0.25);
+  }
+  .closing h2{font-size:clamp(26px,4vw,36px);max-width:20ch;margin:0 auto 20px;}
+  .closing .lede{max-width:44ch;margin:0 auto 8px;color:var(--paper-deep);font-style:italic;}
+
+  footer{
+    background:var(--ink);
+    color:var(--paper-deep);
+    text-align:center;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    padding:22px 0 34px;
+    opacity:0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    #burnRail .stick .burned{transition:none;}
+  }
+</style>
+</head>
+<body id="top">
+
+<svg class="glass-defs" aria-hidden="true">
+  <filter id="liquidGlass" primitiveUnits="objectBoundingBox">
+    <feImage result="map" width="100%" height="100%" x="0" y="0" href="data:image/webp;base64,UklGRq4vAABXRUJQVlA4WAoAAAAQAAAA5wEAhwAAQUxQSOYWAAABHAVpGzCrf9t7EiJCYdIGTDpvURGm9n7K+YS32rZ1W8q0LSSEBCQgAQlIwEGGA3CQOAAHSEDCJSEk4KDvUmL31vrYkSX3ufgXEb4gSbKt2LatxlqIgNBBzbM3ikHVkvUvq7btKpaOBCQgIRIiAQeNg46DwgE4oB1QDuKgS0IcXBykXieHkwdjX/4iAhZtK3ErSBYGEelp+4aM/5/+z14+//jLlz/++s/Xr4//kl9C8Ns8DaajU+lPX/74+viv/eWxOXsO+HHL3/88/ut/2b0zref99evjX8NLmNt1fP7178e/jJcw9k3G//XP49/Iy2qaa7328Xkk9ZnWx0VUj3bcyCY4Pi7C6reeEagEohnRCbQQwFmUp9ggYQj8MChjTSI0Ck7G/bh6P5ykNU9yP+10G8I2UAwXeQ96DQwNjqyPu/c4tK+5CtGOK0oM7AH5f767lHpotXVYYI66B+HjMhHj43C5wok3YDH4/vZFZRkB7rNnEfC39WS2Q3K78y525wFNTPf5f+/fN9YI1YyDvjuzV5rQtsfn1Ez1ka3PkeGxOZ6IODxDJqCLpF7vdb9Z3s/ufLr6jf/55zbW3LodwwVVg7Lmao+p3eGcqDFDGuuKnlBZAPSbnkYtTX+mZl2y57Gq85F3tDv7m7/yzpjXHoVA3YUObsHz80W3IUK1E8yRqggxTMzD4If2230ys7RDxWrLu9o9GdSWNwNRC2yMIg+HkTVT3BOZER49XLBMdljemLFMjw8VwZ8OdBti4lWdt7c7dzaSc5yILtztsTMT1GFGn/tysM23nF3xbOsnh/eQGKkxhWGEalljCvWZ+LDE+9t97uqEfb08rdYwZGhheLzG2SJzKS77OIAVgPDjf9jHt6c+0mjinS/v13iz9RV3vsPdmbNG1E+nD6s83jBrBEnlBiTojuJogGJNtzxtsIoD2CFuXYipzhGWHhWqCBSqd7l7GMrnuHzH6910FO+XYwgcDxoFRJNk2GUcpQ la l l laC l'original.
 </body
 </html>
