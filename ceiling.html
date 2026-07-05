@@ -48,6 +48,43 @@
 
   a{color:var(--sage-dark);}
 
+  /* ---------- burn rail (scroll progress) ---------- */
+  #burnRail{
+    position:fixed;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    width:14px;
+    height:220px;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  #burnRail .flame{
+    width:8px;height:8px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    background:radial-gradient(circle at 50% 30%, #fff2c9, var(--wax-light) 60%, var(--wax) 100%);
+    box-shadow:0 0 8px 2px rgba(224,164,80,0.55);
+    margin-bottom:2px;
+    flex-shrink:0;
+  }
+  #burnRail .stick{
+    width:6px;
+    flex:1;
+    background:linear-gradient(var(--wax-pale), var(--cream));
+    border:1px solid var(--line);
+    border-radius:3px;
+    position:relative;
+    overflow:hidden;
+  }
+  #burnRail .stick .burned{
+    position:absolute;bottom:0;left:0;right:0;
+    background:var(--wick);
+    height:0%;
+    transition:height 0.15s linear;
+  }
+  @media (max-width:900px){ #burnRail{display:none;} }
+
   /* ---------- liquid glass nav ---------- */
   .liquid-nav{
     position:fixed;
@@ -104,7 +141,19 @@
   .liquid-nav__link:hover{color:#fff;}
   .liquid-nav__link.active{color:var(--ink); font-weight:700;}
 
-  /* ---------- nav brand ---------- */
+  /* ---------- adaptive contrast: nav sits over a light (cream) zone ---------- */
+  .liquid-nav.on-light{
+    background-color:color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+  .liquid-nav.on-light .liquid-nav__link{color:var(--oil);}
+  .liquid-nav.on-light .liquid-nav__link:hover{color:var(--wick);}
+  .liquid-nav.on-light .nav-brand{color:var(--oil);}
+  .liquid-nav.on-light .nav-brand:hover{color:var(--wick);}
+  .liquid-nav.on-light .nav-brand::after{background:rgba(36,29,21,0.28);}
+  .liquid-nav{transition:background-color 280ms ease;}
+  .liquid-nav__link, .nav-brand{transition:color 280ms ease;}
+
+  /* ---------- nav brand / logo ---------- */
   .nav-brand{
     position:relative;
     z-index:2;
@@ -118,13 +167,34 @@
     color:var(--paper-deep);
     transition:color 200ms ease, transform 160ms cubic-bezier(0.65,0,0.35,1);
   }
+  .nav-brand::after{
+    content:"";
+    position:absolute;
+    right:-2px;
+    top:22%;
+    bottom:22%;
+    width:1px;
+    background:rgba(236,226,205,0.25);
+  }
   .nav-brand:hover{color:#fff;}
+  .nav-brand:active{transform:scale(0.9);}
+
   .nav-brand__mark{
     width:17px;
     height:24px;
     flex-shrink:0;
     display:block;
+    filter:drop-shadow(0 0 3px rgba(224,164,80,0.45));
+    transition:filter 200ms ease;
   }
+  .nav-brand:hover .nav-brand__mark{filter:drop-shadow(0 0 6px rgba(224,164,80,0.8));}
+
+  .nav-brand__flame{
+    transform-origin:50% 85%;
+    animation:flameFlicker 2.6s ease-in-out infinite;
+  }
+  .nav-brand:hover .nav-brand__flame{animation-duration:0.8s;}
+
   .nav-brand__word{
     font-family:'Big Shoulders Display',sans-serif;
     font-weight:900;
@@ -134,9 +204,34 @@
     white-space:nowrap;
   }
 
+  @keyframes flameFlicker{
+    0%,100%{transform:scale(1) rotate(0deg);}
+    25%{transform:scale(1.06,0.94) rotate(-3deg);}
+    50%{transform:scale(0.94,1.06) rotate(2deg);}
+    75%{transform:scale(1.04,0.96) rotate(-1deg);}
+  }
+
+  @keyframes brandPulse{
+    0%{transform:scale(1);}
+    35%{transform:scale(0.86);}
+    65%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+  }
+  .nav-brand--pulse{animation:brandPulse 420ms cubic-bezier(0.34,1.56,0.64,1);}
+  .nav-brand--pulse .nav-brand__flame{animation:flameFlicker 0.4s ease-in-out 2;}
+
+  @media (max-width:640px){
+    .liquid-nav{top:12px;padding:5px;}
+    .liquid-nav__link{padding:9px 15px;font-size:10.5px;}
+    .nav-brand{padding:7px 12px 7px 8px;}
+    .nav-brand__word{font-size:12px;}
+  }
+
   /* ---------- layout shells ---------- */
   .wrap{max-width:760px;margin:0 auto;padding:0 28px;}
   section{padding:88px 0;}
+  .dark{background:var(--ink);color:var(--paper);}
+  .dark .wrap{color:var(--paper);}
   .eyebrow{
     font-family:'Space Mono',monospace;
     font-size:12.5px;
@@ -149,22 +244,6 @@
     margin-bottom:18px;
   }
   .eyebrow::before{content:"";width:26px;height:1px;background:var(--wax);}
-
-  /* ---------- headings ---------- */
-  h2.section-title{
-    font-size:clamp(30px, 4.5vw, 44px);
-    font-weight:700;
-    line-height:1.02;
-    margin:0 0 10px;
-  }
-  .section-sub{
-    font-family:'Literata',serif;
-    font-style:italic;
-    color:var(--oil);
-    opacity:0.75;
-    font-size:16px;
-    margin:0 0 44px;
-  }
 
   /* ---------- receipt frame ---------- */
   .receipt-frame{
@@ -224,12 +303,29 @@
     padding:22px 0 34px;
     opacity:0.6;
   }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    #burnRail .stick .burned{transition:none;}
+  }
 </style>
 </head>
 <body data-page="ceiling">
 
 <nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
   <a class="nav-brand" href="index.html" id="navBrand" aria-label="EcoNow — go to home">
+    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
+      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
+      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
+      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#navFlameGrad)"/>
+      <defs>
+        <linearGradient id="navFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:#fff2c9"/>
+          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
+          <stop offset="1" style="stop-color:var(--wax)"/>
+        </linearGradient>
+      </defs>
+    </svg>
     <span class="nav-brand__word">EcoNow</span>
   </a>
   <div class="liquid-nav__indicator" id="navIndicator"></div>
@@ -238,7 +334,12 @@
   <a class="liquid-nav__link" href="handover.html" data-page="handover">Handover</a>
 </nav>
 
-<section id="ceiling" style="margin-top: 80px;">
+<div id="burnRail" aria-hidden="true">
+  <div class="flame"></div>
+  <div class="stick"><div class="burned" id="burnedFill"></div></div>
+</div>
+
+<section id="ceiling" class="dark-zone" style="margin-top: 80px;">
   <div class="wrap">
     <p class="eyebrow">03 — The Fundamentals</p>
     <h2 class="section-title">The Ceiling of EcoNow</h2>
@@ -260,8 +361,24 @@
 
 <script>
   (function(){
+    var fill = document.getElementById('burnedFill');
+    if(!fill) return;
+    function update(){
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+      fill.style.height = pct + '%';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  (function(){
     var nav = document.getElementById('liquidNav');
     var indicator = document.getElementById('navIndicator');
+    if(!nav || !indicator) return;
     var page = document.body.getAttribute('data-page');
     var links = Array.prototype.slice.call(nav.querySelectorAll('.liquid-nav__link'));
     function moveIndicator(link){
@@ -273,6 +390,57 @@
       if(l.dataset.page === page){ l.classList.add('active'); active = l; }
     });
     if(active) moveIndicator(active);
+    window.addEventListener('resize', function(){ if(active) moveIndicator(active); });
+  })();
+
+  (function(){
+    var brand = document.getElementById('navBrand');
+    if(!brand) return;
+    var isHome = document.body.getAttribute('data-page') === 'background';
+
+    brand.addEventListener('click', function(e){
+      e.preventDefault();
+      brand.classList.remove('nav-brand--pulse');
+      void brand.offsetWidth;
+      brand.classList.add('nav-brand--pulse');
+
+      if(isHome){
+        window.scrollTo({top:0, behavior:'smooth'});
+        setTimeout(function(){ brand.classList.remove('nav-brand--pulse'); }, 500);
+      } else {
+        setTimeout(function(){ window.location.href = brand.getAttribute('href'); }, 260);
+      }
+    });
+  })();
+
+  (function(){
+    var nav = document.getElementById('liquidNav');
+    if(!nav) return;
+    var ticking = false;
+
+    function sampleContrast(){
+      ticking = false;
+      var navRect = nav.getBoundingClientRect();
+      var x = navRect.left + navRect.width / 2;
+      var y = navRect.bottom + 6;
+      if(y >= window.innerHeight) y = window.innerHeight - 2;
+      var el = document.elementFromPoint(x, y);
+      if(!el) return;
+      var zone = el.closest('.dark-zone');
+      nav.classList.toggle('on-light', !zone);
+    }
+
+    function requestSample(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(sampleContrast);
+      }
+    }
+
+    document.addEventListener('scroll', requestSample, {passive:true});
+    window.addEventListener('resize', requestSample);
+    window.addEventListener('load', sampleContrast);
+    setTimeout(sampleContrast, 50);
   })();
 </script>
 
