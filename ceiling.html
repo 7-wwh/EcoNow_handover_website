@@ -388,17 +388,42 @@
     var nav = document.getElementById('liquidNav');
     var indicator = document.getElementById('navIndicator');
     if(!nav || !indicator) return;
-    var page = document.body.getAttribute('data-page');
+
     var links = Array.prototype.slice.call(nav.querySelectorAll('.liquid-nav__link'));
+    var page = document.body.getAttribute('data-page');
+
+    // Click handler to save state
+    links.forEach(function(link){
+      link.addEventListener('click', function(){
+        localStorage.setItem('prevPage', page);
+      });
+    });
+
     function moveIndicator(link){
       indicator.style.width = link.offsetWidth + 'px';
       indicator.style.transform = 'translateX(' + link.offsetLeft + 'px)';
     }
-    var active = null;
-    links.forEach(function(l){
-      if(l.dataset.page === page){ l.classList.add('active'); active = l; }
+
+    var active = links.filter(function(l){ return l.dataset.page === page; })[0];
+    if (active) active.classList.add('active');
+
+    var prevPage = localStorage.getItem('prevPage');
+    var prevLink = links.filter(function(l){ return l.dataset.page === prevPage; })[0];
+
+    // Initial position (no transition)
+    indicator.style.transition = 'none';
+    if (prevLink) {
+        moveIndicator(prevLink);
+    } else if (active) {
+        moveIndicator(active);
+    }
+
+    // Animate to active (with transition)
+    requestAnimationFrame(function(){
+      indicator.style.transition = '';
+      if (active) moveIndicator(active);
     });
-    if(active) moveIndicator(active);
+
     window.addEventListener('resize', function(){ if(active) moveIndicator(active); });
   })();
 
@@ -408,6 +433,9 @@
     var isHome = document.body.getAttribute('data-page') === 'background';
 
     brand.addEventListener('click', function(e){
+      // Save current page
+      localStorage.setItem('prevPage', document.body.getAttribute('data-page'));
+      
       e.preventDefault();
       brand.classList.remove('nav-brand--pulse');
       void brand.offsetWidth;
