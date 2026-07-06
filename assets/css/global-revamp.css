@@ -1,0 +1,127 @@
+  :root {
+    --ink: #241d15;
+    --oil: #3c2f20;
+    --wick: #150f0a;
+    --wax: #c07a2e;
+    --wax-light: #e3a758;
+    --wax-pale: #f2c98a;
+    --sage: #6d7a56;
+    --sage-dark: #4d5940;
+    --paper: #ece2cd;
+    --paper-deep: #ddcfae;
+    --cream: #f6efdf;
+    --receipt: #fbf6ea;
+    --line: rgba(36,29,21,0.16);
+  }
+
+  /* ---------- WATER CURSOR ---------- */
+  @media (pointer: fine) {
+    html, body, a, button, select, textarea, input, [role="button"], .nav-brand {
+      cursor: none !important;
+    }
+    .water-cursor {
+      display: block !important;
+    }
+  }
+  @media (pointer: coarse) {
+    .water-cursor {
+      display: none !important;
+    }
+  }
+
+  .water-cursor {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    margin-left: -14px;
+    margin-top: -14px;
+    z-index: 99999;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .water-cursor__lens {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.005);
+    backdrop-filter: blur(4px) saturate(160%);
+    -webkit-backdrop-filter: blur(4px) saturate(160%);
+    box-shadow:
+      inset 1.2px 1.2px 1.8px 0px rgba(255, 255, 255, 0.85),
+      inset -1.2px -1.2px 2.2px 0px rgba(0, 0, 0, 0.06),
+      0 0 0 0.8px rgba(255, 0, 80, 0.42),
+      0 0 0 1.6px rgba(0, 220, 255, 0.42),
+      0 0 0 0.5px rgba(36, 29, 21, 0.12),
+      0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 6px 15px -4px rgba(21, 15, 10, 0.15),
+      0 0 6px 0.5px rgba(0, 210, 255, 0.12);
+    transition: 
+      transform 300ms cubic-bezier(0.19, 1, 0.22, 1), 
+      background-color 300ms ease,
+      box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: center center;
+  }
+
+  .water-cursor.is-hovering .water-cursor__lens {
+    transform: scale(1.4);
+    background-color: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(6px) saturate(190%);
+    -webkit-backdrop-filter: blur(6px) saturate(190%);
+    box-shadow:
+      inset 1.8px 1.8px 2.2px 0px rgba(255, 255, 255, 0.95),
+      inset -1.5px -1.5px 3.5px 0px rgba(0, 0, 0, 0.05),
+      0 0 0 1.2px rgba(255, 0, 80, 0.5),
+      0 0 0 2.2px rgba(0, 220, 255, 0.5),
+      0 0 0 0.6px rgba(36, 29, 21, 0.15),
+      0 0 0 2.5px rgba(255, 255, 255, 0.12),
+      0 8px 18px -4px rgba(21, 15, 10, 0.2),
+      0 0 8px 1px rgba(0, 210, 255, 0.15);
+  }
+
+  /* ---------- LIQUID GLASS NAV ---------- */
+  .liquid-nav {
+    position: fixed;
+    z-index: 200;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 999px;
+    background-color: rgba(242, 201, 138, 0.02);
+    backdrop-filter: blur(16px) saturate(240%);
+    -webkit-backdrop-filter: blur(16px) saturate(240%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.65),
+      inset -1.5px -2.5px 0px -2px rgba(255, 255, 255, 0.2),
+      inset -0.4px -1px 4px 0px rgba(21, 15, 10, 0.15),
+      inset 0px 3px 4px -2px rgba(21, 15, 10, 0.1),
+      0px 12px 32px -8px rgba(0, 0, 0, 0.35);
+  }
+  
+  .liquid-nav__link {
+    position: relative;
+    z-index: 2;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--paper-deep);
+    text-decoration: none;
+    transition: color 240ms ease;
+  }
+  .liquid-nav__link.active { color: #fff; }
+  .liquid-nav.on-light .liquid-nav__link { color: var(--oil); }
