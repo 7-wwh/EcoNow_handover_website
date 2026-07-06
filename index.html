@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoNow Access</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/cursor.css">
     <style>
         body { display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; background-color: var(--ink); color: var(--paper); }
         .login-box { text-align: center; padding: 40px; }
@@ -15,6 +16,13 @@
     </style>
 </head>
 <body>
+    <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+      <filter id="goo" primitiveUnits="objectBoundingBox">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -5" result="goo"/>
+        <feBlend in="SourceGraphic" in2="goo"/>
+      </filter>
+    </svg>
     <div class="login-box">
         <h1>EcoNow Access</h1>
         <input type="email" id="email" placeholder="xxxx.enactusunm@gmail.com">
@@ -33,5 +41,8 @@
             }
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="assets/js/cursor.js"></script>
+    <div id="cursor" class="Cursor"></div>
 </body>
 </html>

@@ -24,6 +24,11 @@
     <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur"/>
     <feDisplacementMap in="blur" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
+  <filter id="goo" primitiveUnits="objectBoundingBox">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="blur"/>
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -5" result="goo"/>
+    <feBlend in="SourceGraphic" in2="goo"/>
+  </filter>
 </svg>
 
 <header class="top-bar" id="topBar">
@@ -107,6 +112,8 @@
 <footer>EcoNow · Handover Report · Page 3 of 3</footer>
 
 <script src="assets/js/nav.js"></script>
+<script src="assets/js/cursor.js"></script>
+<div id="cursor" class="Cursor"></div>
 
 </body>
 </html>
