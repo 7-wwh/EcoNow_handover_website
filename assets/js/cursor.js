@@ -1,4 +1,4 @@
-const cursor = document.getElementById("cursor");
+let cursor;
 const amount = 20;
 const sineDots = Math.floor(amount * 0.3);
 const width = 26;
@@ -44,6 +44,8 @@ class Dot {
 }
 
 function init() {
+    cursor = document.getElementById("cursor");
+    if (!cursor) return; // Guard clause
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("touchmove", onTouchMove);
     lastFrame += new Date();

@@ -1,141 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EcoNow 25/26 — Background</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/nav.css">
-<link rel="stylesheet" href="assets/css/cursor.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoNow Access</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body { display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; background-color: var(--ink); color: var(--paper); }
+        .login-box { text-align: center; padding: 40px; }
+        h1 { font-family: 'Big Shoulders Display', sans-serif; color: var(--wax-light); margin-bottom: 30px; }
+        input { padding: 12px; border: 1px solid var(--line); border-radius: 4px; width: 300px; display: block; margin: 0 auto 20px; font-family: 'Space Mono', monospace; }
+        button { padding: 12px 30px; background: var(--wax); color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace; }
+        #error { color: #a53d2b; margin-top: 15px; font-family: 'Space Mono', monospace; }
+    </style>
 </head>
-<body data-page="background">
-
-<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
-  <filter id="liquidGlass" primitiveUnits="objectBoundingBox">
-    <feImage result="map" width="100%" height="100%" x="0" y="0" href="data:image/webp;base64,UklGRq4vAABXRUJQVlA4WAoAAAAQAAAA5wEAhwAAQUxQSOYWAAABHAVpGzCrf9t7EiJCYdIGTDpvURGm9n7K+YS32rZ1W8q0LSSEBCQgAQlIwEGGA3CQOAAHSEDCJSEk4KDvUmL31vrYkSX3ufgXEb4gSbKt2LatxlqIgNBBzbM3ikHVkvUvq7btKpaOBCQgIRIiAQeNg46DwgE4oB1QDuKgS0IcXBykXieHkwdjX/4iAhZtK3ErSBYGEelp+4aM/5/+z14+//jLlz/++s/Xr4//kl9C8Ns8DaajU+lPX/74+viv/eWxOXsO+eHL3/88/ut/2b0zref99evjX8NLmNt1fP7178e/jJcw9k3G//XP49/Iy2qaa7328Xkk9ZnWx0VUj3bcyCY4Pi7C6reeEagEohnRCbQQwFmUp9ggYQj8MChjTSI0Ck7G/bh6P5ykNU9yP+10G8I2UAwXeQ96DQwNjqyPu/c4tK+5CtGOK0oM7AH5f767lHpotXVYYI66B+HjMhHj43C5wok3YDH4/vZFZRkB7rNnEfC39WS2Q3K78y525wFNTPf5f+/fN9YI1YyDvjuzV5rQtsfn1Ez1ka3PkeGxOZ6IODxDJqCLpF7vdb9Z3s/ufLr6jf/55zbW3LodwwVVg7Lmao+p3eGcqDFDGuuKnlBZAPSbnkYtTX+mZl2y57Gq85F3tDv7m7/yzpjXHoVA3YUObsHz80W3IUK1E8yRqggxTMzD4If2230ys7RDxWrLu9o9GdSWNwNRC2yMIg+HkTVT3BOZER49XLBMdljemLFMjw8VwZ8OdBti4lWdt7c7dzaSc5yILtztsTMT1GFGn/tysM23nF3xbOsnh/eQGKkxhWGEalljCvWZ+LDE+9t97uqEfb08rdYwZGhheLzG2SJzKS77OIAVgPDjf9jHt6c+0mjinS/v13iz9RV3vsPdmbNG1E+nD6s83jBrBEnlBiTojuJogGJNtzxtsIoD2CFuXYipzhGWHhWqCBSqd7l7GMrnuHzH6910FO+XYwgcDxoFRJNk2GUcpQ6I/GhLmqisuBS6uSFpfAz3Yb9Yatyed7r781ZYfr3+3FfXs1MykSbVcg4GiOKX19SZ9xFRwhG+UZGiROjsXhePVu12fCZTJ3CJ4Z3uXnyxz28RutHa5yCKG6jgfTBPuA9jHL7YdlAa2trNEr7BLANd3qNYcWZqnkvlDe8+F5Q/9k8jCFk17ObrIf0O/5U/iDnqcqA70mURr8FUN5pmQEzDcxuWvOPd1+KrbO4fd0vXK5OTtYEy5C2TA5L4ok6Y31WHR9ZR9lQr6IjwruSd775W6NVa2zz1fir2k1GWnT573Eu3mfMjIikYZkM4MDCnTWbmLrpK/Hs0KD5C8rZ3n0tnw0j76WuU8P1YBIjsvcESbnOQMY+gGC/sd/gG+hKKtDijJHhrcSj/GHa/FZ8oGLXeLx1IW+cgU8pqD0PzMzU3oG5lQ/ZaDPDMYq+aAPSEmHN+JiVIp0haHTvPt77732z5ed2K7NHs9FtCIk4BdNkKLRLvOKlFcw+UiovM4OB5sGgepyML+a4TEu/I29/dFtjJulojJR4Tg71ybApEdca0TSnaumNJyCWH2pjENASlQS/NIXMWtiPV9CHsvuftev08/lemYIcUnHSu6XEMvaBq41tqf/m0siLj7xeXsnBmhxY5z+nCwX4Iu4euTPaE4EQorgogisHrBtsAMdX+Huje7nlx3hMpKovdf+YftDQqytChXfEh7D5nyC8rzNTICINmpK5Ni0ngcAMzpmiYDwOMtmUTiCjvx2S2dIeSguP/QHZ3xYIeGhTt1CsCOIiEuVw8pGjVznDJppuojl30i9RvXccXzmXGj2b3H3XM38c/PZseyeOdplXhFekzZMZ2fUGuIBsKCc... (line truncated to 2000 chars)
-    <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur"/>
-    <feDisplacementMap in="blur" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-  <filter id="goo" primitiveUnits="objectBoundingBox">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="blur"/>
-    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -5" result="goo"/>
-    <feBlend in="SourceGraphic" in2="goo"/>
-  </filter>
-</svg>
-
-<header class="top-bar" id="topBar">
-  <a class="top-bar__brand" href="#top" id="topBarBrand" aria-label="EcoNow — back to top">
-    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
-      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
-      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
-      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#topFlameGrad)"/>
-      <defs>
-        <linearGradient id="topFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
-          <stop offset="0" style="stop-color:#fff2c9"/>
-          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
-          <stop offset="1" style="stop-color:var(--wax)"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="nav-brand__word">EcoNow</span>
-  </a>
-  <ul class="top-bar__menu">
-    <li><a href="index.html">Background</a></li>
-    <li><a href="ceiling.html">Ceiling</a></li>
-    <li><a href="handover.html">Handover</a></li>
-  </ul>
-</header>
-
-<nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
-  <a class="nav-brand" href="index.html" id="navBrand" aria-label="EcoNow — go to home">
-    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
-      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
-      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
-      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#navFlameGrad)"/>
-      <defs>
-        <linearGradient id="navFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
-          <stop offset="0" style="stop-color:#fff2c9"/>
-          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
-          <stop offset="1" style="stop-color:var(--wax)"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <span class="nav-brand__word">EcoNow</span>
-  </a>
-  <div class="liquid-nav__indicator" id="navIndicator"></div>
-  <a class="liquid-nav__link" href="index.html" data-page="background">Background</a>
-  <a class="liquid-nav__link" href="ceiling.html" data-page="ceiling">Ceiling</a>
-  <a class="liquid-nav__link" href="handover.html" data-page="handover">Handover</a>
-</nav>
-
-<div id="burnRail" aria-hidden="true">
-  <div class="flame"></div>
-  <div class="stick"><div class="burned" id="burnedFill"></div></div>
-</div>
-
-<!-- ===================== HERO ===================== -->
-<header class="hero dark-zone" id="top">
-  <div class="wrap">
-    <p class="kicker">EcoNow · Operational Manager Handover</p>
-    <h1>You don't know<br>what you <em>don't</em> know.</h1>
-    <p class="lede">Notes passed down from one OM to the next — the real history, the actual constraints, and what I'd do differently. Written from my understanding, not the official version.</p>
-    <span class="stamp"><span class="dot"></span>For the incoming Operational Manager</span>
-  </div>
-</header>
-
-<!-- ===================== 01 HISTORY ===================== -->
-<section id="history" class="dark-zone">
-  <div class="wrap">
-    <p class="eyebrow">01 — Where It Started</p>
-    <h2 class="section-title">The History of EcoNow</h2>
-    <p class="section-sub">If you think you already know this, read it anyway.</p>
-
-    <p>EcoNow began with one problem: children who are forced to leave the homes they've lived in for years, once they hit legal age, because there simply isn't enough space or resources to keep supporting them. EcoNow set out to tackle this by giving them real, hands-on entrepreneurial skills — something to actually stand on once they're out.</p>
-
-    <p>The whole thing started almost by accident — a sudden idea to recycle used cooking oil into candles, born during a summer summit. From there, the product line kept moving:</p>
-
-    <div class="timeline">
-      <div class="tl-item" data-n="1">
-        <h3>Candles <span class="tag">Founding idea</span></h3>
-        <p>Used cooking oil, repurposed into candles. The original concept EcoNow was built on.</p>
-      </div>
-      <div class="tl-item" data-n="2">
-        <h3>EcoSoap <span class="tag">Discontinued</span></h3>
-        <p>An expansion into soap-making. Discontinued afterward — the working environment turned out to be highly acidic and difficult to sustain.</p>
-      </div>
-      <div class="tl-item" data-n="3">
-        <h3>Mini Candles</h3>
-        <p>A scaled-down product line, easier to produce and sell.</p>
-      </div>
-      <div class="tl-item active" data-n="4">
-        <h3>Air Diffuser, Perfume &amp; New Scents <span class="tag">My term</span></h3>
-        <p>Under my term, R&amp;D pushed further — trialing air diffusers, perfume, and new candle scents.</p>
-      </div>
+<body>
+    <div class="login-box">
+        <h1>EcoNow Access</h1>
+        <input type="email" id="email" placeholder="xxxx.enactusunm@gmail.com">
+        <button onclick="checkEmail()">Enter</button>
+        <p id="error"></p>
     </div>
-  </div>
-</section>
-
-<!-- ===================== 02 CURRENT STATE ===================== -->
-<section class="dark dark-zone" id="now">
-  <div class="wrap">
-    <p class="eyebrow">02 — Where It Stands Now</p>
-    <h2 class="section-title">The Current State of EcoNow</h2>
-    <p class="section-sub">This is the part you actually need to sit with.</p>
-
-    <p>EcoNow has lost its original focus. That's not just my opinion — it's Dr Roy's, and I agree with it. We've drifted toward <strong>profiting</strong> instead of <strong>educating and equipping the children</strong> with skills, which was the entire point of starting this in the first place.</p>
-  </div>
-</section>
-
-<footer>EcoNow · Handover Report · Page 1 of 3</footer>
-
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/cursor.js"></script>
-<div id="cursor" class="Cursor"></div>
-
+    <script>
+        function checkEmail() {
+            const email = document.getElementById('email').value;
+            const regex = /^.+\.enactusunm@gmail\.com$/;
+            if (regex.test(email)) {
+                sessionStorage.setItem('authorized', 'true');
+                window.location.href = 'main.html';
+            } else {
+                document.getElementById('error').innerText = 'Invalid email address.';
+            }
+        }
+    </script>
 </body>
 </html>

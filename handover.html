@@ -12,6 +12,11 @@
 <link rel="stylesheet" href="assets/css/nav.css">
 </head>
 <body data-page="handover">
+<script>
+    if (sessionStorage.getItem('authorized') !== 'true') {
+        window.location.href = 'index.html';
+    }
+</script>
 
 <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
   <filter id="liquidGlass" primitiveUnits="objectBoundingBox">
@@ -38,14 +43,14 @@
     <span class="nav-brand__word">EcoNow</span>
   </a>
   <ul class="top-bar__menu">
-    <li><a href="index.html">Background</a></li>
+    <li><a href="main.html">Background</a></li>
     <li><a href="ceiling.html">Ceiling</a></li>
     <li><a href="handover.html">Handover</a></li>
   </ul>
 </header>
 
 <nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
-  <a class="nav-brand" href="index.html" id="navBrand" aria-label="EcoNow — go to home">
+  <a class="nav-brand" href="main.html" id="navBrand" aria-label="EcoNow — go to home">
     <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
       <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
       <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
@@ -61,7 +66,7 @@
     <span class="nav-brand__word">EcoNow</span>
   </a>
   <div class="liquid-nav__indicator" id="navIndicator"></div>
-  <a class="liquid-nav__link" href="index.html" data-page="background">Background</a>
+  <a class="liquid-nav__link" href="main.html" data-page="background">Background</a>
   <a class="liquid-nav__link" href="ceiling.html" data-page="ceiling">Ceiling</a>
   <a class="liquid-nav__link" href="handover.html" data-page="handover">Handover</a>
 </nav>
