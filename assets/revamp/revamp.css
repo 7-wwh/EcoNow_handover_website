@@ -1,4 +1,3 @@
-/* [Paste ALL CSS from the block provided in the user's last message] */
 :root {
   --ink: #241d15;
   --oil: #3c2f20;
@@ -39,6 +38,7 @@ h1, h2, h3, .label {
 .mono { font-family: 'Space Mono', monospace; }
 a { color: var(--sage-dark); }
 
+/* ---------- Cursor Styling ---------- */
 @media (pointer: fine) {
   html, body, a, button, select, textarea, input, [role="button"], .nav-brand {
     cursor: none !important;
@@ -153,6 +153,7 @@ a { color: var(--sage-dark); }
   }
 }
 
+/* ---------- Liquid Nav ---------- */
 .liquid-nav {
   position: fixed;
   z-index: 200;
@@ -586,39 +587,3 @@ a { color: var(--sage-dark); }
   .top-bar__menu a { font-size: 10.5px; letter-spacing: 0.07em; }
   .top-bar__brand .nav-brand__word { font-size: 14px; }
 }
-
-#burnRail {
-  position: fixed;
-  right: 22px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 14px;
-  height: 220px;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#burnRail .flame {
-  width: 8px; height: 8px; border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
-  background: radial-gradient(circle at 50% 30%, #fff2c9, var(--wax-light) 60%, var(--wax) 100%);
-  box-shadow: 0 0 8px 2px rgba(224,164,80,0.55);
-  margin-bottom: 2px;
-  flex-shrink: 0;
-}
-#burnRail .stick {
-  width: 6px;
-  flex: 1;
-  background: linear-gradient(var(--wax-pale), var(--cream));
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  position: relative;
-  overflow: hidden;
-}
-#burnRail .stick .burned {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: var(--wick);
-  height: 0%;
-  transition: height 0.15s linear;
-}
-@media (max-width: 900px) { #burnRail { display: none; } }
