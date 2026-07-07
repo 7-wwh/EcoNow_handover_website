@@ -1,1386 +1,1440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoNow 25/26 — Background</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Literata:ital,opsz,wght@0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --ink: #241d15;
-      --oil: #3c2f20;
-      --wick: #150f0a;
-      --wax: #c07a2e;
-      --wax-light: #e3a758;
-      --wax-pale: #f2c98a;
-      --sage: #6d7a56;
-      --sage-dark: #4d5940;
-      --paper: #ece2cd;
-      --paper-deep: #ddcfae;
-      --cream: #f6efdf;
-      --receipt: #fbf6ea;
-      --line: rgba(36, 29, 21, 0.16);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoNow — Ultra-Transparent Viscous Liquid Navigation Bar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght=500;700;900&family=Literata:ital,opsz,wght=0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --ink: #241d15;
+    --oil: #3c2f20;
+    --wick: #150f0a;
+    --wax: #c07a2e;
+    --wax-light: #e3a758;
+    --wax-pale: #f2c98a;
+    --sage: #6d7a56;
+    --sage-dark: #4d5940;
+    --paper: #ece2cd;
+    --paper-deep: #ddcfae;
+    --cream: #f6efdf;
+    --receipt: #fbf6ea;
+    --line: rgba(36,29,21,0.16);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Literata', serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--wax-pale); color: var(--ink); }
+
+  h1, h2, h3, .label {
+    font-family: 'Big Shoulders Display', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .mono { font-family: 'Space Mono', monospace; }
+  a { color: var(--sage-dark); }
+
+  /* ---------- STREAMING_CHUNK:Designing premium water droplet custom cursor styling ---------- */
+  /* Disable system cursors only on devices with precision pointing (desktop mice) */
+  @media (pointer: fine) {
+    html, body, a, button, select, textarea, input, [role="button"], .nav-brand {
+      cursor: none !important;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--cream);
-      color: var(--ink);
-      font-family: 'Literata', serif;
-      font-size: 17px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow: hidden;
-      /* Lock viewport scrolling to simulate desktop page states */
-    }
-
-    ::selection {
-      background: var(--wax-pale);
-      color: var(--ink);
-    }
-
-    h1,
-    h2,
-    h3,
-    .label {
-      font-family: 'Big Shoulders Display', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    .mono {
-      font-family: 'Space Mono', monospace;
-    }
-
-    a {
-      color: var(--sage-dark);
-    }
-
-    /* ---------- STREAMING_CHUNK:Designing premium water droplet custom cursor styling ---------- */
-    @media (pointer: fine) {
-
-      html,
-      body,
-      a,
-      button,
-      select,
-      textarea,
-      input,
-      [role="button"],
-      .nav-brand {
-        cursor: none !important;
-      }
-
-      .water-cursor {
-        display: block !important;
-      }
-    }
-
-    @media (pointer: coarse) {
-      .water-cursor {
-        display: none !important;
-      }
-    }
-
-    /* Root Wrapper for coordinate placement & velocity tracking */
     .water-cursor {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 28px;
-      height: 28px;
-      margin-left: -14px;
-      margin-top: -14px;
-      z-index: 99999;
-      pointer-events: none;
-      transform-origin: center center;
-      will-change: transform;
+      display: block !important;
+    }
+  }
+  @media (pointer: coarse) {
+    /* Instantly fallback to touch gestures on tablets/phones to preserve usability */
+    .water-cursor {
+      display: none !important;
+    }
+  }
+
+  /* Root Wrapper for coordinate placement & velocity tracking */
+  .water-cursor {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    margin-left: -14px;
+    margin-top: -14px;
+    z-index: 99999;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  /* Core Glass Lens featuring chromatic diffraction edge shadows */
+  .water-cursor__lens {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.005);
+    backdrop-filter: blur(4px) saturate(160%);
+    -webkit-backdrop-filter: blur(4px) saturate(160%);
+    
+    /* Double-nested specular reflection + boosted red/cyan diffraction ring for high contrast */
+    box-shadow:
+      inset 1.2px 1.2px 1.8px 0px rgba(255, 255, 255, 0.85),  /* Bright Specular Highlight */
+      inset -1.2px -1.2px 2.2px 0px rgba(0, 0, 0, 0.06),       /* Slightly deepened internal shadow */
+      0 0 0 0.8px rgba(255, 0, 80, 0.42),                     /* Saturated red light bend refraction edge */
+      0 0 0 1.6px rgba(0, 220, 255, 0.42),                   /* Saturated cyan light bend refraction edge */
+      0 0 0 0.5px rgba(36, 29, 21, 0.12),                     /* Dark outer boundary for white backgrounds */
+      0 0 0 2px rgba(255, 255, 255, 0.1),                     /* Soft white containment border */
+      0 6px 15px -4px rgba(21, 15, 10, 0.15),                  /* Translucent water-drop shadow */
+      0 0 6px 0.5px rgba(0, 210, 255, 0.12);
+      
+    /* Smooth transitions when changing cursor action states */
+    transition: 
+      transform 300ms cubic-bezier(0.19, 1, 0.22, 1), 
+      background-color 300ms ease,
+      box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: center center;
+  }
+
+  /* Dynamic Bubble Expansion Hover state over clickable elements */
+  .water-cursor.is-hovering .water-cursor__lens {
+    transform: scale(1.4);
+    background-color: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(6px) saturate(190%);
+    -webkit-backdrop-filter: blur(6px) saturate(190%);
+    box-shadow:
+      inset 1.8px 1.8px 2.2px 0px rgba(255, 255, 255, 0.95),
+      inset -1.5px -1.5px 3.5px 0px rgba(0, 0, 0, 0.05),
+      0 0 0 1.2px rgba(255, 0, 80, 0.5),
+      0 0 0 2.2px rgba(0, 220, 255, 0.5),
+      0 0 0 0.6px rgba(36, 29, 21, 0.15),
+      0 0 0 2.5px rgba(255, 255, 255, 0.12),
+      0 8px 18px -4px rgba(21, 15, 10, 0.2),
+      0 0 8px 1px rgba(0, 210, 255, 0.15);
+  }
+
+  /* Squash/Flatten cursor state when clicking down */
+  .water-cursor.is-clicking .water-cursor__lens {
+    transform: scale(0.8);
+    box-shadow:
+      inset 1px 1px 1.2px 0px rgba(255, 255, 255, 0.8),
+      inset -1px -1px 1.8px 0px rgba(0, 0, 0, 0.1),
+      0 0 0 0.6px rgba(255, 0, 80, 0.45),
+      0 0 0 1.4px rgba(0, 220, 255, 0.45),
+      0 0 0 0.5px rgba(36, 29, 21, 0.12),
+      0 4px 6px -2px rgba(21, 15, 10, 0.18);
+  }
+
+  /* Radial Splashing Ripple component */
+  .water-cursor__ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 
+      inset 0 0 0 1px rgba(0, 210, 255, 0.4),
+      0 0 0 1px rgba(255, 0, 100, 0.2);
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .water-cursor.is-clicking .water-cursor__ripple {
+    animation: waterRipple 500ms cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+  }
+
+  @keyframes waterRipple {
+    0% {
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2.8);
       opacity: 0;
-      transition: opacity 400ms ease;
     }
+  }
 
-    /* Core Glass Lens featuring chromatic diffraction edge shadows */
-    .water-cursor__lens {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.005);
-      backdrop-filter: blur(4px) saturate(160%);
-      -webkit-backdrop-filter: blur(4px) saturate(160%);
+  /* ---------- STREAMING_CHUNK:Styling the premium floating liquid-glass navigation bar ---------- */
+  /* ---------- Ultra-Transparent Liquid Glass Nav ---------- */
+  .liquid-nav {
+    position: fixed;
+    z-index: 200;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%) translateY(var(--nav-y, 10px)) scale(var(--nav-scale, 0.92));
+    opacity: var(--nav-opacity, 0);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 999px;
+    
+    /* Maximum structural clarity glass styling */
+    background-color: rgba(242, 201, 138, 0.02); 
+    backdrop-filter: blur(16px) saturate(240%);
+    -webkit-backdrop-filter: blur(16px) saturate(240%);
+    
+    /* Double-layer subtle specular reflections for deep 3D clarity */
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.65),
+      inset -1.5px -2.5px 0px -2px rgba(255, 255, 255, 0.2),
+      inset -0.4px -1px 4px 0px rgba(21, 15, 10, 0.15),
+      inset 0px 3px 4px -2px rgba(21, 15, 10, 0.1),
+      0px 12px 32px -8px rgba(0, 0, 0, 0.35);
+    transition: background-color 280ms ease;
+  }
 
-      box-shadow:
-        inset 1.2px 1.2px 1.8px 0px rgba(255, 255, 255, 0.85),
-        inset -1.2px -1.2px 2.2px 0px rgba(0, 0, 0, 0.06),
-        0 0 0 0.8px rgba(255, 0, 80, 0.42),
-        0 0 0 1.6px rgba(0, 220, 255, 0.42),
-        0 0 0 0.5px rgba(36, 29, 21, 0.12),
-        0 0 0 2px rgba(255, 255, 255, 0.1),
-        0 6px 15px -4px rgba(21, 15, 10, 0.15),
-        0 0 6px 0.5px rgba(0, 210, 255, 0.12);
+  /* Adaptive Contrast Styling for Light Background Zones */
+  .liquid-nav.on-light {
+    background-color: rgba(36, 29, 21, 0.025);
+    box-shadow:
+      inset 0 0 0 1px rgba(36, 29, 21, 0.07),
+      inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.55),
+      inset -0.4px -1px 3px 0px rgba(36, 29, 21, 0.04),
+      0px 12px 30px -10px rgba(36, 29, 21, 0.18);
+  }
 
-      transition:
-        transform 300ms cubic-bezier(0.19, 1, 0.22, 1),
-        background-color 300ms ease,
-        box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1);
-      transform-origin: center center;
-    }
+  /* ---------- STREAMING_CHUNK:Engineering horizontal fluid-stretch active indicators ---------- */
+  /* ---------- Horizontal Viscous sliding Indicator (Desktop) ---------- */
+  .liquid-nav__indicator {
+    position: absolute;
+    top: 6px; 
+    bottom: 6px; 
+    left: var(--left, 0px);
+    right: var(--right, 100%);
+    width: auto;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--wax) 80%, transparent);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 3px 12px -2px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    pointer-events: none;
+    transform: scaleY(1) scaleX(1);
+    transform-origin: center;
+  }
 
-    /* Dynamic Bubble Expansion Hover state over clickable elements */
-    .water-cursor.is-hovering .water-cursor__lens {
-      transform: scale(1.4);
-      background-color: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(6px) saturate(190%);
-      -webkit-backdrop-filter: blur(6px) saturate(190%);
-      box-shadow:
-        inset 1.8px 1.8px 2.2px 0px rgba(255, 255, 255, 0.95),
-        inset -1.5px -1.5px 3.5px 0px rgba(0, 0, 0, 0.05),
-        0 0 0 1.2px rgba(255, 0, 80, 0.5),
-        0 0 0 2.2px rgba(0, 220, 255, 0.5),
-        0 0 0 0.6px rgba(36, 29, 21, 0.15),
-        0 0 0 2.5px rgba(255, 255, 255, 0.12),
-        0 8px 18px -4px rgba(21, 15, 10, 0.2),
-        0 0 8px 1px rgba(0, 210, 255, 0.15);
-    }
+  /* Stretching Rightward viscosity animation */
+  .liquid-nav[data-direction="right"] .liquid-nav__indicator {
+    transition:
+      right 420ms cubic-bezier(0.4, 0.02, 0.1, 1),            
+      left 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,    
+      transform 380ms ease;
+    transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);   
+  }
 
-    /* Squash/Flatten cursor state when clicking down */
-    .water-cursor.is-clicking .water-cursor__lens {
-      transform: scale(0.8);
-      box-shadow:
-        inset 1px 1px 1.2px 0px rgba(255, 255, 255, 0.8),
-        inset -1px -1px 1.8px 0px rgba(0, 0, 0, 0.1),
-        0 0 0 0.6px rgba(255, 0, 80, 0.45),
-        0 0 0 1.4px rgba(0, 220, 255, 0.45),
-        0 0 0 0.5px rgba(36, 29, 21, 0.12),
-        0 4px 6px -2px rgba(21, 15, 10, 0.18);
-    }
+  /* Stretching Leftward viscosity animation */
+  .liquid-nav[data-direction="left"] .liquid-nav__indicator {
+    transition:
+      left 420ms cubic-bezier(0.4, 0.02, 0.1, 1),             
+      right 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,   
+      transform 380ms ease;
+    transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);
+  }
 
-    /* Radial Splashing Ripple component */
-    .water-cursor__ripple {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow:
-        inset 0 0 0 1px rgba(0, 210, 255, 0.4),
-        0 0 0 1px rgba(255, 0, 100, 0.2);
-      transform: translate(-50%, -50%) scale(1);
+  /* Resting elastic snapback state */
+  .liquid-nav:not(.is-animating) .liquid-nav__indicator {
+    transform: scaleY(1) scaleX(1);
+    transition: 
+      left 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
+      right 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
+      transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
+  }
+
+  /* ---------- STREAMING_CHUNK:Structuring mobile liquid dropdown indicators and layouts ---------- */
+  /* ---------- Mobile Liquid Dropdown Container ---------- */
+  .nav-dropdown {
+    position: fixed;
+    z-index: 199;
+    left: 50%;
+    top: 78px; /* Elegant spatial clearance below top:18px pill navbar */
+    transform-origin: top center;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 220px;
+    padding: 8px;
+    border-radius: 24px;
+    
+    /* Droplet high transparent glass look matching root pill */
+    background-color: rgba(242, 201, 138, 0.02);
+    backdrop-filter: blur(18px) saturate(240%);
+    -webkit-backdrop-filter: blur(18px) saturate(240%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+      inset 1.6px 2.6px 0px -2px rgba(255, 255, 255, 0.4),
+      0px 14px 34px -8px rgba(0,0,0,0.45);
+    
+    /* Base transforms reset */
+    transform: translateX(-50%) translateY(-35px) scaleX(0.5) scaleY(0.1);
+    transition: background-color 280ms ease;
+  }
+
+  /* Extreme Dynamic Droplet opening animation */
+  .nav-dropdown.open {
+    opacity: 1;
+    pointer-events: auto;
+    animation: liquidDripOpen 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Dynamic Snapback closing animation */
+  .nav-dropdown.closing {
+    pointer-events: none;
+    animation: liquidDripClose 480ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  }
+
+  /* Viscous opening keyframe simulates gravity drip and elastic rebound */
+  @keyframes liquidDripOpen {
+    0% {
+      transform: translateX(-50%) translateY(-35px) scaleX(0.4) scaleY(0.1);
+      filter: blur(3px);
       opacity: 0;
-      pointer-events: none;
     }
-
-    .water-cursor.is-clicking .water-cursor__ripple {
-      animation: waterRipple 500ms cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+    45% {
+      transform: translateX(-50%) translateY(22px) scaleX(0.8) scaleY(1.35); /* Stretched heavy drop */
+      filter: blur(1px);
+      opacity: 0.85;
     }
-
-    @keyframes waterRipple {
-      0% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0.8;
-      }
-
-      100% {
-        transform: translate(-50%, -50%) scale(2.8);
-        opacity: 0;
-      }
-    }
-
-    /* ---------- Floating Pill Liquid Nav (Permanently Visible) ---------- */
-    .liquid-nav {
-      position: fixed;
-      z-index: 200;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%) translateY(0) scale(1);
+    70% {
+      transform: translateX(-50%) translateY(-6px) scaleX(1.12) scaleY(0.84); /* Kinetic rebound squashing */
       opacity: 1;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      padding: 6px;
-      border-radius: 999px;
-
-      background-color: rgba(242, 201, 138, 0.02);
-      backdrop-filter: blur(16px) saturate(240%);
-      -webkit-backdrop-filter: blur(16px) saturate(240%);
-
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.65),
-        inset -1.5px -2.5px 0px -2px rgba(255, 255, 255, 0.2),
-        inset -0.4px -1px 4px 0px rgba(21, 15, 10, 0.15),
-        inset 0px 3px 4px -2px rgba(21, 15, 10, 0.1),
-        0px 12px 32px -8px rgba(0, 0, 0, 0.35);
-      transition: background-color 280ms ease, transform 300ms ease, opacity 300ms ease;
     }
-
-    .liquid-nav.on-light {
-      background-color: rgba(36, 29, 21, 0.025);
-      box-shadow:
-        inset 0 0 0 1px rgba(36, 29, 21, 0.07),
-        inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.55),
-        inset -0.4px -1px 3px 0px rgba(36, 29, 21, 0.04),
-        0px 12px 30px -10px rgba(36, 29, 21, 0.18);
+    88% {
+      transform: translateX(-50%) translateY(3px) scaleX(0.96) scaleY(1.04); /* Settling wobble */
     }
-
-    /* ---------- Horizontal Viscous sliding Indicator (Desktop) ---------- */
-    .liquid-nav__indicator {
-      position: absolute;
-      top: 6px;
-      bottom: 6px;
-      left: var(--left, 0px);
-      right: var(--right, 100%);
-      width: auto;
-      border-radius: 999px;
-      background-color: color-mix(in srgb, var(--wax) 80%, transparent);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
-        0 3px 12px -2px rgba(0, 0, 0, 0.4);
-      z-index: 1;
-      pointer-events: none;
-      transform: scaleY(1) scaleX(1);
-      transform-origin: center;
-    }
-
-    /* Stretching Rightward viscosity animation */
-    .liquid-nav[data-direction="right"] .liquid-nav__indicator {
-      transition:
-        right 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-        left 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
-        transform 380ms ease;
-      transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);
-    }
-
-    /* Stretching Leftward viscosity animation */
-    .liquid-nav[data-direction="left"] .liquid-nav__indicator {
-      transition:
-        left 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-        right 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
-        transform 380ms ease;
-      transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);
-    }
-
-    /* Resting elastic snapback state */
-    .liquid-nav:not(.is-animating) .liquid-nav__indicator {
-      transform: scaleY(1) scaleX(1);
-      transition:
-        left 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
-        right 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
-        transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
-    }
-
-    /* ---------- Mobile Liquid Dropdown Container ---------- */
-    .nav-dropdown {
-      position: fixed;
-      z-index: 199;
-      left: 50%;
-      top: 78px;
-      transform-origin: top center;
-      opacity: 0;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 220px;
-      padding: 8px;
-      border-radius: 24px;
-
-      background-color: rgba(242, 201, 138, 0.02);
-      backdrop-filter: blur(18px) saturate(240%);
-      -webkit-backdrop-filter: blur(18px) saturate(240%);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-        inset 1.6px 2.6px 0px -2px rgba(255, 255, 255, 0.4),
-        0px 14px 34px -8px rgba(0, 0, 0, 0.45);
-
-      transform: translateX(-50%) translateY(-35px) scaleX(0.5) scaleY(0.1);
-      transition: background-color 280ms ease;
-    }
-
-    .nav-dropdown.open {
+    100% {
+      transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
+      filter: blur(0);
       opacity: 1;
-      pointer-events: auto;
-      animation: liquidDripOpen 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
+  }
 
-    .nav-dropdown.closing {
-      pointer-events: none;
-      animation: liquidDripClose 480ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
-    }
-
-    @keyframes liquidDripOpen {
-      0% {
-        transform: translateX(-50%) translateY(-35px) scaleX(0.4) scaleY(0.1);
-        filter: blur(3px);
-        opacity: 0;
-      }
-
-      45% {
-        transform: translateX(-50%) translateY(22px) scaleX(0.8) scaleY(1.35);
-        filter: blur(1px);
-        opacity: 0.85;
-      }
-
-      70% {
-        transform: translateX(-50%) translateY(-6px) scaleX(1.12) scaleY(0.84);
-        opacity: 1;
-      }
-
-      88% {
-        transform: translateX(-50%) translateY(3px) scaleX(0.96) scaleY(1.04);
-      }
-
-      100% {
-        transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
-        filter: blur(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes liquidDripClose {
-      0% {
-        transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
-        filter: blur(0);
-        opacity: 1;
-      }
-
-      30% {
-        transform: translateX(-50%) translateY(8px) scaleX(0.88) scaleY(1.16);
-        opacity: 0.9;
-      }
-
-      100% {
-        transform: translateX(-50%) translateY(-65px) scaleX(0.3) scaleY(0.05);
-        filter: blur(5px);
-        opacity: 0;
-      }
-    }
-
-    .nav-dropdown.on-light {
-      background-color: rgba(36, 29, 21, 0.025);
-      box-shadow:
-        inset 0 0 0 1px rgba(36, 29, 21, 0.07),
-        inset 1.6px 2.6px 0px -2px rgba(255, 255, 255, 0.4),
-        0px 14px 34px -8px rgba(36, 29, 21, 0.18);
-    }
-
-    /* ---------- Vertical Viscous Indicator (Mobile Dropdown) ---------- */
-    .nav-dropdown__indicator {
-      position: absolute;
-      left: 8px;
-      right: 8px;
-      top: var(--top, 0px);
-      bottom: var(--bottom, 100%);
-      width: auto;
-      border-radius: 16px;
-      background-color: color-mix(in srgb, var(--wax) 80%, transparent);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
-        0 3px 12px -2px rgba(0, 0, 0, 0.35);
-      z-index: 1;
-      pointer-events: none;
-      transform: scaleX(1) scaleY(1);
-      transform-origin: center;
-    }
-
-    .nav-dropdown[data-direction="down"] .nav-dropdown__indicator {
-      transition:
-        bottom 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-        top 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
-        transform 380ms ease;
-      transform: scaleX(0.85) scaleY(1.06) translateX(0px);
-    }
-
-    .nav-dropdown[data-direction="up"] .nav-dropdown__indicator {
-      transition:
-        top 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-        bottom 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
-        transform 380ms ease;
-      transform: scaleX(0.85) scaleY(1.06) translateX(0px);
-    }
-
-    .nav-dropdown:not(.is-animating) .nav-dropdown__indicator {
-      transform: scaleX(1) scaleY(1);
-      transition:
-        top 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
-        bottom 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
-        transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
-    }
-
-    /* ---------- Nav brand & link typography ---------- */
-    .liquid-nav__link {
-      position: relative;
-      z-index: 2;
-      padding: 10px 22px;
-      border-radius: 999px;
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      color: var(--paper-deep);
-      text-decoration: none;
-      transition: color 240ms ease;
-    }
-
-    .liquid-nav__link:hover {
-      color: #fff;
-    }
-
-    .liquid-nav__link.active {
-      color: #fff;
-    }
-
-    .liquid-nav.on-light .liquid-nav__link {
-      color: var(--oil);
-    }
-
-    .liquid-nav.on-light .liquid-nav__link:hover {
-      color: var(--wick);
-    }
-
-    .liquid-nav.on-light .nav-brand {
-      color: var(--oil);
-    }
-
-    .liquid-nav.on-light .nav-brand:hover {
-      color: var(--wick);
-    }
-
-    .liquid-nav.on-light .nav-brand::after {
-      background: rgba(36, 29, 21, 0.2);
-    }
-
-    .liquid-nav__link,
-    .nav-brand {
-      transition: color 280ms ease;
-    }
-
-    .nav-brand {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 16px 8px 10px;
-      margin-right: 4px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: var(--paper-deep);
-      transition: color 200ms ease, transform 160ms cubic-bezier(0.65, 0, 0.35, 1);
-    }
-
-    .nav-brand::after {
-      content: "";
-      position: absolute;
-      right: -2px;
-      top: 22%;
-      bottom: 22%;
-      width: 1px;
-      background: rgba(236, 226, 205, 0.2);
-    }
-
-    .nav-brand:hover {
-      color: #fff;
-    }
-
-    .nav-brand:active {
-      transform: scale(0.9);
-    }
-
-    .nav-brand__mark {
-      width: 17px;
-      height: 24px;
-      flex-shrink: 0;
-      display: block;
-      filter: drop-shadow(0 0 3px rgba(224, 164, 80, 0.45));
-      transition: filter 200ms ease;
-    }
-
-    .nav-brand:hover .nav-brand__mark {
-      filter: drop-shadow(0 0 6px rgba(224, 164, 80, 0.8));
-    }
-
-    .nav-brand__flame {
-      transform-origin: 50% 85%;
-      animation: flameFlicker 2.6s ease-in-out infinite;
-    }
-
-    .nav-brand:hover .nav-brand__flame {
-      animation-duration: 0.8s;
-    }
-
-    .nav-brand__word {
-      font-family: 'Big Shoulders Display', sans-serif;
-      font-weight: 900;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    @keyframes flameFlicker {
-
-      0%,
-      100% {
-        transform: scale(1) rotate(0deg);
-      }
-
-      25% {
-        transform: scale(1.06, 0.94) rotate(-3deg);
-      }
-
-      50% {
-        transform: scale(0.94, 1.06) rotate(2deg);
-      }
-
-      75% {
-        transform: scale(1.04, 0.96) rotate(-1deg);
-      }
-    }
-
-    @keyframes brandPulse {
-      0% {
-        transform: scale(1);
-      }
-
-      35% {
-        transform: scale(0.86);
-      }
-
-      65% {
-        transform: scale(1.1);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    .nav-brand--pulse {
-      animation: brandPulse 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .nav-brand--pulse .nav-brand__flame {
-      animation: flameFlicker 0.4s ease-in-out 2;
-    }
-
-    /* ---------- Burger Toggle Button ---------- */
-    .nav-burger {
-      display: none;
-      position: relative;
-      z-index: 2;
-      width: 38px;
-      height: 38px;
-      border: none;
-      background: transparent;
-      border-radius: 50%;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .nav-burger__line {
-      display: block;
-      width: 16px;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--paper-deep);
-      transition:
-        transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 220ms ease,
-        background-color 280ms ease;
-    }
-
-    .liquid-nav.on-light .nav-burger__line {
-      background: var(--oil);
-    }
-
-    .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(1) {
-      transform: translateY(7px) rotate(45deg) scaleX(1.1);
-    }
-
-    .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(2) {
-      opacity: 0;
-      transform: scale(0);
-    }
-
-    .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg) scaleX(1.1);
-    }
-
-    /* Dropdown panel links styles with individual flowing cascade entrance */
-    .nav-dropdown__link {
-      position: relative;
-      z-index: 2;
-      padding: 13px 20px;
-      border-radius: 16px;
-      font-family: 'Space Mono', monospace;
-      font-size: 12.5px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      color: var(--paper-deep);
-      text-decoration: none;
-
-      opacity: 0;
-      transform: translateY(-16px) scaleY(0.75);
-      transition:
-        opacity 380ms cubic-bezier(0.25, 1, 0.5, 1),
-        transform 480ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        color 240ms ease,
-        background-color 240ms ease;
-    }
-
-    .nav-dropdown.open .nav-dropdown__link {
+  /* Viscous closing keyframe simulates pulling tension before snapping upwards */
+  @keyframes liquidDripClose {
+    0% {
+      transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
+      filter: blur(0);
       opacity: 1;
-      transform: translateY(0) scaleY(1);
     }
-
-    .nav-dropdown.open .nav-dropdown__link:nth-child(2) {
-      transition-delay: 140ms;
+    30% {
+      transform: translateX(-50%) translateY(8px) scaleX(0.88) scaleY(1.16); /* Pull down stretch under resistance */
+      opacity: 0.9;
     }
-
-    .nav-dropdown.open .nav-dropdown__link:nth-child(3) {
-      transition-delay: 210ms;
+    100% {
+      transform: translateX(-50%) translateY(-65px) scaleX(0.3) scaleY(0.05); /* Instant elastic collapse */
+      filter: blur(5px);
+      opacity: 0;
     }
+  }
 
-    .nav-dropdown.open .nav-dropdown__link:nth-child(4) {
-      transition-delay: 280ms;
-    }
+  .nav-dropdown.on-light {
+    background-color: rgba(36, 29, 21, 0.025);
+    box-shadow:
+      inset 0 0 0 1px rgba(36, 29, 21, 0.07),
+      inset 1.6px 2.6px 0px -2px rgba(255, 255, 255, 0.4),
+      0px 14px 34px -8px rgba(36,29,21,0.18);
+  }
 
-    .nav-dropdown__link:hover {
-      color: #fff;
-    }
+  /* ---------- Vertical Viscous Indicator (Mobile Dropdown) ---------- */
+  .nav-dropdown__indicator {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: var(--top, 0px);
+    bottom: var(--bottom, 100%);
+    width: auto;
+    border-radius: 16px;
+    background-color: color-mix(in srgb, var(--wax) 80%, transparent);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 3px 12px -2px rgba(0, 0, 0, 0.35);
+    z-index: 1;
+    pointer-events: none;
+    transform: scaleX(1) scaleY(1);
+    transform-origin: center;
+  }
 
-    .nav-dropdown__link.active {
-      color: #fff !important;
-    }
+  /* Stretching Downward viscosity animation inside dropdown */
+  .nav-dropdown[data-direction="down"] .nav-dropdown__indicator {
+    transition:
+      bottom 420ms cubic-bezier(0.4, 0.02, 0.1, 1),            /* Bottom edge speeds ahead */
+      top 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,       /* Top edge lags behind */
+      transform 380ms ease;
+    transform: scaleX(0.85) scaleY(1.06) translateX(0px);      /* Squeezes horizontally while stretching vertically */
+  }
 
-    .nav-dropdown.on-light .nav-dropdown__link {
-      color: var(--oil);
-    }
+  /* Stretching Upward viscosity animation inside dropdown */
+  .nav-dropdown[data-direction="up"] .nav-dropdown__indicator {
+    transition:
+      top 420ms cubic-bezier(0.4, 0.02, 0.1, 1),               /* Top edge speeds ahead */
+      bottom 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,    /* Bottom edge lags behind */
+      transform 380ms ease;
+    transform: scaleX(0.85) scaleY(1.06) translateX(0px);      /* Squeezes horizontally while stretching vertically */
+  }
 
-    .nav-dropdown.on-light .nav-dropdown__link:hover {
-      color: var(--wick);
-    }
+  /* Dropdown resting spring state */
+  .nav-dropdown:not(.is-animating) .nav-dropdown__indicator {
+    transform: scaleX(1) scaleY(1);
+    transition: 
+      top 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
+      bottom 460ms cubic-bezier(0.2, 0.8, 0.2, 1.15),
+      transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
+  }
 
-    .nav-dropdown.on-light .nav-dropdown__link.active {
-      color: #fff !important;
-    }
+  /* ---------- Nav brand & link typography ---------- */
+  .liquid-nav__link {
+    position: relative;
+    z-index: 2;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--paper-deep);
+    text-decoration: none;
+    transition: color 240ms ease;
+  }
+  .liquid-nav__link:hover { color: #fff; }
+  .liquid-nav__link.active { color: #fff; }
 
-    @media (max-width:640px) {
-      .liquid-nav {
-        top: 12px;
-        padding: 5px;
-      }
+  .liquid-nav.on-light .liquid-nav__link { color: var(--oil); }
+  .liquid-nav.on-light .liquid-nav__link:hover { color: var(--wick); }
+  .liquid-nav.on-light .nav-brand { color: var(--oil); }
+  .liquid-nav.on-light .nav-brand:hover { color: var(--wick); }
+  .liquid-nav.on-light .nav-brand::after { background: rgba(36,29,21,0.2); }
+  .liquid-nav__link, .nav-brand { transition: color 280ms ease; }
 
-      .liquid-nav__link {
-        padding: 9px 15px;
-        font-size: 10.5px;
-      }
+  .nav-brand {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px 8px 10px;
+    margin-right: 4px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--paper-deep);
+    transition: color 200ms ease, transform 160ms cubic-bezier(0.65,0,0.35,1);
+  }
+  .nav-brand::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 22%;
+    bottom: 22%;
+    width: 1px;
+    background: rgba(236,226,205,0.2);
+  }
+  .nav-brand:hover { color: #fff; }
+  .nav-brand:active { transform: scale(0.9); }
 
-      .nav-brand {
-        padding: 7px 12px 7px 8px;
-      }
+  .nav-brand__mark {
+    width: 17px;
+    height: 24px;
+    flex-shrink: 0;
+    display: block;
+    filter: drop-shadow(0 0 3px rgba(224,164,80,0.45));
+    transition: filter 200ms ease;
+  }
+  .nav-brand:hover .nav-brand__mark { filter: drop-shadow(0 0 6px rgba(224,164,80,0.8)); }
 
-      .nav-brand__word {
-        font-size: 12px;
-      }
+  .nav-brand__flame {
+    transform-origin: 50% 85%;
+    animation: flameFlicker 2.6s ease-in-out infinite;
+  }
+  .nav-brand:hover .nav-brand__flame { animation-duration: 0.8s; }
 
-      .nav-dropdown {
-        top: 66px;
-      }
-    }
+  .nav-brand__word {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 
-    @media (max-width:767px) {
-      .liquid-nav__link {
-        display: none;
-      }
+  @keyframes flameFlicker {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.06,0.94) rotate(-3deg); }
+    50% { transform: scale(0.94,1.06) rotate(2deg); }
+    75% { transform: scale(1.04,0.96) rotate(-1deg); }
+  }
 
-      .liquid-nav__indicator {
-        display: none;
-      }
+  @keyframes brandPulse {
+    0% { transform: scale(1); }
+    35% { transform: scale(0.86); }
+    65% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  .nav-brand--pulse { animation: brandPulse 420ms cubic-bezier(0.34,1.56,0.64,1); }
+  .nav-brand--pulse .nav-brand__flame { animation: flameFlicker 0.4s ease-in-out 2; }
 
-      .nav-burger {
-        display: flex;
-      }
-    }
+  /* ---------- STREAMING_CHUNK:Configuring springy mobile burger line transformations ---------- */
+  /* ---------- Burger Toggle Button ---------- */
+  .nav-burger {
+    display: none;
+    position: relative;
+    z-index: 2;
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-burger__line {
+    display: block;
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--paper-deep);
+    /* Springy transform ease curve */
+    transition: 
+      transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1), 
+      opacity 220ms ease, 
+      background-color 280ms ease;
+  }
+  .liquid-nav.on-light .nav-burger__line { background: var(--oil); }
+  .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(1) { transform: translateY(7px) rotate(45deg) scaleX(1.1); }
+  .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(2) { opacity: 0; transform: scale(0); }
+  .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(3) { transform: translateY(-7px) rotate(-45deg) scaleX(1.1); }
 
-    /* ---------- Glass Capillary Progress Rail ---------- */
-    #burnRail {
-      position: fixed;
-      right: 22px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 16px;
-      height: 250px;
-      z-index: 150;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-    }
+  /* Dropdown panel links styles with individual flowing cascade entrance */
+  .nav-dropdown__link {
+    position: relative;
+    z-index: 2;
+    padding: 13px 20px;
+    border-radius: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--paper-deep);
+    text-decoration: none;
+    
+    /* Flowing cascading state closed */
+    opacity: 0;
+    transform: translateY(-16px) scaleY(0.75);
+    transition: 
+      opacity 380ms cubic-bezier(0.25, 1, 0.5, 1), 
+      transform 480ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      color 240ms ease,
+      background-color 240ms ease;
+  }
+  
+  /* Trigger cascade on parent expansion */
+  .nav-dropdown.open .nav-dropdown__link {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+  
+  /* Delicate fluid offset cascade delays */
+  .nav-dropdown.open .nav-dropdown__link:nth-child(2) { transition-delay: 140ms; }
+  .nav-dropdown.open .nav-dropdown__link:nth-child(3) { transition-delay: 210ms; }
+  .nav-dropdown.open .nav-dropdown__link:nth-child(4) { transition-delay: 280ms; }
 
-    #burnRail .flame {
-      width: 10px;
-      height: 10px;
-      border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
-      background: radial-gradient(circle at 50% 30%, #fff2c9, var(--wax-light) 60%, var(--wax) 100%);
-      box-shadow:
-        0 0 12px 2px rgba(224, 164, 80, 0.65),
-        inset 1px 1px 2px rgba(255, 255, 255, 0.8);
-      margin-bottom: 6px;
-      flex-shrink: 0;
-    }
+  .nav-dropdown__link:hover { color: #fff; }
+  .nav-dropdown__link.active { color: #fff !important; }
+  .nav-dropdown.on-light .nav-dropdown__link { color: var(--oil); }
+  .nav-dropdown.on-light .nav-dropdown__link:hover { color: var(--wick); }
+  .nav-dropdown.on-light .nav-dropdown__link.active { color: #fff !important; }
 
-    #burnRail .stick {
-      width: 8px;
-      flex: 1;
-      border-radius: 999px;
-      position: relative;
-      overflow: hidden;
+  @media (max-width:640px) {
+    .liquid-nav { top: 12px; padding: 5px; }
+    .liquid-nav__link { padding: 9px 15px; font-size: 10.5px; }
+    .nav-brand { padding: 7px 12px 7px 8px; }
+    .nav-brand__word { font-size: 12px; }
+    .nav-dropdown { top: 66px; }
+  }
 
-      background-color: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(8px) saturate(200%);
-      -webkit-backdrop-filter: blur(8px) saturate(200%);
+  @media (max-width:767px) {
+    .liquid-nav__link { display: none; }
+    .liquid-nav__indicator { display: none; }
+    .nav-burger { display: flex; }
+  }
 
-      box-shadow:
-        inset 0 0 0 1.2px rgba(255, 255, 255, 0.15),
-        inset 1px 0px 2.5px rgba(255, 255, 255, 0.45),
-        inset -1px 0px 2px rgba(0, 0, 0, 0.08),
-        0 0 0 0.5px rgba(36, 29, 21, 0.06),
-        0 6px 16px -4px rgba(21, 15, 10, 0.15);
+  /* ---------- Spread header styles ---------- */
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 190;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px;
+    opacity: var(--bar-opacity, 1);
+    transition: opacity 150ms ease;
+  }
 
-      transition: background-color 280ms ease, box-shadow 280ms ease;
-    }
+  .top-bar__brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    color: var(--paper-deep);
+    transition: color 220ms ease;
+    transform: translateX(var(--brand-x, 0px));
+  }
+  .top-bar__brand:hover { color: #fff; }
+  .top-bar__brand .nav-brand__mark { width: 20px; height: 28px; }
+  .top-bar__brand .nav-brand__word { font-size: 16px; }
 
-    #burnRail.on-light .stick {
-      background-color: rgba(36, 29, 21, 0.02);
-      box-shadow:
-        inset 0 0 0 1.2px rgba(36, 29, 21, 0.08),
-        inset 1px 0px 2px rgba(255, 255, 255, 0.55),
-        inset -1px 0px 1.5px rgba(36, 29, 21, 0.04),
-        0 6px 14px -4px rgba(36, 29, 21, 0.12);
-    }
+  .top-bar__menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    transform: translateX(var(--menu-x, 0px));
+  }
+  .top-bar__menu a {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-deep);
+    text-decoration: none;
+    transition: color 220ms ease;
+  }
+  .top-bar__menu a:hover { color: #fff; }
 
-    #burnRail .stick .burned {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 0%;
-      border-radius: 0 0 999px 999px;
-      transition: height 480ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  @media (max-width:640px) {
+    .top-bar { padding: 22px 24px; }
+    .top-bar__menu { gap: 18px; }
+    .top-bar__menu a { font-size: 10.5px; letter-spacing: 0.07em; }
+    .top-bar__brand .nav-brand__word { font-size: 14px; }
+  }
 
-      background: linear-gradient(to top, var(--wax), var(--wax-light));
-      box-shadow:
-        inset 1px 0 2px rgba(255, 255, 255, 0.6),
-        0 0 6px rgba(224, 164, 80, 0.5);
-    }
+  /* ---------- STREAMING_CHUNK:Styling the new liquid glass progress rail ---------- */
+  /* ---------- Glass Capillary Scroll Progress Indicator ---------- */
+  #burnRail {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 250px;
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+  
+  #burnRail .flame {
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+    background: radial-gradient(circle at 50% 30%, #fff2c9, var(--wax-light) 60%, var(--wax) 100%);
+    box-shadow: 
+      0 0 12px 2px rgba(224, 164, 80, 0.65),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+    margin-bottom: 6px;
+    flex-shrink: 0;
+  }
+  
+  #burnRail .stick {
+    width: 8px;
+    flex: 1;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    
+    /* Maximum structural clarity glass styling to match navigation */
+    background-color: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px) saturate(200%);
+    -webkit-backdrop-filter: blur(8px) saturate(200%);
+    
+    /* Double-layer subtle specular reflections */
+    box-shadow:
+      inset 0 0 0 1.2px rgba(255, 255, 255, 0.15),
+      inset 1px 0px 2.5px rgba(255, 255, 255, 0.45),
+      inset -1px 0px 2px rgba(0, 0, 0, 0.08),
+      0 0 0 0.5px rgba(36, 29, 21, 0.06), /* Dark boundary ring for white environments */
+      0 6px 16px -4px rgba(21, 15, 10, 0.15);
+      
+    transition: background-color 280ms ease, box-shadow 280ms ease;
+  }
+  
+  /* Adaptive Contrast Styling for Light Background Zones */
+  #burnRail.on-light .stick {
+    background-color: rgba(36, 29, 21, 0.02);
+    box-shadow:
+      inset 0 0 0 1.2px rgba(36, 29, 21, 0.08),
+      inset 1px 0px 2px rgba(255, 255, 255, 0.55),
+      inset -1px 0px 1.5px rgba(36, 29, 21, 0.04),
+      0 6px 14px -4px rgba(36, 29, 21, 0.12);
+  }
+  
+  #burnRail .stick .burned {
+    position: absolute; 
+    bottom: 0; left: 0; right: 0;
+    height: 0%;
+    border-radius: 0 0 999px 999px;
+    transition: height 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    /* Viscous glowing fluid inside the capillary tube */
+    background: linear-gradient(to top, var(--wax), var(--wax-light));
+    box-shadow: 
+      inset 1px 0 2px rgba(255, 255, 255, 0.6),
+      0 0 6px rgba(224, 164, 80, 0.5);
+  }
 
-    #burnRail .stick .burned::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 8px;
-      margin-top: -4px;
-      border-radius: 50%;
-      background: #fff2c9;
-      box-shadow:
-        0 0 6px 1px var(--wax-light),
-        inset 1px 1px 1.2px #fff;
-    }
+  /* Viscous meniscus bubble cap at top of fluid column */
+  #burnRail .stick .burned::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 8px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: #fff2c9;
+    box-shadow: 
+      0 0 6px 1px var(--wax-light),
+      inset 1px 1px 1.2px #fff;
+  }
+  
+  @media (max-width: 900px) { #burnRail { display: none; } }
 
-    @media (max-width: 900px) {
-      #burnRail {
-        display: none;
-      }
-    }
-  </style>
+  /* ---------- Custom demonstration layout zones ---------- */
+  .section-showcase {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .section-showcase h1 {
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    line-height: 0.92;
+    margin: 0 0 20px 0;
+    font-weight: 900;
+  }
+  .section-showcase h1 em {
+    font-style: normal;
+    color: var(--wax-light);
+  }
+  .section-showcase p {
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    max-width: 650px;
+    margin: 0 0 40px 0;
+    opacity: 0.85;
+    text-wrap: balance;
+  }
+  .section-showcase .badge {
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    border: 1px solid currentColor;
+    padding: 6px 18px;
+    border-radius: 999px;
+    margin-bottom: 30px;
+    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.05);
+  }
 
-  <script src="assets/revamp/revamp.js" defer></script>
+  .zone-dark {
+    background: radial-gradient(ellipse at center, #2c241a, #150f0a);
+    color: var(--paper);
+  }
+  .zone-light {
+    background: radial-gradient(ellipse at center, #faf6ee, var(--cream));
+    color: var(--ink);
+  }
+  .zone-warm-accent {
+    background: radial-gradient(ellipse at center, #423424, #241d15);
+    color: var(--paper-deep);
+  }
+
+  .scroll-guide {
+    position: absolute;
+    bottom: 50px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    66% { transform: translateY(-4px); }
+  }
+</style>
 </head>
 <body data-page="background">
-  <script>
-    if (sessionStorage.getItem('authorized') !== 'true') {
-      window.location.href = 'index.html';
-    }
-  </script>
 
-  <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
-    <filter id="liquidGlass" primitiveUnits="objectBoundingBox">
-      <feImage result="map" width="100%" height="100%" x="0" y="0" href="data:image/webp;base64,UklGRq4vAABXRUJQVlA4WAoAAAAQAAAA5wEAhwAAQUxQSOYWAAABHAVpGzCrf9t7EiJCYdIGTDpvURGm9n7K+YS32rZ1W8q0LSSEBCQgAQlIwEGGA3CQOAAHSEDCJSEk4KDvUmL31vrYkSX3ufgXEb4gSbKt2LatxlqIgNBBzbM3ikHVkvUvq7btKpaOBCQgIRIiAQeNg46DwgE4oB1QDuKgS0IcXBykXieHkwdjX/4iAhZtK3ErSBYGEelp+4aM/5/+z14+//jLlz/++s/Xr4//kl9C8Ns8DaajU+lPX/74+viv/eWxOXsO+eHL3/88/ut/2b0zref99evjX8NLmNt1fP7178e/jJcw9k3G//XP49/Iy2qaa7328Xkk9ZnWx0VUj3bcyCY4Pi7C6reeEagEohnRCbQQwFmUp9ggYQj8MChjTSI0Ck7G/bh6P5ykNU9yP+10G8I2UAwXeQ96DQwNjqyPu/c4tK+5CtGOK0oM7AH5f767lHpotXVYYI66B+HjMhHj43C5wok3YDH4/vZFZRkB7rNnEfC39WS2Q3K78y525wFNTPf5f+/fN9YI1YyDvjuzV5rQtsfn1Ez1ka3PkeGxOZ6IODxDJqCLpF7vdb9Z3s/ufLr6jf/55zbW3LodwwVVg7Lmao+p3eGcqDFDGuuKnlBZAPSbnkYtTX+mZl2y57Gq85F3tDv7m7/yzpjXHoVA3YUObsHz80W3IUK1E8yRqggxTMzD4If2230ys7RDxWrLu9o9GdSWNwNRC2yMIg+HkTVT3BOZER49XLBMdljemLFMjw8VwZ8OdBti4lWdt7c7dzaSc5yILtztsTMT1GFGn/tysM23nF3xbOsnh/eQGKkxhWGEalljCvWZ+LDE+9t97uqEfb08rdYwZGhheLzG2SJzKS77OIAVgPDjf9jHt6c+0mjinS/v13iz9RV3vsPdmbNG1E+nD6s83jBrBEnlBiTojuJogGJNtzxtsIoD2CFuXYipzhGWHhWqCBSqd7l7GMrnuHzH6910FO+XYwgcDxoFRJNk2GUcpQ6I/GhLmqisuBS6uSFpfAz3Yb9Yatyed7r781ZYfr3+3FfXs1MykSbVcg4GiOKX19SZ9xFRwhG+UZGiROjsXhePVu12fCZTJ3CJ4Z3uXnyxz28RutHa5yCKG6jgfTBPuA9jHL7YdlAa2trNEr7BLANd3qNYcWZqnkvlDe8+F5Q/9k8jCFk17ObrIf0O/5U/iDnqcqA70mURr8FUN5pmQEzDcxuWvOPd1+KrbO4fd0vXK5OTtYEy5C2TA5L4ok6Y31WHR9ZR9lQr6IjwruSd775W6NVa2zz1fir2k1GWnT573Eu3mfMjIikYZkM4MDCnTWbmLrpK/Hs0KD5C8rZ3n0tnw0j76WuU8P1YBIjsvcESbnOQMY+gGC/sd/gG+hKKtDijJHhrcSj/GHa/FZ8oGLXeLx1IW+cgU8pqD0PzMzU3oG5lQ/ZaDPDMYq+aAPSEmHN+JiVIp0haHTvPt77732z5ed2K7NHs9FtCIk4BdNkKLRLvOKlFcw+UiovM4OB5sGgepyML+a4TEu/I29/dFtjJulojJR4Tg71ybApEdca0TSnaumNJyCWH2pjENASlQS/NIXMWtiPV9CHsvuftev08/lemYIcUnHSu6XEMvaBq41tqf/m0siLj7xeXsnBmhxY5z+nCwX4Iu4euTPaE4EQorgogisHrBtsAMdX+Huje7nlx3hMpKovdf+YftDQqytChXfEh7D5nyC8rzNTICINmpK5Ni0ngcAMzpmiYDwOMtmUTiCjvx2S2dIeSguP/QHZ3xYIeGhTt1CsCOIiEuVw8pGjVznDJppuojl30i9RvXccXzmXGj2b3H3XM38c/PZseyeOdplXhFekzZMZ2fUGuIBsKCc... (line truncated to 2000 chars)
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.04" result="blur"/>
-      <feDisplacementMap in="blur" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="goo" primitiveUnits="objectBoundingBox">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -5" result="goo"/>
-      <feBlend in="SourceGraphic" in2="goo"/>
-    </filter>
-  </svg>
+<!-- Spread Top Bar (Fades out and merges into Liquid Nav on scroll) -->
+<header class="top-bar dark-zone" id="topBar">
+  <a class="top-bar__brand" href="#intro" id="topBarBrand" aria-label="EcoNow — Home">
+    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
+      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
+      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
+      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#topFlameGrad)"/>
+      <defs>
+        <linearGradient id="topFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:#fff2c9"/>
+          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
+          <stop offset="1" style="stop-color:var(--wax)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="nav-brand__word">EcoNow</span>
+  </a>
+  <ul class="top-bar__menu">
+    <li><a href="main.html">Background</a></li>
+    <li><a href="ceiling.html">Ceiling</a></li>
+    <li><a href="handover.html">Handover</a></li>
+  </ul>
+</header>
 
-  <!-- Floating Pill Liquid Nav -->
-  <nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
-    <a class="nav-brand" href="main.html" id="navBrand" aria-label="EcoNow — Home">
-      <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
-        <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)" />
-        <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)" />
-        <path class="nav-brand__flame"
-          d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z"
-          fill="url(#navFlameGrad)" />
-        <defs>
-          <linearGradient id="navFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
-            <stop offset="0" style="stop-color:#fff2c9" />
-            <stop offset="0.55" style="stop-color:var(--wax-light)" />
-            <stop offset="1" style="stop-color:var(--wax)" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <span class="nav-brand__word">EcoNow</span>
-    </a>
-
-    <!-- Desktop Liquid Indicator -->
-    <div class="liquid-nav__indicator" id="navIndicator"></div>
-
-    <a class="liquid-nav__link" href="main.html" data-page="background">Background</a>
-    <a class="liquid-nav__link" href="ceiling.html" data-page="ceiling">Ceiling</a>
-    <a class="liquid-nav__link" href="handover.html" data-page="handover">Handover</a>
-
-    <!-- Mobile Burger Toggle Button -->
-    <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false"
-      aria-controls="navDropdown">
-      <span class="nav-burger__line"></span>
-      <span class="nav-burger__line"></span>
-      <span class="nav-burger__line"></span>
-    </button>
-  </nav>
-
-  <!-- Mobile Dropdown Menu with Vertical Viscosity Physics -->
-  <div class="nav-dropdown" id="navDropdown" role="menu" aria-hidden="true">
-    <!-- Mobile Fluid Active Indicator -->
-    <div class="nav-dropdown__indicator" id="dropdownIndicator"></div>
-
-    <a class="nav-dropdown__link" href="main.html" data-page="background" role="menuitem">Background</a>
-    <a class="nav-dropdown__link" href="ceiling.html" data-page="ceiling" role="menuitem">Ceiling</a>
-    <a class="nav-dropdown__link" href="handover.html" data-page="handover" role="menuitem">Handover</a>
-  </div>
-
-  <!-- Glass Progress Rail -->
-  <div id="burnRail" aria-hidden="true">
-    <div class="flame"></div>
-    <div class="stick">
-      <div class="burned" id="burnedFill"></div>
-    </div>
-  </div>
-
-
+<!-- Floating Pill Liquid Nav (Adapts layout automatically) -->
+<nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
+  <a class="nav-brand" href="#intro" id="navBrand" aria-label="EcoNow — Home">
+    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
+      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
+      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
+      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#navFlameGrad)"/>
+      <defs>
+        <linearGradient id="navFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:#fff2c9"/>
+          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
+          <stop offset="1" style="stop-color:var(--wax)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="nav-brand__word">EcoNow</span>
+  </a>
   
-  <!-- ===================== HERO ===================== -->
-  <header class="hero dark-zone" id="top">
-    <div class="wrap">
-      <p class="kicker">EcoNow · Operational Manager Handover</p>
-      <h1>You don't know<br>what you <em>don't</em> know.</h1>
-      <p class="lede">Notes passed down from one OM to the next — the real history, the actual constraints, and what I'd do differently. Written from my understanding, not the official version.</p>
-      <span class="stamp"><span class="dot"></span>For the incoming Operational Manager</span>
-    </div>
-  </header>
+  <!-- Desktop Liquid Indicator -->
+  <div class="liquid-nav__indicator" id="navIndicator"></div>
+  
+  <a class="liquid-nav__link" href="main.html" data-page="background">Background</a>
+  <a class="liquid-nav__link" href="ceiling.html" data-page="ceiling">Ceiling</a>
+  <a class="liquid-nav__link" href="handover.html" data-page="handover">Handover</a>
+  
+  <!-- Mobile Burger Toggle Button -->
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navDropdown">
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+  </button>
+</nav>
 
-  <!-- ===================== 01 HISTORY ===================== -->
-  <section id="history" class="dark-zone">
-    <div class="wrap">
-      <p class="eyebrow">01 — Where It Started</p>
-      <h2 class="section-title">The History of EcoNow</h2>
-      <p class="section-sub">If you think you already know this, read it anyway.</p>
+<!-- Mobile Dropdown Menu with Vertical Viscosity Physics -->
+<div class="nav-dropdown" id="navDropdown" role="menu" aria-hidden="true">
+  <!-- Mobile Fluid Active Indicator -->
+  <div class="nav-dropdown__indicator" id="dropdownIndicator"></div>
+  
+  <a class="nav-dropdown__link" href="main.html" data-page="background" role="menuitem">Background</a>
+  <a class="nav-dropdown__link" href="ceiling.html" data-page="ceiling" role="menuitem">Ceiling</a>
+  <a class="nav-dropdown__link" href="handover.html" data-page="handover" role="menuitem">Handover</a>
+</div>
 
-      <p>EcoNow began with one problem: children who are forced to leave the homes they've lived in for years, once they hit legal age, because there simply isn't enough space or resources to keep supporting them. EcoNow set out to tackle this by giving them real, hands-on entrepreneurial skills — something to actually stand on once they're out.</p>
+<!-- Glass Progress Rail -->
+<div id="burnRail" aria-hidden="true">
+  <div class="flame"></div>
+  <div class="stick">
+    <div class="burned" id="burnedFill"></div>
+  </div>
+</div>
 
-      <p>The whole thing started almost by accident — a sudden idea to recycle used cooking oil into candles, born during a summer summit. From there, the product line kept moving:</p>
+<!-- ===================== SECTION 1: BACKGROUND (DARK) ===================== -->
+<section class="section-showcase zone-dark dark-zone" id="intro">
+  <div class="badge">Liquifying Transitions</div>
+  <h1>Dripping <em>Glass</em>.</h1>
+  <p>Test the navigation on both desktop and mobile screens. Tap tabs to witness the asymmetric stretching liquid glass "droplet" effect.</p>
+  <div class="scroll-guide">Scroll Down to Light Zone ↓</div>
+</section>
 
-      <div class="timeline">
-        <div class="tl-item" data-n="1">
-          <h3>Candles <span class="tag">Founding idea</span></h3>
-          <p>Used cooking oil, repurposed into candles. The original concept EcoNow was built on.</p>
-        </div>
-        <div class="tl-item" data-n="2">
-          <h3>EcoSoap <span class="tag">Discontinued</span></h3>
-          <p>An expansion into soap-making. Discontinued afterward — the working environment turned out to be highly acidic and difficult to sustain.</p>
-        </div>
-        <div class="tl-item" data-n="3">
-          <h3>Mini Candles</h3>
-          <p>A scaled-down product line, easier to produce and sell.</p>
-        </div>
-        <div class="tl-item active" data-n="4">
-          <h3>Air Diffuser, Perfume &amp; New Scents <span class="tag">My term</span></h3>
-          <p>Under my term, R&amp;D pushed further — trialing air diffusers, perfume, and new candle scents.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ===================== SECTION 2: CEILING (LIGHT) ===================== -->
+<section class="section-showcase zone-light" id="ceiling">
+  <div class="badge">Adaptive Transparency</div>
+  <h1>Elastic <em>Bounce</em>.</h1>
+  <p>The system actively tracks color contrast under the floating bar. When passing over light zones, the panel seamlessly turns smoky charcoal to maximize readability.</p>
+  <div class="scroll-guide">Scroll to Green Zone ↓</div>
+</section>
 
-  <!-- ===================== 02 CURRENT STATE ===================== -->
-  <section class="dark dark-zone" id="now">
-    <div class="wrap">
-      <p class="eyebrow">02 — Where It Stands Now</p>
-      <h2 class="section-title">The Current State of EcoNow</h2>
-      <p class="section-sub">This is the part you actually need to sit with.</p>
+<!-- ===================== SECTION 3: HANDOVER (DARK SAGE) ===================== -->
+<section class="section-showcase zone-warm-accent dark-zone" id="handover">
+  <div class="badge">Responsive Unity</div>
+  <h1>Mobile <em>Viscosity</em>.</h1>
+  <p>Shrink your browser to mobile widths, trigger the burger button, and tap between links to see the custom vertical stretching indicator inside the dropdown.</p>
+  <a href="#intro" style="color: var(--wax-light); font-family: 'Space Mono', monospace; text-transform: uppercase; font-size: 0.9rem; text-decoration: none; margin-top: 20px;">Back to top ↑</a>
+</section>
 
-      <p>EcoNow has lost its original focus. That's not just my opinion — it's Dr Roy's, and I agree with it. We've drifted toward <strong>profiting</strong> instead of <strong>educating and equipping the children</strong> with skills, which was the entire point of starting this in the first place.</p>
-    </div>
-  </section>
+<script>
+  // ---------- STREAMING_CHUNK:Designing premium water droplet custom cursor logic ----------
+  (function(){
+    // Ensure the client has mouse hover precision support before loading cursor elements
+    var isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!isFinePointer) return;
 
-  <footer>EcoNow · Handover Report · Page 1 of 3</footer>
+    var mouseX = 0, mouseY = 0;
+    var hasMoved = false;
 
-  <script>
-    // ---------- STREAMING_CHUNK:Designing premium water droplet custom cursor logic ----------
-    (function () {
-      var isFinePointer = window.matchMedia('(pointer: fine)').matches;
-      if (!isFinePointer) return;
-
-      var mouseX = 0, mouseY = 0;
-      var hasMoved = false;
-
-      window.addEventListener('mousemove', function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        if (!hasMoved) {
-          hasMoved = true;
-          segments.forEach(function (seg) {
-            seg.el.style.opacity = '1';
-            seg.x = mouseX;
-            seg.y = mouseY;
-          });
-        }
-      }, { passive: true });
-
-      window.addEventListener('mouseleave', function () {
-        segments.forEach(function (seg) {
-          seg.el.style.opacity = '0';
-        });
-      });
-
-      window.addEventListener('mouseenter', function () {
-        if (hasMoved) {
-          segments.forEach(function (seg) {
-            seg.el.style.opacity = '1';
-          });
-        }
-      });
-
-      var numSegments = 10;
-      var segments = [];
-      var container = document.createElement('div');
-      container.style.pointerEvents = 'none';
-      document.body.appendChild(container);
-
-      for (var i = 0; i < numSegments; i++) {
-        var segEl = document.createElement('div');
-        segEl.className = 'water-cursor';
-
-        var lens = document.createElement('div');
-        lens.className = 'water-cursor__lens';
-
-        var sizeMultiplier = Math.pow(0.82, i);
-        var baseOpacity = 1.0 * Math.pow(0.65, i);
-
-        if (i > 0) {
-          lens.style.transform = 'scale(' + sizeMultiplier.toFixed(3) + ')';
-          segEl.style.opacity = '0';
-
-          lens.style.boxShadow =
-            'inset 1px 1px 1.5px 0px rgba(255, 255, 255, 0.75), ' +
-            'inset -1px -1px 2px 0px rgba(0, 0, 0, 0.05), ' +
-            '0 0 0 0.6px rgba(255, 0, 80, 0.35), ' +
-            '0 0 0 1.2px rgba(0, 220, 255, 0.35), ' +
-            '0 0 0 0.3px rgba(36, 29, 21, 0.08), ' +
-            '0 4px 10px -2px rgba(21, 15, 10, 0.12)';
-        } else {
-          var ripple = document.createElement('div');
-          ripple.className = 'water-cursor__ripple';
-          segEl.appendChild(ripple);
-        }
-
-        segEl.appendChild(lens);
-        container.appendChild(segEl);
-
-        segments.push({
-          el: segEl,
-          lens: lens,
-          x: 0,
-          y: 0,
-          sizeMultiplier: sizeMultiplier,
-          baseOpacity: baseOpacity,
-          index: i
+    window.addEventListener('mousemove', function(e){
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if(!hasMoved){
+        hasMoved = true;
+        // Make all trail segments visible once initialized
+        segments.forEach(function(seg) {
+          seg.el.style.opacity = '1';
+          seg.x = mouseX;
+          seg.y = mouseY;
         });
       }
+    }, {passive: true});
 
-      document.addEventListener('mousedown', function () {
-        segments[0].el.classList.add('is-clicking');
-        var ripple = segments[0].el.querySelector('.water-cursor__ripple');
-        if (ripple) {
-          ripple.style.animation = 'none';
-          void ripple.offsetHeight;
-          ripple.style.animation = '';
-        }
-        for (var i = 1; i < segments.length; i++) {
-          segments[i].el.classList.add('is-clicking');
-        }
+    window.addEventListener('mouseleave', function(){
+      segments.forEach(function(seg) {
+        seg.el.style.opacity = '0';
       });
+    });
 
-      document.addEventListener('mouseup', function () {
-        segments.forEach(function (seg) {
-          seg.el.classList.remove('is-clicking');
+    window.addEventListener('mouseenter', function(){
+      if(hasMoved) {
+        segments.forEach(function(seg) {
+          seg.el.style.opacity = '1';
         });
-      });
-
-      document.addEventListener('mouseover', function (e) {
-        var target = e.target;
-        if (!target) return;
-        var clickable = target.closest('a, button, [role="button"], .nav-brand, .liquid-nav__link');
-        if (clickable) {
-          segments[0].el.classList.add('is-hovering');
-        } else {
-          segments[0].el.classList.remove('is-hovering');
-        }
-      });
-
-      function tick() {
-        for (var i = 0; i < segments.length; i++) {
-          var seg = segments[i];
-          var targetX = (i === 0) ? mouseX : segments[i - 1].x;
-          var targetY = (i === 0) ? mouseY : segments[i - 1].y;
-
-          var delay = (i === 0) ? 0.09 : 0.28;
-
-          var dx = targetX - seg.x;
-          var dy = targetY - seg.y;
-
-          seg.x += dx * delay;
-          seg.y += dy * delay;
-
-          var velX = dx * delay;
-          var velY = dy * delay;
-          var speed = Math.sqrt(velX * velX + velY * velY);
-
-          var angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
-          var maxStretch = (i === 0) ? 0.55 : 0.70;
-          var stretchCoeff = (i === 0) ? 0.08 : 0.12;
-          var stretch = Math.min(speed * stretchCoeff, maxStretch);
-
-          var scaleX = seg.sizeMultiplier * (1 + stretch);
-          var scaleY = seg.sizeMultiplier * (1 - (stretch * 0.45));
-
-          var movementAlphaModifier = Math.max(0.4, 1 - (speed * 0.015));
-          var finalOpacity = seg.baseOpacity * movementAlphaModifier;
-
-          seg.el.style.opacity = hasMoved ? finalOpacity : '0';
-          seg.el.style.transform = 'translate3d(' + seg.x.toFixed(2) + 'px, ' + seg.y.toFixed(2) + 'px, 0) rotate(' + angle.toFixed(1) + 'deg) scale(' + scaleX.toFixed(3) + ', ' + scaleY.toFixed(3) + ')';
-        }
-
-        window.requestAnimationFrame(tick);
       }
+    });
+
+    // Create a 10-bead fluid trail array
+    var numSegments = 10;
+    var segments = [];
+    var container = document.createElement('div');
+    container.style.pointerEvents = 'none';
+    document.body.appendChild(container);
+
+    for (var i = 0; i < numSegments; i++) {
+      var segEl = document.createElement('div');
+      segEl.className = 'water-cursor';
+      
+      var lens = document.createElement('div');
+      lens.className = 'water-cursor__lens';
+      
+      // Calculate progressive sizing and base opacity multipliers
+      var sizeMultiplier = Math.pow(0.82, i);
+      var baseOpacity = 1.0 * Math.pow(0.65, i); // High transparency fade-off on tail
+      
+      if (i > 0) {
+        lens.style.transform = 'scale(' + sizeMultiplier.toFixed(3) + ')';
+        segEl.style.opacity = '0';
+        
+        // Tail segment glass overrides with increased contrast chromatic aberration and edge boundaries
+        lens.style.boxShadow = 
+          'inset 1px 1px 1.5px 0px rgba(255, 255, 255, 0.75), ' +
+          'inset -1px -1px 2px 0px rgba(0, 0, 0, 0.05), ' +
+          '0 0 0 0.6px rgba(255, 0, 80, 0.35), ' +
+          '0 0 0 1.2px rgba(0, 220, 255, 0.35), ' +
+          '0 0 0 0.3px rgba(36, 29, 21, 0.08), ' +
+          '0 4px 10px -2px rgba(21, 15, 10, 0.12)';
+      } else {
+        // Head segment contains splash ripple markup
+        var ripple = document.createElement('div');
+        ripple.className = 'water-cursor__ripple';
+        segEl.appendChild(ripple);
+      }
+
+      segEl.appendChild(lens);
+      container.appendChild(segEl);
+
+      segments.push({
+        el: segEl,
+        lens: lens,
+        x: 0,
+        y: 0,
+        sizeMultiplier: sizeMultiplier,
+        baseOpacity: baseOpacity,
+        index: i
+      });
+    }
+
+    // Handle physical tap down/up squash across the entire chain
+    document.addEventListener('mousedown', function(){
+      segments[0].el.classList.add('is-clicking');
+      var ripple = segments[0].el.querySelector('.water-cursor__ripple');
+      if (ripple) {
+        ripple.style.animation = 'none';
+        void ripple.offsetHeight; // Reflow reset
+        ripple.style.animation = '';
+      }
+      for (var i = 1; i < segments.length; i++) {
+        segments[i].el.classList.add('is-clicking');
+      }
+    });
+
+    document.addEventListener('mouseup', function(){
+      segments.forEach(function(seg) {
+        seg.el.classList.remove('is-clicking');
+      });
+    });
+
+    // Detect clickables to expand target absorption (hover swelling)
+    document.addEventListener('mouseover', function(e){
+      var target = e.target;
+      if(!target) return;
+      var clickable = target.closest('a, button, [role="button"], .nav-brand, .liquid-nav__link');
+      if(clickable){
+        segments[0].el.classList.add('is-hovering');
+      } else {
+        segments[0].el.classList.remove('is-hovering');
+      }
+    });
+
+    // Lag and trail physics cycle
+    function tick(){
+      for (var i = 0; i < segments.length; i++) {
+        var seg = segments[i];
+        var targetX = (i === 0) ? mouseX : segments[i - 1].x;
+        var targetY = (i === 0) ? mouseY : segments[i - 1].y;
+
+        // Custom organic lagging factors (delay coefficients)
+        var delay = (i === 0) ? 0.09 : 0.28; 
+        
+        var dx = targetX - seg.x;
+        var dy = targetY - seg.y;
+
+        seg.x += dx * delay;
+        seg.y += dy * delay;
+
+        var velX = dx * delay;
+        var velY = dy * delay;
+        var speed = Math.sqrt(velX * velX + velY * velY);
+
+        var angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+        // Highly elastic stretching factors to achieve a "longer trail" visual
+        var maxStretch = (i === 0) ? 0.55 : 0.70;
+        var stretchCoeff = (i === 0) ? 0.08 : 0.12;
+        var stretch = Math.min(speed * stretchCoeff, maxStretch);
+        
+        var scaleX = seg.sizeMultiplier * (1 + stretch);
+        var scaleY = seg.sizeMultiplier * (1 - (stretch * 0.45));
+
+        // Dynamically fade out trailing beads during fast, sweeping gestures
+        var movementAlphaModifier = Math.max(0.4, 1 - (speed * 0.015));
+        var finalOpacity = seg.baseOpacity * movementAlphaModifier;
+
+        seg.el.style.opacity = hasMoved ? finalOpacity : '0';
+        seg.el.style.transform = 'translate3d(' + seg.x.toFixed(2) + 'px, ' + seg.y.toFixed(2) + 'px, 0) rotate(' + angle.toFixed(1) + 'deg) scale(' + scaleX.toFixed(3) + ', ' + scaleY.toFixed(3) + ')';
+      }
+
       window.requestAnimationFrame(tick);
-    })();
+    }
+    window.requestAnimationFrame(tick);
+  })();
 
-    // ---------- STREAMING_CHUNK:Developing synced desktop & mobile liquid glass physics engines ----------
-    (function () {
-      var nav = document.getElementById('liquidNav');
-      var indicator = document.getElementById('navIndicator');
-      var dropdown = document.getElementById('navDropdown');
-      var dropdownIndicator = document.getElementById('dropdownIndicator');
-      var fill = document.getElementById('burnedFill');
-      if (!nav || !indicator || !dropdown || !dropdownIndicator) return;
+  // ---------- STREAMING_CHUNK:Implementing scroll tracking burn rail values ----------
+  // ---------- Dynamic Scroll Burn Rail Progress Indicator ----------
+  (function(){
+    var fill = document.getElementById('burnedFill');
+    if(!fill) return;
+    function update(){
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
+      fill.style.height = pct + '%';
+    }
+    document.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    update();
+  })();
 
-      var links = Array.prototype.slice.call(nav.querySelectorAll('.liquid-nav__link'));
-      var dropdownLinks = Array.prototype.slice.call(dropdown.querySelectorAll('.nav-dropdown__link'));
-      var sections = Array.prototype.slice.call(document.querySelectorAll('.section-showcase'));
+  // ---------- STREAMING_CHUNK:Developing synced desktop & mobile liquid glass physics engines ----------
+  // ---------- Synced Double-Indicator Liquid Pill Physics System ----------
+  (function(){
+    var nav = document.getElementById('liquidNav');
+    var indicator = document.getElementById('navIndicator');
+    var dropdown = document.getElementById('navDropdown');
+    var dropdownIndicator = document.getElementById('dropdownIndicator');
+    if(!nav || !indicator || !dropdown || !dropdownIndicator) return;
 
-      var activeLink = links[0];
-      var activeDropdownLink = dropdownLinks[0];
+    var links = Array.prototype.slice.call(nav.querySelectorAll('.liquid-nav__link'));
+    var dropdownLinks = Array.prototype.slice.call(dropdown.querySelectorAll('.nav-dropdown__link'));
+    var activeLink = links[0];
+    var activeDropdownLink = dropdownLinks[0];
+    
+    var animTimeout = null;
+    var dropdownAnimTimeout = null;
 
-      var animTimeout = null;
-      var dropdownAnimTimeout = null;
+    // Move Horizontal Indicator (Desktop)
+    function moveIndicator(link, instant = false){
+      if(!link) return;
+      
+      var targetLeft = link.offsetLeft;
+      var targetRight = nav.offsetWidth - (link.offsetLeft + link.offsetWidth);
 
-      function moveIndicator(link, instant = false) {
-        if (!link) return;
-
-        var targetLeft = link.offsetLeft;
-        var targetRight = nav.offsetWidth - (link.offsetLeft + link.offsetWidth);
-
-        if (instant) {
-          indicator.style.transition = 'none';
-          indicator.style.setProperty('--left', targetLeft + 'px');
-          indicator.style.setProperty('--right', targetRight + 'px');
-          indicator.offsetHeight;
-          indicator.style.transition = '';
-          return;
-        }
-
-        var currentLeft = parseFloat(indicator.style.getPropertyValue('--left') || 0);
-        var direction = targetLeft >= currentLeft ? 'right' : 'left';
-
-        nav.setAttribute('data-direction', direction);
-        nav.classList.add('is-animating');
-
+      if(instant) {
+        indicator.style.transition = 'none';
         indicator.style.setProperty('--left', targetLeft + 'px');
         indicator.style.setProperty('--right', targetRight + 'px');
-
-        clearTimeout(animTimeout);
-        animTimeout = setTimeout(function () {
-          nav.classList.remove('is-animating');
-        }, 550);
+        indicator.offsetHeight; // Force reflow
+        indicator.style.transition = '';
+        return;
       }
 
-      function moveDropdownIndicator(link, instant = false) {
-        if (!link) return;
+      var currentLeft = parseFloat(indicator.style.getPropertyValue('--left') || 0);
+      var direction = targetLeft >= currentLeft ? 'right' : 'left';
 
-        var targetTop = link.offsetTop;
-        var targetBottom = dropdown.offsetHeight - (link.offsetTop + link.offsetHeight);
+      nav.setAttribute('data-direction', direction);
+      nav.classList.add('is-animating');
 
-        if (instant) {
-          dropdownIndicator.style.transition = 'none';
-          dropdownIndicator.style.setProperty('--top', targetTop + 'px');
-          dropdownIndicator.style.setProperty('--bottom', targetBottom + 'px');
-          dropdownIndicator.offsetHeight;
-          dropdownIndicator.style.transition = '';
-          return;
-        }
+      indicator.style.setProperty('--left', targetLeft + 'px');
+      indicator.style.setProperty('--right', targetRight + 'px');
 
-        var currentTop = parseFloat(dropdownIndicator.style.getPropertyValue('--top') || 0);
-        var direction = targetTop >= currentTop ? 'down' : 'up';
+      clearTimeout(animTimeout);
+      animTimeout = setTimeout(function(){
+        nav.classList.remove('is-animating');
+      }, 550);
+    }
 
-        dropdown.setAttribute('data-direction', direction);
-        dropdown.classList.add('is-animating');
+    // Move Vertical Indicator (Mobile Dropdown)
+    function moveDropdownIndicator(link, instant = false){
+      if(!link) return;
 
+      var targetTop = link.offsetTop;
+      var targetBottom = dropdown.offsetHeight - (link.offsetTop + link.offsetHeight);
+
+      if(instant) {
+        dropdownIndicator.style.transition = 'none';
         dropdownIndicator.style.setProperty('--top', targetTop + 'px');
         dropdownIndicator.style.setProperty('--bottom', targetBottom + 'px');
-
-        clearTimeout(dropdownAnimTimeout);
-        dropdownAnimTimeout = setTimeout(function () {
-          dropdown.classList.remove('is-animating');
-        }, 550);
+        dropdownIndicator.offsetHeight; // Force reflow
+        dropdownIndicator.style.transition = '';
+        return;
       }
 
-      function syncActiveIndicators(index, instant = false) {
-        links.forEach(function (l, i) {
-          if (i === index) {
-            l.classList.add('active');
-            activeLink = l;
-            moveIndicator(l, instant);
-          } else {
-            l.classList.remove('active');
-          }
-        });
+      var currentTop = parseFloat(dropdownIndicator.style.getPropertyValue('--top') || 0);
+      var direction = targetTop >= currentTop ? 'down' : 'up';
 
-        dropdownLinks.forEach(function (dl, i) {
-          if (i === index) {
-            dl.classList.add('active');
-            activeDropdownLink = dl;
-            moveDropdownIndicator(dl, instant);
-          } else {
-            dl.classList.remove('active');
-          }
-        });
+      dropdown.setAttribute('data-direction', direction);
+      dropdown.classList.add('is-animating');
 
-        // Update Simulated Page Capillary burn tube rail step
-        if (fill && sections.length > 1) {
-          var pct = (index / (sections.length - 1)) * 100;
-          fill.style.height = pct + '%';
+      dropdownIndicator.style.setProperty('--top', targetTop + 'px');
+      dropdownIndicator.style.setProperty('--bottom', targetBottom + 'px');
+
+      clearTimeout(dropdownAnimTimeout);
+      dropdownAnimTimeout = setTimeout(function(){
+        dropdown.classList.remove('is-animating');
+      }, 550);
+    }
+
+    // Set layout positions initially
+    function syncActiveIndicators(index, instant = false){
+      links.forEach(function(l, i){
+        if(i === index){
+          l.classList.add('active');
+          activeLink = l;
+          moveIndicator(l, instant);
+        } else {
+          l.classList.remove('active');
         }
-      }
+      });
 
-      // Initialize layout
-      syncActiveIndicators(0, true);
+      dropdownLinks.forEach(function(dl, i){
+        if(i === index){
+          dl.classList.add('active');
+          activeDropdownLink = dl;
+          moveDropdownIndicator(dl, instant);
+        } else {
+          dl.classList.remove('active');
+        }
+      });
+    }
 
-      function switchPage(index) {
-        sections.forEach(function (sec, i) {
-          if (i === index) {
-            sec.classList.add('is-active');
-          } else {
-            sec.classList.remove('is-active');
-          }
-        });
+    // Initialize state
+    syncActiveIndicators(0, true);
 
+    // Interactive Scroll Navigation Links
+    function handleAnchorClick(e, linkElement, index){
+      e.preventDefault();
+      var targetId = linkElement.getAttribute('href');
+      var targetSection = document.querySelector(targetId);
+      if (targetSection) {
         syncActiveIndicators(index);
-
-        // Instantly trigger contrast sampling when section active states change
-        setTimeout(function () {
-          window.dispatchEvent(new Event('resize'));
-        }, 50);
-      }
-
-      function handleAnchorClick(e, linkElement, index) {
-        e.preventDefault();
-        switchPage(index);
-
+        
+        // Let liquid menu snap shut if on mobile
         var burger = document.getElementById('navBurger');
-        if (burger && burger.getAttribute('aria-expanded') === 'true') {
+        if(burger && burger.getAttribute('aria-expanded') === 'true') {
           burger.click();
         }
-      }
 
-      links.forEach(function (link, i) {
-        link.addEventListener('click', function (e) { handleAnchorClick(e, link, i); });
-      });
-
-      dropdownLinks.forEach(function (link, i) {
-        link.addEventListener('click', function (e) { handleAnchorClick(e, link, i); });
-      });
-
-      window.addEventListener('resize', function () {
-        if (activeLink) moveIndicator(activeLink, true);
-        if (activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
-      });
-
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function () {
-          if (activeLink) moveIndicator(activeLink, true);
-          if (activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+        window.scrollTo({
+          top: targetSection.offsetTop - 60,
+          behavior: 'smooth'
         });
       }
+    }
 
-      if (window.ResizeObserver) {
-        var ro = new ResizeObserver(function () {
-          if (activeLink) moveIndicator(activeLink, true);
-          if (activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
-        });
-        ro.observe(nav);
-        ro.observe(dropdown);
+    links.forEach(function(link, i) {
+      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
+    });
+
+    dropdownLinks.forEach(function(link, i) {
+      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
+    });
+
+    // Scroll active tracking logic
+    var sections = document.querySelectorAll('section');
+    function updateActiveOnScroll(){
+      var scrollPos = window.scrollY || document.documentElement.scrollTop;
+      sections.forEach(function(section, index){
+        var top = section.offsetTop - 150;
+        var bottom = top + section.offsetHeight;
+        if(scrollPos >= top && scrollPos < bottom){
+          var id = section.getAttribute('id');
+          if(activeLink && activeLink.getAttribute('href') !== '#' + id){
+            syncActiveIndicators(index);
+          }
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveOnScroll, {passive:true});
+    window.addEventListener('resize', function(){ 
+      if(activeLink) moveIndicator(activeLink, true);
+      if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+    });
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(function(){ 
+        if(activeLink) moveIndicator(activeLink, true);
+        if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+      });
+    }
+
+    if(window.ResizeObserver){
+      var ro = new ResizeObserver(function(){ 
+        if(activeLink) moveIndicator(activeLink, true);
+        if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+      });
+      ro.observe(nav);
+      ro.observe(dropdown);
+    }
+  })();
+
+  // ---------- STREAMING_CHUNK:Configuring custom logo pulse interactive events ----------
+  // ---------- Navigation Logo Pulse Effect ----------
+  (function(){
+    var brand = document.getElementById('navBrand');
+    if(!brand) return;
+
+    brand.addEventListener('click', function(e){
+      e.preventDefault();
+      brand.classList.remove('nav-brand--pulse');
+      void brand.offsetWidth; // Force Reflow
+      brand.classList.add('nav-brand--pulse');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(function(){ brand.classList.remove('nav-brand--pulse'); }, 500);
+    });
+  })();
+
+  // ---------- STREAMING_CHUNK:Designing scroll-linked header morph mechanics ----------
+  // ---------- Scroll-linked Morphing (Top Bar to Compact Liquid Nav) ----------
+  (function(){
+    var topBar = document.getElementById('topBar');
+    var liquidNav = document.getElementById('liquidNav');
+    if(!topBar || !liquidNav) return;
+    var brand = topBar.querySelector('.top-bar__brand');
+    var menu = topBar.querySelector('.top-bar__menu');
+
+    var startPx = 10;
+    var endPx = 150;
+    var viscosity = 0.085;
+    var target = 0;
+    var current = 0;
+    var rafId = null;
+
+    function computeTarget(){
+      var y = window.scrollY || window.pageYOffset || 0;
+      target = Math.min(1, Math.max(0, (y - startPx) / (endPx - startPx)));
+    }
+
+    function render(t){
+      topBar.style.setProperty('--bar-opacity', String(1 - t));
+      brand.style.setProperty('--brand-x', (46 * t).toFixed(2) + 'px');
+      menu.style.setProperty('--menu-x', (-46 * t).toFixed(2) + 'px');
+
+      liquidNav.style.setProperty('--nav-opacity', String(t));
+      liquidNav.style.setProperty('--nav-y', (10 * (1 - t)).toFixed(2) + 'px');
+      liquidNav.style.setProperty('--nav-scale', (0.92 + 0.08 * t).toFixed(4));
+
+      var merged = t > 0.55;
+      topBar.style.pointerEvents = merged ? 'none' : '';
+      liquidNav.style.pointerEvents = merged ? '' : 'none';
+    }
+
+    function tick(){
+      current += (target - current) * viscosity;
+      if(Math.abs(target - current) < 0.0006){
+        current = target;
+        render(current);
+        rafId = null;
+        return;
       }
+      render(current);
+      rafId = window.requestAnimationFrame(tick);
+    }
 
-      // Bind back-to-top custom inline link simulation
-      var backToTop = document.querySelector('.simulated-link');
-      if (backToTop) {
-        backToTop.addEventListener('click', function (e) {
-          e.preventDefault();
-          switchPage(0);
-        });
+    function onScrollOrResize(){
+      computeTarget();
+      if(rafId === null){
+        rafId = window.requestAnimationFrame(tick);
       }
-    })();
+    }
 
-    // ---------- STREAMING_CHUNK:Configuring custom logo pulse interactive events ----------
-    (function () {
-      var brand = document.getElementById('navBrand');
-      if (!brand) return;
+    document.addEventListener('scroll', onScrollOrResize, {passive:true});
+    window.addEventListener('resize', onScrollOrResize);
 
-      brand.addEventListener('click', function (e) {
+    computeTarget();
+    current = target;
+    render(current);
+
+    var topBarBrand = document.getElementById('topBarBrand');
+    if(topBarBrand){
+      topBarBrand.addEventListener('click', function(e){
         e.preventDefault();
-        brand.classList.remove('nav-brand--pulse');
-        void brand.offsetWidth;
-        brand.classList.add('nav-brand--pulse');
-
-        // Reset navigation to the first page (Background)
-        var firstLink = document.querySelector('.liquid-nav__link');
-        if (firstLink) firstLink.click();
-
-        setTimeout(function () { brand.classList.remove('nav-brand--pulse'); }, 500);
+        topBarBrand.classList.remove('nav-brand--pulse');
+        void topBarBrand.offsetWidth;
+        topBarBrand.classList.add('nav-brand--pulse');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(function(){ topBarBrand.classList.remove('nav-brand--pulse'); }, 500);
       });
-    })();
+    }
+  })();
 
-    // ---------- STREAMING_CHUNK:Deploying real-time backdrop color sensors ----------
-    (function () {
-      var nav = document.getElementById('liquidNav');
-      if (!nav) return;
-      var ticking = false;
+  // ---------- STREAMING_CHUNK:Deploying real-time backdrop color sensors ----------
+  // ---------- Dynamic Contrast Monitor (Real-Time Zone Checking) ----------
+  (function(){
+    var nav = document.getElementById('liquidNav');
+    if(!nav) return;
+    var ticking = false;
 
-      function sampleContrast() {
-        ticking = false;
-        var navRect = nav.getBoundingClientRect();
-        var x = navRect.left + navRect.width / 2;
-        var y = navRect.bottom + 6;
-        if (y >= window.innerHeight) y = window.innerHeight - 2;
-        var el = document.elementFromPoint(x, y);
-        if (!el) return;
-        var zone = el.closest('.dark-zone');
-
-        nav.classList.toggle('on-light', !zone);
-
-        var dropdown = document.getElementById('navDropdown');
-        if (dropdown) dropdown.classList.toggle('on-light', !zone);
-
-        var burnRail = document.getElementById('burnRail');
-        if (burnRail) burnRail.classList.toggle('on-light', !zone);
-      }
-
-      function requestSample() {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(sampleContrast);
-        }
-      }
-
-      window.addEventListener('resize', requestSample);
-      window.addEventListener('load', sampleContrast);
-      setTimeout(sampleContrast, 50);
-    })();
-
-    // ---------- STREAMING_CHUNK:Finalizing springy mobile drawer controller logic ----------
-    (function () {
-      var nav = document.getElementById('liquidNav');
-      var burger = document.getElementById('navBurger');
+    function sampleContrast(){
+      ticking = false;
+      var navRect = nav.getBoundingClientRect();
+      var x = navRect.left + navRect.width / 2;
+      var y = navRect.bottom + 6;
+      if(y >= window.innerHeight) y = window.innerHeight - 2;
+      var el = document.elementFromPoint(x, y);
+      if(!el) return;
+      var zone = el.closest('.dark-zone');
+      
+      // Update Contrast on Floating Pill Navigation
+      nav.classList.toggle('on-light', !zone);
+      
+      // Update Contrast on Mobile Dropdown Menu
       var dropdown = document.getElementById('navDropdown');
-      if (!nav || !burger || !dropdown) return;
+      if(dropdown) dropdown.classList.toggle('on-light', !zone);
 
-      var closingTimeout = null;
+      // Update Contrast on the Glass Scroll Progress Capillary Rail
+      var burnRail = document.getElementById('burnRail');
+      if(burnRail) burnRail.classList.toggle('on-light', !zone);
+    }
 
-      function openDropdown() {
-        clearTimeout(closingTimeout);
+    function requestSample(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(sampleContrast);
+      }
+    }
+
+    document.addEventListener('scroll', requestSample, {passive:true});
+    window.addEventListener('resize', requestSample);
+    window.addEventListener('load', sampleContrast);
+    setTimeout(sampleContrast, 50);
+  })();
+
+  // ---------- STREAMING_CHUNK:Finalizing springy mobile drawer controller logic ----------
+  // ---------- Mobile Burger Dropdown Controller ----------
+  (function(){
+    var nav = document.getElementById('liquidNav');
+    var burger = document.getElementById('navBurger');
+    var dropdown = document.getElementById('navDropdown');
+    if(!nav || !burger || !dropdown) return;
+
+    var closingTimeout = null;
+
+    function openDropdown() {
+      clearTimeout(closingTimeout);
+      dropdown.classList.remove('closing');
+      burger.setAttribute('aria-expanded', 'true');
+      dropdown.classList.add('open');
+      dropdown.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDropdown() {
+      if (!dropdown.classList.contains('open')) return;
+      burger.setAttribute('aria-expanded', 'false');
+      dropdown.classList.remove('open');
+      dropdown.classList.add('closing');
+      dropdown.setAttribute('aria-hidden', 'true');
+
+      // Sync timeout cleanly with the 480ms liquid close animation
+      closingTimeout = setTimeout(function(){
         dropdown.classList.remove('closing');
-        burger.setAttribute('aria-expanded', 'true');
-        dropdown.classList.add('open');
-        dropdown.setAttribute('aria-hidden', 'false');
+      }, 480);
+    }
+
+    // Toggle dropdown state
+    burger.addEventListener('click', function(e){
+      e.stopPropagation();
+      var expanded = burger.getAttribute('aria-expanded') === 'true';
+      if (expanded) {
+        closeDropdown();
+      } else {
+        openDropdown();
       }
+    });
 
-      function closeDropdown() {
-        if (!dropdown.classList.contains('open')) return;
-        burger.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('open');
-        dropdown.classList.add('closing');
-        dropdown.setAttribute('aria-hidden', 'true');
-
-        closingTimeout = setTimeout(function () {
-          dropdown.classList.remove('closing');
-        }, 480);
+    // Close when clicking outside of navigation panel
+    document.addEventListener('click', function(e){
+      if(!nav.contains(e.target) && !dropdown.contains(e.target)){
+        closeDropdown();
       }
-
-      burger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var expanded = burger.getAttribute('aria-expanded') === 'true';
-        if (expanded) {
-          closeDropdown();
-        } else {
-          openDropdown();
-        }
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!nav.contains(e.target) && !dropdown.contains(e.target)) {
-          closeDropdown();
-        }
-      });
-    })();
-  </script>
+    });
+  })();
+</script>
 </body>
 </html>
