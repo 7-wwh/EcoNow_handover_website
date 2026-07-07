@@ -1,19 +1,3 @@
-  // ---------- Implementing scroll tracking burn rail values ----------
-  (function(){
-    var fill = document.getElementById('burnedFill');
-    if(!fill) return;
-    function update(){
-      var doc = document.documentElement;
-      var scrollTop = doc.scrollTop || document.body.scrollTop;
-      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
-      var pct = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100));
-      fill.style.height = pct + '%';
-    }
-    document.addEventListener('scroll', update, {passive:true});
-    window.addEventListener('resize', update);
-    update();
-  })();
-
   // ---------- Synced Double-Indicator Liquid Pill Physics System ----------
   (function(){
     var nav = document.getElementById('liquidNav');
@@ -24,8 +8,6 @@
 
     var links = Array.prototype.slice.call(nav.querySelectorAll('.liquid-nav__link'));
     var dropdownLinks = Array.prototype.slice.call(dropdown.querySelectorAll('.nav-dropdown__link'));
-    var activeLink = links[0];
-    var activeDropdownLink = dropdownLinks[0];
     
     var animTimeout = null;
     var dropdownAnimTimeout = null;
@@ -92,94 +74,54 @@
       }, 550);
     }
 
-    // Set layout positions initially
-    function syncActiveIndicators(index, instant = false){
+    // Set layout positions based on current page
+    function initActiveIndicators(){
+      var currentPath = window.location.pathname.split('/').pop();
+      if(currentPath === "" || currentPath === "index.html") currentPath = "main.html"; // Default
+
+      var activeIndex = 0;
       links.forEach(function(l, i){
-        if(i === index){
+        if(l.getAttribute('href') === currentPath){
+          activeIndex = i;
+        }
+      });
+
+      links.forEach(function(l, i){
+        if(i === activeIndex){
           l.classList.add('active');
-          activeLink = l;
-          moveIndicator(l, instant);
+          moveIndicator(l, true);
         } else {
           l.classList.remove('active');
         }
       });
 
       dropdownLinks.forEach(function(dl, i){
-        if(i === index){
+        if(i === activeIndex){
           dl.classList.add('active');
-          activeDropdownLink = dl;
-          moveDropdownIndicator(dl, instant);
+          moveDropdownIndicator(dl, true);
         } else {
           dl.classList.remove('active');
         }
       });
     }
 
-    // Initialize state
-    syncActiveIndicators(0, true);
+    // Initialize state on load
+    initActiveIndicators();
 
-    // Interactive Scroll Navigation Links
-    function handleAnchorClick(e, linkElement, index){
-      e.preventDefault();
-      var targetId = linkElement.getAttribute('href');
-      var targetSection = document.querySelector(targetId);
-      if (targetSection) {
-        syncActiveIndicators(index);
-        
-        // Let liquid menu snap shut if on mobile
-        var burger = document.getElementById('navBurger');
-        if(burger && burger.getAttribute('aria-expanded') === 'true') {
-          burger.click();
-        }
-
-        window.scrollTo({
-          top: targetSection.offsetTop - 60,
-          behavior: 'smooth'
-        });
-      }
-    }
-
-    links.forEach(function(link, i) {
-      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
-    });
-
-    dropdownLinks.forEach(function(link, i) {
-      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
-    });
-
-    // Scroll active tracking logic
-    var sections = document.querySelectorAll('section');
-    function updateActiveOnScroll(){
-      var scrollPos = window.scrollY || document.documentElement.scrollTop;
-      sections.forEach(function(section, index){
-        var top = section.offsetTop - 150;
-        var bottom = top + section.offsetHeight;
-        if(scrollPos >= top && scrollPos < bottom){
-          var id = section.getAttribute('id');
-          if(activeLink && activeLink.getAttribute('href') !== '#' + id){
-            syncActiveIndicators(index);
-          }
-        }
-      });
-    }
-
-    window.addEventListener('scroll', updateActiveOnScroll, {passive:true});
+    // Responsive fixes
     window.addEventListener('resize', function(){ 
-      if(activeLink) moveIndicator(activeLink, true);
-      if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+      initActiveIndicators();
     });
 
     if(document.fonts && document.fonts.ready){
       document.fonts.ready.then(function(){ 
-        if(activeLink) moveIndicator(activeLink, true);
-        if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+        initActiveIndicators();
       });
     }
 
     if(window.ResizeObserver){
       var ro = new ResizeObserver(function(){ 
-        if(activeLink) moveIndicator(activeLink, true);
-        if(activeDropdownLink) moveDropdownIndicator(activeDropdownLink, true);
+        initActiveIndicators();
       });
       ro.observe(nav);
       ro.observe(dropdown);
@@ -192,11 +134,9 @@
     if(!brand) return;
 
     brand.addEventListener('click', function(e){
-      e.preventDefault();
       brand.classList.remove('nav-brand--pulse');
       void brand.offsetWidth; // Force Reflow
       brand.classList.add('nav-brand--pulse');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(function(){ brand.classList.remove('nav-brand--pulse'); }, 500);
     });
   })();
@@ -206,26 +146,14 @@
     var topBar = document.getElementById('topBar');
     var liquidNav = document.getElementById('liquidNav');
     if(!topBar || !liquidNav) return;
-    var brand = topBar.querySelector('.top-bar__brand');
-    var menu = topBar.querySelector('.top-bar__menu');
-
-    var startPx = 10;
-    var endPx = 150;
-    var viscosity = 0.085;
-    var target = 0;
-    var current = 0;
-    var rafId = null;
-
-    function computeTarget(){
-      var y = window.scrollY || window.pageYOffset || 0;
-      target = Math.min(1, Math.max(0, (y - startPx) / (endPx - startPx)));
-    }
+    
+    // Initially set to compact state if scrolled, or just default state
+    var y = window.scrollY || window.pageYOffset || 0;
+    var t = y > 150 ? 1 : (y < 10 ? 0 : (y - 10) / 140);
+    render(t);
 
     function render(t){
       topBar.style.setProperty('--bar-opacity', String(1 - t));
-      brand.style.setProperty('--brand-x', (46 * t).toFixed(2) + 'px');
-      menu.style.setProperty('--menu-x', (-46 * t).toFixed(2) + 'px');
-
       liquidNav.style.setProperty('--nav-opacity', String(t));
       liquidNav.style.setProperty('--nav-y', (10 * (1 - t)).toFixed(2) + 'px');
       liquidNav.style.setProperty('--nav-scale', (0.92 + 0.08 * t).toFixed(4));
@@ -235,43 +163,12 @@
       liquidNav.style.pointerEvents = merged ? '' : 'none';
     }
 
-    function tick(){
-      current += (target - current) * viscosity;
-      if(Math.abs(target - current) < 0.0006){
-        current = target;
-        render(current);
-        rafId = null;
-        return;
-      }
-      render(current);
-      rafId = window.requestAnimationFrame(tick);
-    }
+    document.addEventListener('scroll', function(){
+        var y = window.scrollY || window.pageYOffset || 0;
+        var t = Math.min(1, Math.max(0, (y - 10) / 140));
+        render(t);
+    }, {passive:true});
 
-    function onScrollOrResize(){
-      computeTarget();
-      if(rafId === null){
-        rafId = window.requestAnimationFrame(tick);
-      }
-    }
-
-    document.addEventListener('scroll', onScrollOrResize, {passive:true});
-    window.addEventListener('resize', onScrollOrResize);
-
-    computeTarget();
-    current = target;
-    render(current);
-
-    var topBarBrand = document.getElementById('topBarBrand');
-    if(topBarBrand){
-      topBarBrand.addEventListener('click', function(e){
-        e.preventDefault();
-        topBarBrand.classList.remove('nav-brand--pulse');
-        void topBarBrand.offsetWidth;
-        topBarBrand.classList.add('nav-brand--pulse');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(function(){ topBarBrand.classList.remove('nav-brand--pulse'); }, 500);
-      });
-    }
   })();
 
   // ---------- Dynamic Contrast Monitor (Real-Time Zone Checking) ----------
@@ -296,10 +193,6 @@
       // Update Contrast on Mobile Dropdown Menu
       var dropdown = document.getElementById('navDropdown');
       if(dropdown) dropdown.classList.toggle('on-light', !zone);
-
-      // Update Contrast on the Glass Scroll Progress Capillary Rail
-      var burnRail = document.getElementById('burnRail');
-      if(burnRail) burnRail.classList.toggle('on-light', !zone);
     }
 
     function requestSample(){
