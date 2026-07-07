@@ -271,6 +271,40 @@
 
     initActiveIndicators();
 
+    // Interactive Scroll Navigation Links
+    function handleAnchorClick(e, linkElement, index){
+      var targetId = linkElement.getAttribute('href');
+      
+      // If it's a hash, handle internally
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        var targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          syncActiveIndicators(index);
+          
+          // Let liquid menu snap shut if on mobile
+          var burger = document.getElementById('navBurger');
+          if(burger && burger.getAttribute('aria-expanded') === 'true') {
+            burger.click();
+          }
+
+          window.scrollTo({
+            top: targetSection.offsetTop - 60,
+            behavior: 'smooth'
+          });
+        }
+      }
+      // If it's not a hash (i.e. 'main.html'), do not call preventDefault
+    }
+
+    links.forEach(function(link, i) {
+      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
+    });
+
+    dropdownLinks.forEach(function(link, i) {
+      link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
+    });
+
     window.addEventListener('resize', function(){ 
       initActiveIndicators();
     });
