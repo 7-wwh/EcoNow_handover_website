@@ -25,17 +25,18 @@
     }
 
     /* Typography Animations */
-    .reveal-item {
+    .insane-text .char {
+      display: inline-block;
       opacity: 0;
-      transform: translateY(30px);
-      animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform: rotateX(-90deg) translateY(20px);
+      filter: blur(10px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity, filter;
     }
-
-    @keyframes revealUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .insane-text.animate-in .char {
+      opacity: 1;
+      transform: rotateX(0) translateY(0);
+      filter: blur(0);
     }
 
     .delay-1 {
@@ -121,25 +122,25 @@
 
   <main class="max-w-xl">
     <div class="space-y-6">
-      <div class="reveal-item flex items-center gap-4">
+      <div class="insane-text flex items-center gap-4" id="header-meta">
         <div class="w-12 h-[2px] bg-[var(--accent-color)]"></div>
         <span class="text-xs font-bold tracking-[0.3em] uppercase text-[var(--accent-color)]">
           Strategic Handover
         </span>
       </div>
 
-      <h1 class="reveal-item delay-1 text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900">
+      <h1 class="insane-text text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900" id="header-main">
         ECONOW <br>
         <span class="text-[var(--accent-color)]">25/26</span>
       </h1>
 
       <p
-        class="reveal-item delay-2 text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed">
+        class="insane-text text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed" id="header-sub">
         A legacy defined by purpose. Enter your Enactus credential to begin the handover documentation.
       </p>
     </div>
 
-    <div class="reveal-item delay-3 mt-12 space-y-6 max-w-sm">
+    <div class="insane-text mt-12 space-y-6 max-w-sm" id="header-cta">
       <div class="relative">
         <input type="text" id="emailInput" placeholder="Your Enactus Email"
           class="w-full bg-transparent border-b-2 border-gray-300 py-3 text-lg outline-none focus:border-[var(--accent-color)] placeholder-gray-400 transition-all">
@@ -175,6 +176,20 @@
       setTimeout(() => {
         overlay.classList.add('revealed');
       }, 500);
+      
+      // Initialize text animations
+      document.querySelectorAll('.insane-text').forEach(el => {
+        const html = el.innerHTML;
+        // Simple way to handle <br>
+        const parts = html.split('<br>');
+        el.innerHTML = parts.map(part => {
+          return part.trim().split('').map((char, i) =>
+            char === ' ' ? '&nbsp;' : `<span class="char" style="transition-delay: ${i * 0.03}s">${char}</span>`
+          ).join('');
+        }).join('<br>');
+        
+        setTimeout(() => el.classList.add('animate-in'), 800);
+      });
     });
 
     // Button exit animation
