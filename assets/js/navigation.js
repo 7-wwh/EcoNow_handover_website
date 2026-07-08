@@ -99,7 +99,14 @@
   }
 
   // Initialize state
-  syncActiveIndicators(0, true);
+  var currentPath = window.location.pathname.split('/').pop() || 'main.html';
+  var initialIndex = 0;
+  links.forEach(function(l, i) {
+    if (l.getAttribute('href') === currentPath) {
+      initialIndex = i;
+    }
+  });
+  syncActiveIndicators(initialIndex, true);
 
   // Interactive Scroll Navigation Links
   function handleAnchorClick(e, linkElement, index){
