@@ -1,159 +1,4 @@
-:root {
-  --ink: #241d15;
-  --oil: #3c2f20;
-  --wick: #150f0a;
-  --wax: #c07a2e;
-  --wax-light: #e3a758;
-  --wax-pale: #f2c98a;
-  --sage: #6d7a56;
-  --sage-dark: #4d5940;
-  --paper: #ece2cd;
-  --paper-deep: #ddcfae;
-  --cream: #f6efdf;
-  --receipt: #fbf6ea;
-  --line: rgba(36,29,21,0.16);
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--cream);
-  color: var(--ink);
-  font-family: 'Literata', serif;
-  font-size: 17px;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-::selection { background: var(--wax-pale); color: var(--ink); }
-
-h1, h2, h3, .label {
-  font-family: 'Big Shoulders Display', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.mono { font-family: 'Space Mono', monospace; }
-a { color: var(--sage-dark); }
-
-/* ---------- Cursor Styling ---------- */
-@media (pointer: fine) {
-  html, body, a, button, select, textarea, input, [role="button"], .nav-brand {
-    cursor: none !important;
-  }
-  .water-cursor {
-    display: block !important;
-  }
-}
-@media (pointer: coarse) {
-  .water-cursor {
-    display: none !important;
-  }
-}
-
-.water-cursor {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  margin-left: -14px;
-  margin-top: -14px;
-  z-index: 99999;
-  pointer-events: none;
-  transform-origin: center center;
-  will-change: transform;
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-
-.water-cursor__lens {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.005);
-  backdrop-filter: blur(4px) saturate(160%);
-  -webkit-backdrop-filter: blur(4px) saturate(160%);
-  
-  box-shadow:
-    inset 1.2px 1.2px 1.8px 0px rgba(255, 255, 255, 0.85),
-    inset -1.2px -1.2px 2.2px 0px rgba(0, 0, 0, 0.06),
-    0 0 0 0.8px rgba(255, 0, 80, 0.42),
-    0 0 0 1.6px rgba(0, 220, 255, 0.42),
-    0 0 0 0.5px rgba(36, 29, 21, 0.12),
-    0 0 0 2px rgba(255, 255, 255, 0.1),
-    0 6px 15px -4px rgba(21, 15, 10, 0.15),
-    0 0 6px 0.5px rgba(0, 210, 255, 0.12);
-    
-  transition: 
-    transform 300ms cubic-bezier(0.19, 1, 0.22, 1), 
-    background-color 300ms ease,
-    box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1);
-  transform-origin: center center;
-}
-
-.water-cursor.is-hovering .water-cursor__lens {
-  transform: scale(1.4);
-  background-color: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(6px) saturate(190%);
-  -webkit-backdrop-filter: blur(6px) saturate(190%);
-  box-shadow:
-    inset 1.8px 1.8px 2.2px 0px rgba(255, 255, 255, 0.95),
-    inset -1.5px -1.5px 3.5px 0px rgba(0, 0, 0, 0.05),
-    0 0 0 1.2px rgba(255, 0, 80, 0.5),
-    0 0 0 2.2px rgba(0, 220, 255, 0.5),
-    0 0 0 0.6px rgba(36, 29, 21, 0.15),
-    0 0 0 2.5px rgba(255, 255, 255, 0.12),
-    0 8px 18px -4px rgba(21, 15, 10, 0.2),
-    0 0 8px 1px rgba(0, 210, 255, 0.15);
-}
-
-.water-cursor.is-clicking .water-cursor__lens {
-  transform: scale(0.8);
-  box-shadow:
-    inset 1px 1px 1.2px 0px rgba(255, 255, 255, 0.8),
-    inset -1px -1px 1.8px 0px rgba(0, 0, 0, 0.1),
-    0 0 0 0.6px rgba(255, 0, 80, 0.45),
-    0 0 0 1.4px rgba(0, 220, 255, 0.45),
-    0 0 0 0.5px rgba(36, 29, 21, 0.12),
-    0 4px 6px -2px rgba(21, 15, 10, 0.18);
-}
-
-.water-cursor__ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: transparent;
-  box-shadow: 
-    inset 0 0 0 1px rgba(0, 210, 255, 0.4),
-    0 0 0 1px rgba(255, 0, 100, 0.2);
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.water-cursor.is-clicking .water-cursor__ripple {
-  animation: waterRipple 500ms cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
-}
-
-@keyframes waterRipple {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.8);
-    opacity: 0;
-  }
-}
-
-/* ---------- Liquid Nav ---------- */
+/* ---------- Ultra-Transparent Liquid Glass Nav ---------- */
 .liquid-nav {
   position: fixed;
   z-index: 200;
@@ -167,10 +12,12 @@ a { color: var(--sage-dark); }
   padding: 6px;
   border-radius: 999px;
   
+  /* Maximum structural clarity glass styling */
   background-color: rgba(242, 201, 138, 0.02); 
   backdrop-filter: blur(16px) saturate(240%);
   -webkit-backdrop-filter: blur(16px) saturate(240%);
   
+  /* Double-layer subtle specular reflections for deep 3D clarity */
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.15),
     inset 1.5px 2.5px 0px -2px rgba(255, 255, 255, 0.65),
@@ -181,6 +28,7 @@ a { color: var(--sage-dark); }
   transition: background-color 280ms ease;
 }
 
+/* Adaptive Contrast Styling for Light Background Zones */
 .liquid-nav.on-light {
   background-color: rgba(36, 29, 21, 0.025);
   box-shadow:
@@ -190,6 +38,7 @@ a { color: var(--sage-dark); }
     0px 12px 30px -10px rgba(36, 29, 21, 0.18);
 }
 
+/* ---------- Horizontal Viscous sliding Indicator (Desktop) ---------- */
 .liquid-nav__indicator {
   position: absolute;
   top: 6px; 
@@ -208,6 +57,7 @@ a { color: var(--sage-dark); }
   transform-origin: center;
 }
 
+/* Stretching Rightward viscosity animation */
 .liquid-nav[data-direction="right"] .liquid-nav__indicator {
   transition:
     right 420ms cubic-bezier(0.4, 0.02, 0.1, 1),            
@@ -216,6 +66,7 @@ a { color: var(--sage-dark); }
   transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);   
 }
 
+/* Stretching Leftward viscosity animation */
 .liquid-nav[data-direction="left"] .liquid-nav__indicator {
   transition:
     left 420ms cubic-bezier(0.4, 0.02, 0.1, 1),             
@@ -224,6 +75,7 @@ a { color: var(--sage-dark); }
   transform: scaleY(0.82) scaleX(1.05) translateY(0.5px);
 }
 
+/* Resting elastic snapback state */
 .liquid-nav:not(.is-animating) .liquid-nav__indicator {
   transform: scaleY(1) scaleX(1);
   transition: 
@@ -232,11 +84,12 @@ a { color: var(--sage-dark); }
     transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
 }
 
+/* ---------- Mobile Liquid Dropdown Container ---------- */
 .nav-dropdown {
   position: fixed;
   z-index: 199;
   left: 50%;
-  top: 78px;
+  top: 78px; /* Elegant spatial clearance below top:18px pill navbar */
   transform-origin: top center;
   opacity: 0;
   pointer-events: none;
@@ -247,6 +100,7 @@ a { color: var(--sage-dark); }
   padding: 8px;
   border-radius: 24px;
   
+  /* Droplet high transparent glass look matching root pill */
   background-color: rgba(242, 201, 138, 0.02);
   backdrop-filter: blur(18px) saturate(240%);
   -webkit-backdrop-filter: blur(18px) saturate(240%);
@@ -255,21 +109,25 @@ a { color: var(--sage-dark); }
     inset 1.6px 2.6px 0px -2px rgba(255, 255, 255, 0.4),
     0px 14px 34px -8px rgba(0,0,0,0.45);
   
+  /* Base transforms reset */
   transform: translateX(-50%) translateY(-35px) scaleX(0.5) scaleY(0.1);
   transition: background-color 280ms ease;
 }
 
+/* Extreme Dynamic Droplet opening animation */
 .nav-dropdown.open {
   opacity: 1;
   pointer-events: auto;
   animation: liquidDripOpen 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* Dynamic Snapback closing animation */
 .nav-dropdown.closing {
   pointer-events: none;
   animation: liquidDripClose 480ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }
 
+/* Viscous opening keyframe simulates gravity drip and elastic rebound */
 @keyframes liquidDripOpen {
   0% {
     transform: translateX(-50%) translateY(-35px) scaleX(0.4) scaleY(0.1);
@@ -277,16 +135,16 @@ a { color: var(--sage-dark); }
     opacity: 0;
   }
   45% {
-    transform: translateX(-50%) translateY(22px) scaleX(0.8) scaleY(1.35);
+    transform: translateX(-50%) translateY(22px) scaleX(0.8) scaleY(1.35); /* Stretched heavy drop */
     filter: blur(1px);
     opacity: 0.85;
   }
   70% {
-    transform: translateX(-50%) translateY(-6px) scaleX(1.12) scaleY(0.84);
+    transform: translateX(-50%) translateY(-6px) scaleX(1.12) scaleY(0.84); /* Kinetic rebound squashing */
     opacity: 1;
   }
   88% {
-    transform: translateX(-50%) translateY(3px) scaleX(0.96) scaleY(1.04);
+    transform: translateX(-50%) translateY(3px) scaleX(0.96) scaleY(1.04); /* Settling wobble */
   }
   100% {
     transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
@@ -295,6 +153,7 @@ a { color: var(--sage-dark); }
   }
 }
 
+/* Viscous closing keyframe simulates pulling tension before snapping upwards */
 @keyframes liquidDripClose {
   0% {
     transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1);
@@ -302,11 +161,11 @@ a { color: var(--sage-dark); }
     opacity: 1;
   }
   30% {
-    transform: translateX(-50%) translateY(8px) scaleX(0.88) scaleY(1.16);
+    transform: translateX(-50%) translateY(8px) scaleX(0.88) scaleY(1.16); /* Pull down stretch under resistance */
     opacity: 0.9;
   }
   100% {
-    transform: translateX(-50%) translateY(-65px) scaleX(0.3) scaleY(0.05);
+    transform: translateX(-50%) translateY(-65px) scaleX(0.3) scaleY(0.05); /* Instant elastic collapse */
     filter: blur(5px);
     opacity: 0;
   }
@@ -320,6 +179,7 @@ a { color: var(--sage-dark); }
     0px 14px 34px -8px rgba(36,29,21,0.18);
 }
 
+/* ---------- Vertical Viscous Indicator (Mobile Dropdown) ---------- */
 .nav-dropdown__indicator {
   position: absolute;
   left: 8px;
@@ -338,22 +198,25 @@ a { color: var(--sage-dark); }
   transform-origin: center;
 }
 
+/* Stretching Downward viscosity animation inside dropdown */
 .nav-dropdown[data-direction="down"] .nav-dropdown__indicator {
   transition:
-    bottom 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-    top 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
+    bottom 420ms cubic-bezier(0.4, 0.02, 0.1, 1),            /* Bottom edge speeds ahead */
+    top 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,       /* Top edge lags behind */
     transform 380ms ease;
-  transform: scaleX(0.85) scaleY(1.06) translateX(0px);
+  transform: scaleX(0.85) scaleY(1.06) translateX(0px);      /* Squeezes horizontally while stretching vertically */
 }
 
+/* Stretching Upward viscosity animation inside dropdown */
 .nav-dropdown[data-direction="up"] .nav-dropdown__indicator {
   transition:
-    top 420ms cubic-bezier(0.4, 0.02, 0.1, 1),
-    bottom 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,
+    top 420ms cubic-bezier(0.4, 0.02, 0.1, 1),               /* Top edge speeds ahead */
+    bottom 480ms cubic-bezier(0.5, 0.05, 0.15, 1.15) 50ms,    /* Bottom edge lags behind */
     transform 380ms ease;
-  transform: scaleX(0.85) scaleY(1.06) translateX(0px);
+  transform: scaleX(0.85) scaleY(1.06) translateX(0px);      /* Squeezes horizontally while stretching vertically */
 }
 
+/* Dropdown resting spring state */
 .nav-dropdown:not(.is-animating) .nav-dropdown__indicator {
   transform: scaleX(1) scaleY(1);
   transition: 
@@ -362,6 +225,7 @@ a { color: var(--sage-dark); }
     transform 460ms cubic-bezier(0.175, 0.885, 0.42, 1.35);
 }
 
+/* ---------- Nav brand & link typography ---------- */
 .liquid-nav__link {
   position: relative;
   z-index: 2;
@@ -452,6 +316,7 @@ a { color: var(--sage-dark); }
 .nav-brand--pulse { animation: brandPulse 420ms cubic-bezier(0.34,1.56,0.64,1); }
 .nav-brand--pulse .nav-brand__flame { animation: flameFlicker 0.4s ease-in-out 2; }
 
+/* ---------- Burger Toggle Button ---------- */
 .nav-burger {
   display: none;
   position: relative;
@@ -475,6 +340,7 @@ a { color: var(--sage-dark); }
   height: 2px;
   border-radius: 2px;
   background: var(--paper-deep);
+  /* Springy transform ease curve */
   transition: 
     transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1), 
     opacity 220ms ease, 
@@ -485,6 +351,7 @@ a { color: var(--sage-dark); }
 .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(2) { opacity: 0; transform: scale(0); }
 .nav-burger[aria-expanded="true"] .nav-burger__line:nth-child(3) { transform: translateY(-7px) rotate(-45deg) scaleX(1.1); }
 
+/* Dropdown panel links styles with individual flowing cascade entrance */
 .nav-dropdown__link {
   position: relative;
   z-index: 2;
@@ -498,6 +365,7 @@ a { color: var(--sage-dark); }
   color: var(--paper-deep);
   text-decoration: none;
   
+  /* Flowing cascading state closed */
   opacity: 0;
   transform: translateY(-16px) scaleY(0.75);
   transition: 
@@ -507,11 +375,13 @@ a { color: var(--sage-dark); }
     background-color 240ms ease;
 }
 
+/* Trigger cascade on parent expansion */
 .nav-dropdown.open .nav-dropdown__link {
   opacity: 1;
   transform: translateY(0) scaleY(1);
 }
 
+/* Delicate fluid offset cascade delays */
 .nav-dropdown.open .nav-dropdown__link:nth-child(2) { transition-delay: 140ms; }
 .nav-dropdown.open .nav-dropdown__link:nth-child(3) { transition-delay: 210ms; }
 .nav-dropdown.open .nav-dropdown__link:nth-child(4) { transition-delay: 280ms; }
@@ -536,6 +406,7 @@ a { color: var(--sage-dark); }
   .nav-burger { display: flex; }
 }
 
+/* ---------- Spread header styles ---------- */
 .top-bar {
   position: fixed;
   top: 0; left: 0; right: 0;

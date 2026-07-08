@@ -1,0 +1,39 @@
+:root {
+  --ink: #241d15;
+  --oil: #3c2f20;
+  --wick: #150f0a;
+  --wax: #c07a2e;
+  --wax-light: #e3a758;
+  --wax-pale: #f2c98a;
+  --sage: #6d7a56;
+  --sage-dark: #4d5940;
+  --paper: #ece2cd;
+  --paper-deep: #ddcfae;
+  --cream: #f6efdf;
+  --receipt: #fbf6ea;
+  --line: rgba(36,29,21,0.16);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Literata', serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--wax-pale); color: var(--ink); }
+
+h1, h2, h3, .label {
+  font-family: 'Big Shoulders Display', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.mono { font-family: 'Space Mono', monospace; }
+a { color: var(--sage-dark); }

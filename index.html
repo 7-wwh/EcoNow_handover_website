@@ -1,76 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EcoNow — Access</title>
-  <link rel="stylesheet" href="assets/revamp/revamp.css">
-  <script src="assets/revamp/revamp.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoNow — Ultra-Transparent Viscous Liquid Navigation Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght=500;700;900&family=Literata:ital,opsz,wght=0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Load Tailwind CDN first -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Styles in order of dependency -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/cursor.css">
+  <link rel="stylesheet" href="assets/css/navigation.css">
+  <link rel="stylesheet" href="assets/css/progress-rail.css">
+  <link rel="stylesheet" href="assets/css/showcase.css">
 </head>
+<body data-page="background">
 
-<body>
+<!-- Spread Top Bar (Fades out and merges into Liquid Nav on scroll) -->
+<header class="top-bar dark-zone" id="topBar">
+  <a class="top-bar__brand" href="#intro" id="topBarBrand" aria-label="EcoNow — Home">
+    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
+      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
+      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
+      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#topFlameGrad)"/>
+      <defs>
+        <linearGradient id="topFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:#fff2c9"/>
+          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
+          <stop offset="1" style="stop-color:var(--wax)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="nav-brand__word">EcoNow</span>
+  </a>
+  <ul class="top-bar__menu">
+    <li><a href="#intro">Background</a></li>
+    <li><a href="#ceiling">Ceiling</a></li>
+    <li><a href="#handover">Handover</a></li>
+  </ul>
+</header>
 
-  <!-- Hidden SVG filters -->
-  <svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
-    <filter id="goo" primitiveUnits="objectBoundingBox">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="blur" />
-      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 10 -5" result="goo" />
-      <feBlend in="SourceGraphic" in2="goo" />
-    </filter>
-    <radialGradient id="glowGrad" cx="50%" cy="55%" r="50%">
-      <stop offset="0%" stop-color="#E8964A" stop-opacity="0.4" />
-      <stop offset="100%" stop-color="#E8964A" stop-opacity="0" />
-    </radialGradient>
-    <filter id="softBlur" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur stdDeviation="5" />
-    </filter>
-  </svg>
+<!-- Floating Pill Liquid Nav (Adapts layout automatically) -->
+<nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
+  <a class="nav-brand" href="#intro" id="navBrand" aria-label="EcoNow — Home">
+    <svg class="nav-brand__mark" viewBox="0 0 20 28" fill="none" aria-hidden="true">
+      <rect x="6" y="14" width="8" height="12" rx="2" fill="var(--paper-deep)"/>
+      <rect x="6" y="18.5" width="8" height="3" fill="var(--sage)"/>
+      <path class="nav-brand__flame" d="M10 2c-1.6 3-3.4 4.6-3.4 7.6a3.4 3.4 0 0 0 6.8 0c0-1-.4-1.7-.9-2.4.4 1.7-.8 2.4-.8 2.4s.5-2-.9-3.6C10.6 4.6 10.3 3.3 10 2Z" fill="url(#navFlameGrad)"/>
+      <defs>
+        <linearGradient id="navFlameGrad" x1="10" y1="2" x2="10" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:#fff2c9"/>
+          <stop offset="0.55" style="stop-color:var(--wax-light)"/>
+          <stop offset="1" style="stop-color:var(--wax)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="nav-brand__word">EcoNow</span>
+  </a>
+  
+  <!-- Desktop Liquid Indicator -->
+  <div class="liquid-nav__indicator" id="navIndicator"></div>
+  
+  <a class="liquid-nav__link" href="#intro" data-page="background">Background</a>
+  <a class="liquid-nav__link" href="#ceiling" data-page="ceiling">Ceiling</a>
+  <a class="liquid-nav__link" href="#handover" data-page="handover">Handover</a>
+  
+  <!-- Mobile Burger Toggle Button -->
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navDropdown">
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+  </button>
+</nav>
 
-  <div>
-    <div class="candle-wrap" id="candleWrap" aria-hidden="true">
-      <svg class="candle-svg" viewBox="0 0 74 90" xmlns="http://www.w3.org/2000/svg">
-        <!-- smoke wisp -->
-        <path class="smoke-path" d="M37,62 C34,54 41,48 38,40 C35,33 42,28 39,20" fill="none" stroke="#B9B3A4"
-          stroke-width="2.4" stroke-linecap="round" opacity="0" />
-        <!-- ember -->
-        <circle class="ember" cx="37" cy="62" r="2.4" fill="#E8964A" />
-        <!-- flame -->
-        <g class="flame-group">
-          <ellipse cx="37" cy="40" rx="19" ry="26" fill="url(#glowGrad)" filter="url(#softBlur)" />
-          <path d="M37,66 C24,66 14,56 15,42 C16,32 24,28 20,16
-                   C28,20 30,28 27,34 C34,18 40,10 36,0
-                   C50,10 54,24 46,34 C56,32 60,42 52,52
-                   C48,60 42,66 37,66 Z" fill="#F2884A" stroke="#2B2620" stroke-width="3" stroke-linejoin="round" />
-          <path d="M36,58 C29,58 24,50 26,42 C27,36 31,32 29,26
-                   C34,30 36,34 35,38 C39,28 43,24 40,18
-                   C48,24 50,32 45,38 C50,38 52,44 47,50
-                   C44,54 40,58 36,58 Z" fill="#FFD873" />
-          <ellipse cx="32" cy="30" rx="3" ry="5" fill="#FFF6DE" opacity="0.9" />
-        </g>
-      </svg>
-    </div>
+<!-- Mobile Dropdown Menu with Vertical Viscosity Physics -->
+<div class="nav-dropdown" id="navDropdown" role="menu" aria-hidden="true">
+  <!-- Mobile Fluid Active Indicator -->
+  <div class="nav-dropdown__indicator" id="dropdownIndicator"></div>
+  
+  <a class="nav-dropdown__link" href="#intro" data-page="background" role="menuitem">Background</a>
+  <a class="nav-dropdown__link" href="#ceiling" data-page="ceiling" role="menuitem">Ceiling</a>
+  <a class="nav-dropdown__link" href="#handover" data-page="handover" role="menuitem">Handover</a>
+</div>
 
-    <form class="receipt" id="gateForm" novalidate>
-      <div class="receipt-header">EcoNow · Enactus</div>
-      <div class="receipt-title">Handover Access</div>
-      <div class="receipt-sub">present your enactus credential</div>
-
-      <hr class="divider">
-
-      <label for="emailInput">Enactus Email</label>
-      <div class="input-row">
-        <input type="text" id="emailInput" placeholder="Your Enactus Email" autocomplete="off" autocapitalize="off"
-          spellcheck="false">
-      </div>
-
-      <button type="submit">Enter</button>
-
-      <div class="status" id="statusMsg"></div>
-
-      <div class="footer-note">No 15 · Verified Entry Only</div>
-    </form>
+<!-- Glass Progress Rail -->
+<div id="burnRail" aria-hidden="true">
+  <div class="flame"></div>
+  <div class="stick">
+    <div class="burned" id="burnedFill"></div>
   </div>
-</body>
+</div>
 
+<!-- ===================== SECTION 1: BACKGROUND (DARK) ===================== -->
+<section class="section-showcase zone-dark dark-zone" id="intro">
+  <div class="badge">Liquifying Transitions</div>
+  <h1>Dripping <em>Glass</em>.</h1>
+  <p>Test the navigation on both desktop and mobile screens. Tap tabs to witness the asymmetric stretching liquid glass "droplet" effect.</p>
+  <div class="scroll-guide">Scroll Down to Light Zone ↓</div>
+</section>
+
+<!-- ===================== SECTION 2: CEILING (LIGHT) ===================== -->
+<section class="section-showcase zone-light" id="ceiling">
+  <div class="badge">Adaptive Transparency</div>
+  <h1>Elastic <em>Bounce</em>.</h1>
+  <p>The system actively tracks color contrast under the floating bar. When passing over light zones, the panel seamlessly turns smoky charcoal to maximize readability.</p>
+  <div class="scroll-guide">Scroll to Green Zone ↓</div>
+</section>
+
+<!-- ===================== SECTION 3: HANDOVER (DARK SAGE) ===================== -->
+<section class="section-showcase zone-warm-accent dark-zone" id="handover">
+  <div class="badge">Responsive Unity</div>
+  <h1>Mobile <em>Viscosity</em>.</h1>
+  <p>Shrink your browser to mobile widths, trigger the burger button, and tap between links to see the custom vertical stretching indicator inside the dropdown.</p>
+  <a href="#intro" style="color: var(--wax-light); font-family: 'Space Mono', monospace; text-transform: uppercase; font-size: 0.9rem; text-decoration: none; margin-top: 20px;">Back to top ↑</a>
+</section>
+
+<!-- JS Initialization in dependency order -->
+<script src="assets/js/cursor.js"></script>
+<script src="assets/js/progress-rail.js"></script>
+<script src="assets/js/navigation.js"></script>
+<script src="assets/js/logo-pulse.js"></script>
+<script src="assets/js/scroll-morph.js"></script>
+<script src="assets/js/contrast-sensor.js"></script>
+<script src="assets/js/burger-dropdown.js"></script>
+</body>
 </html>

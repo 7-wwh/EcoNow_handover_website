@@ -1,0 +1,68 @@
+/* ---------- Custom demonstration layout zones ---------- */
+.section-showcase {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 24px;
+  text-align: center;
+  position: relative;
+}
+.section-showcase h1 {
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  line-height: 0.92;
+  margin: 0 0 20px 0;
+  font-weight: 900;
+}
+.section-showcase h1 em {
+  font-style: normal;
+  color: var(--wax-light);
+}
+.section-showcase p {
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  max-width: 650px;
+  margin: 0 0 40px 0;
+  opacity: 0.85;
+  text-wrap: balance;
+}
+.section-showcase .badge {
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  border: 1px solid currentColor;
+  padding: 6px 18px;
+  border-radius: 999px;
+  margin-bottom: 30px;
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.zone-dark {
+  background: radial-gradient(ellipse at center, #2c241a, #150f0a);
+  color: var(--paper);
+}
+.zone-light {
+  background: radial-gradient(ellipse at center, #faf6ee, var(--cream));
+  color: var(--ink);
+}
+.zone-warm-accent {
+  background: radial-gradient(ellipse at center, #423424, #241d15);
+  color: var(--paper-deep);
+}
+
+.scroll-guide {
+  position: absolute;
+  bottom: 50px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100%, 20%, 50%, 80% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  66% { transform: translateY(-4px); }
+}
