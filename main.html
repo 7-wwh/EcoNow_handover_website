@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght=500;700;900&family=Literata:ital,opsz,wght=0,18..144,400;0,18..144,500;0,18..144,600;1,18..144,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+    :root {
+      --clip-x: 50vw;
+      --clip-y: 50vh;
+    }
     /* Transition Overlay */
     #transition-overlay {
       position: fixed;
@@ -18,11 +22,11 @@
       background-color: #556b2f;
       z-index: 1000;
       pointer-events: none;
-      clip-path: circle(150% at var(--clip-x, 50vw) var(--clip-y, 50vh));
+      clip-path: circle(150% at var(--clip-x) var(--clip-y));
       transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1);
     }
     #transition-overlay.revealed {
-      clip-path: circle(0% at var(--clip-x, 50vw) var(--clip-y, 50vh));
+      clip-path: circle(0% at var(--clip-x) var(--clip-y));
     }
 </style>
 <link rel="stylesheet" href="assets/css/base.css">

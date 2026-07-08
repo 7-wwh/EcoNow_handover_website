@@ -191,8 +191,9 @@
 
         setTimeout(() => {
           // Store button coordinates before redirect
-          sessionStorage.setItem('clip-x', document.documentElement.style.getPropertyValue('--clip-x'));
-          sessionStorage.setItem('clip-y', document.documentElement.style.getPropertyValue('--clip-y'));
+          const styles = getComputedStyle(document.documentElement);
+          sessionStorage.setItem('clip-x', styles.getPropertyValue('--clip-x'));
+          sessionStorage.setItem('clip-y', styles.getPropertyValue('--clip-y'));
           window.location.href = 'main.html';
         }, 1200);
       } else {
