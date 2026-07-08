@@ -11,9 +11,6 @@
     :root {
       --accent-color: #556b2f;
       --text-color: #1a1a1a;
-      /* Default entrance point */
-      --clip-x: 50vw;
-      --clip-y: 50vh;
     }
 
     body {
@@ -25,18 +22,17 @@
     }
 
     /* Typography Animations */
-    .insane-text .char {
-      display: inline-block;
+    .reveal-item {
       opacity: 0;
-      transform: rotateX(-90deg) translateY(20px);
-      filter: blur(10px);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform, opacity, filter;
+      transform: translateY(30px);
+      animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .insane-text.animate-in .char {
-      opacity: 1;
-      transform: rotateX(0) translateY(0);
-      filter: blur(0);
+
+    @keyframes revealUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .delay-1 {
@@ -83,14 +79,12 @@
       background-color: var(--accent-color);
       z-index: 1000;
       pointer-events: none;
-      /* Initially covers the screen */
-      clip-path: circle(150% at var(--clip-x) var(--clip-y));
+      clip-path: circle(0% at var(--btn-center-x, 50%) var(--btn-center-y, 50%));
       transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    /* When 'revealed' class is added, it shrinks to 0 (shows page) */
-    #transition-overlay.revealed {
-      clip-path: circle(0% at var(--clip-x) var(--clip-y));
+    #transition-overlay.active {
+      clip-path: circle(150% at var(--btn-center-x, 50%) var(--btn-center-y, 50%));
     }
 
     .btn-interact {
@@ -122,27 +116,27 @@
 
   <main class="max-w-xl">
     <div class="space-y-6">
-      <div class="insane-text flex items-center gap-4" id="header-meta">
+      <div class="reveal-item flex items-center gap-4">
         <div class="w-12 h-[2px] bg-[var(--accent-color)]"></div>
         <span class="text-xs font-bold tracking-[0.3em] uppercase text-[var(--accent-color)]">
           Strategic Handover
         </span>
       </div>
 
-      <h1 class="insane-text text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900" id="header-main">
+      <h1 class="reveal-item delay-1 text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900">
         ECONOW <br>
         <span class="text-[var(--accent-color)]">25/26</span>
       </h1>
 
       <p
-        class="insane-text text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed" id="header-sub">
+        class="reveal-item delay-2 text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed">
         A legacy defined by purpose. Enter your Enactus credential to begin the handover documentation.
       </p>
     </div>
 
-    <div class="insane-text mt-12 space-y-6 max-w-sm" id="header-cta">
+    <div class="reveal-item delay-3 mt-12 space-y-6 max-w-sm">
       <div class="relative">
-        <input type="text" id="emailInput" placeholder="Your Enactus Email"
+        <input type="text" id="emailInput" placeholder="xxxx.enactusunm@gmail.com"
           class="w-full bg-transparent border-b-2 border-gray-300 py-3 text-lg outline-none focus:border-[var(--accent-color)] placeholder-gray-400 transition-all">
       </div>
       <div id="statusMsg" class="text-sm font-medium text-red-600 h-6"></div>
@@ -162,58 +156,23 @@
     const statusMsg = document.getElementById('statusMsg');
     const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+\.enactusunm@gmail\.com$/i;
 
-    // Track cursor for entry animation
-    window.addEventListener('mousemove', (e) => {
-      if (!overlay.classList.contains('revealed')) {
-        document.documentElement.style.setProperty('--clip-x', `${e.clientX}px`);
-        document.documentElement.style.setProperty('--clip-y', `${e.clientY}px`);
-      }
-    });
+    // Position overlay origin
+    const updateButtonPosition = () => {
+      const rect = button.getBoundingClientRect();
+      document.documentElement.style.setProperty('--btn-center-x', `${rect.left + rect.width / 2}px`);
+      document.documentElement.style.setProperty('--btn-center-y', `${rect.top + rect.height / 2}px`);
+    };
 
-    // Helper to recursively wrap text nodes
-    function splitTextNodes(el) {
-      el.childNodes.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.nodeValue;
-          const span = document.createElement('span');
-          span.innerHTML = text.split('').map((char, i) =>
-            char === ' ' ? '&nbsp;' : `<span class="char" style="transition-delay: ${i * 0.03}s">${char}</span>`
-          ).join('');
-          node.replaceWith(span);
-        } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('char')) {
-          splitTextNodes(node);
-        }
-      });
-    }
+    window.addEventListener('resize', updateButtonPosition);
+    updateButtonPosition();
 
-    // Entrance animation on load
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        overlay.classList.add('revealed');
-      }, 500);
-      
-      // Initialize text animations
-      document.querySelectorAll('.insane-text').forEach(el => {
-        splitTextNodes(el);
-        setTimeout(() => el.classList.add('animate-in'), 800);
-      });
-    });
-
-    // Button exit animation
     button.addEventListener('click', () => {
       const val = emailInput.value.trim();
       if (EMAIL_PATTERN.test(val)) {
-        const rect = button.getBoundingClientRect();
-        document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
-        document.documentElement.style.setProperty('--clip-y', `${rect.top + rect.height / 2}px`);
-
         statusMsg.textContent = "";
-        overlay.classList.remove('revealed');
-
+        overlay.classList.add('active');
         setTimeout(() => {
-          const styles = getComputedStyle(document.documentElement);
-          sessionStorage.setItem('clip-x', styles.getPropertyValue('--clip-x'));
-          sessionStorage.setItem('clip-y', styles.getPropertyValue('--clip-y'));
+          // Redirect logic
           window.location.href = 'main.html';
         }, 1200);
       } else {
