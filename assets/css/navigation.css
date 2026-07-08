@@ -105,12 +105,12 @@
   .nav-dropdown.open {
     opacity: 1;
     pointer-events: auto;
-    animation: liquidDripOpen 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: liquidDripOpen 1000ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
   .nav-dropdown.closing {
     pointer-events: none;
-    animation: liquidDripClose 480ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+    animation: liquidDripClose 700ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
   }
 
   @keyframes liquidDripOpen {
@@ -281,7 +281,7 @@
     border-radius: 2px;
     background: var(--paper-deep);
     transition: 
-      transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1), 
+      transform 550ms cubic-bezier(0.34, 1.56, 0.64, 1), 
       opacity 220ms ease, 
       background-color 280ms ease;
   }

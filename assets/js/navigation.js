@@ -99,15 +99,20 @@
   }
 
   // Initialize state
-  var currentPath = window.location.pathname;
-  var initialIndex = 0;
-  links.forEach(function(l, i) {
-    var href = l.getAttribute('href');
-    if (currentPath.includes(href) || (currentPath === '/' && href === 'main.html')) {
-      initialIndex = i;
-    }
+  window.addEventListener('DOMContentLoaded', function() {
+    var currentPath = window.location.pathname;
+    var initialIndex = 0;
+    links.forEach(function(l, i) {
+      var href = l.getAttribute('href');
+      if (currentPath.includes(href) || (currentPath === '/' && href === 'main.html')) {
+        initialIndex = i;
+      }
+    });
+
+    requestAnimationFrame(function() {
+      syncActiveIndicators(initialIndex, true);
+    });
   });
-  syncActiveIndicators(initialIndex, true);
 
   // Interactive Scroll Navigation Links
   function handleAnchorClick(e, linkElement, index){
