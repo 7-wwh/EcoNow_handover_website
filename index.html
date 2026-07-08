@@ -33,6 +33,7 @@
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform, opacity, filter;
     }
+
     .insane-text.animate-in .char {
       opacity: 1;
       transform: rotateX(0) translateY(0);
@@ -125,18 +126,19 @@
       <div class="insane-text flex items-center gap-4" id="header-meta">
         <div class="w-12 h-[2px] bg-[var(--accent-color)]"></div>
         <span class="text-xs font-bold tracking-[0.3em] uppercase text-[var(--accent-color)]">
-          Strategic Handover
+          A year with
         </span>
       </div>
 
-      <h1 class="insane-text text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900" id="header-main">
+      <h1 class="insane-text text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900"
+        id="header-main">
         ECONOW <br>
         <span class="text-[var(--accent-color)]">25/26</span>
       </h1>
 
-      <p
-        class="insane-text text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed" id="header-sub">
-        A legacy defined by purpose. Enter your Enactus credential to begin the handover documentation.
+      <p class="insane-text text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed"
+        id="header-sub">
+        My thoughts, plans and memories during my term with my wonderful team
       </p>
     </div>
 
@@ -191,7 +193,7 @@
       setTimeout(() => {
         overlay.classList.add('revealed');
       }, 500);
-      
+
       // Initialize text animations
       document.querySelectorAll('.insane-text').forEach(el => {
         splitTextNodes(el);
