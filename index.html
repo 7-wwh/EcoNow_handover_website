@@ -11,6 +11,9 @@
     :root {
       --accent-color: #556b2f;
       --text-color: #1a1a1a;
+      /* Default entrance point */
+      --clip-x: 50vw;
+      --clip-y: 50vh;
     }
 
     body {
@@ -79,12 +82,14 @@
       background-color: var(--accent-color);
       z-index: 1000;
       pointer-events: none;
-      clip-path: circle(0% at var(--btn-center-x, 50%) var(--btn-center-y, 50%));
+      /* Initially covers the screen */
+      clip-path: circle(150% at var(--clip-x) var(--clip-y));
       transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
-    #transition-overlay.active {
-      clip-path: circle(150% at var(--btn-center-x, 50%) var(--btn-center-y, 50%));
+    /* When 'revealed' class is added, it shrinks to 0 (shows page) */
+    #transition-overlay.revealed {
+      clip-path: circle(0% at var(--clip-x) var(--clip-y));
     }
 
     .btn-interact {
@@ -136,7 +141,7 @@
 
     <div class="reveal-item delay-3 mt-12 space-y-6 max-w-sm">
       <div class="relative">
-        <input type="text" id="emailInput" placeholder="xxxx.enactusunm@gmail.com"
+        <input type="text" id="emailInput" placeholder="Your Enactus Email"
           class="w-full bg-transparent border-b-2 border-gray-300 py-3 text-lg outline-none focus:border-[var(--accent-color)] placeholder-gray-400 transition-all">
       </div>
       <div id="statusMsg" class="text-sm font-medium text-red-600 h-6"></div>
@@ -156,23 +161,38 @@
     const statusMsg = document.getElementById('statusMsg');
     const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+\.enactusunm@gmail\.com$/i;
 
-    // Position overlay origin
-    const updateButtonPosition = () => {
-      const rect = button.getBoundingClientRect();
-      document.documentElement.style.setProperty('--btn-center-x', `${rect.left + rect.width / 2}px`);
-      document.documentElement.style.setProperty('--btn-center-y', `${rect.top + rect.height / 2}px`);
-    };
+    // Track cursor for entry animation
+    window.addEventListener('mousemove', (e) => {
+      // Only update until overlay reveals itself
+      if (!overlay.classList.contains('revealed')) {
+        document.documentElement.style.setProperty('--clip-x', `${e.clientX}px`);
+        document.documentElement.style.setProperty('--clip-y', `${e.clientY}px`);
+      }
+    });
 
-    window.addEventListener('resize', updateButtonPosition);
-    updateButtonPosition();
+    // Entrance animation on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        overlay.classList.add('revealed');
+      }, 500);
+    });
 
+    // Button exit animation
     button.addEventListener('click', () => {
       const val = emailInput.value.trim();
       if (EMAIL_PATTERN.test(val)) {
+        // Update coordinates to button center for exit
+        const rect = button.getBoundingClientRect();
+        document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
+        document.documentElement.style.setProperty('--clip-y', `${rect.top + rect.height / 2}px`);
+
         statusMsg.textContent = "";
-        overlay.classList.add('active');
+        overlay.classList.remove('revealed');
+
         setTimeout(() => {
-          // Redirect logic
+          // Store button coordinates before redirect
+          sessionStorage.setItem('clip-x', document.documentElement.style.getPropertyValue('--clip-x'));
+          sessionStorage.setItem('clip-y', document.documentElement.style.getPropertyValue('--clip-y'));
           window.location.href = 'main.html';
         }, 1200);
       } else {
