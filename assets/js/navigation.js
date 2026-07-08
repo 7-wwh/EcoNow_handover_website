@@ -17,8 +17,10 @@
   function moveIndicator(link, instant = false){
     if(!link) return;
     
-    var targetLeft = link.offsetLeft;
-    var targetRight = nav.offsetWidth - (link.offsetLeft + link.offsetWidth);
+    var navRect = nav.getBoundingClientRect();
+    var linkRect = link.getBoundingClientRect();
+    var targetLeft = linkRect.left - navRect.left;
+    var targetRight = navRect.width - (targetLeft + linkRect.width);
 
     if(instant) {
       indicator.style.transition = 'none';
@@ -48,8 +50,10 @@
   function moveDropdownIndicator(link, instant = false){
     if(!link) return;
 
-    var targetTop = link.offsetTop;
-    var targetBottom = dropdown.offsetHeight - (link.offsetTop + link.offsetHeight);
+    var dropdownRect = dropdown.getBoundingClientRect();
+    var linkRect = link.getBoundingClientRect();
+    var targetTop = linkRect.top - dropdownRect.top;
+    var targetBottom = dropdownRect.height - (targetTop + linkRect.height);
 
     if(instant) {
       dropdownIndicator.style.transition = 'none';
