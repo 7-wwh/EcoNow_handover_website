@@ -164,12 +164,27 @@
 
     // Track cursor for entry animation
     window.addEventListener('mousemove', (e) => {
-      // Only update until overlay reveals itself
       if (!overlay.classList.contains('revealed')) {
         document.documentElement.style.setProperty('--clip-x', `${e.clientX}px`);
         document.documentElement.style.setProperty('--clip-y', `${e.clientY}px`);
       }
     });
+
+    // Helper to recursively wrap text nodes
+    function splitTextNodes(el) {
+      el.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.nodeValue;
+          const span = document.createElement('span');
+          span.innerHTML = text.split('').map((char, i) =>
+            char === ' ' ? '&nbsp;' : `<span class="char" style="transition-delay: ${i * 0.03}s">${char}</span>`
+          ).join('');
+          node.replaceWith(span);
+        } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('char')) {
+          splitTextNodes(node);
+        }
+      });
+    }
 
     // Entrance animation on load
     window.addEventListener('load', () => {
@@ -179,15 +194,7 @@
       
       // Initialize text animations
       document.querySelectorAll('.insane-text').forEach(el => {
-        const html = el.innerHTML;
-        // Simple way to handle <br>
-        const parts = html.split('<br>');
-        el.innerHTML = parts.map(part => {
-          return part.trim().split('').map((char, i) =>
-            char === ' ' ? '&nbsp;' : `<span class="char" style="transition-delay: ${i * 0.03}s">${char}</span>`
-          ).join('');
-        }).join('<br>');
-        
+        splitTextNodes(el);
         setTimeout(() => el.classList.add('animate-in'), 800);
       });
     });
@@ -196,7 +203,6 @@
     button.addEventListener('click', () => {
       const val = emailInput.value.trim();
       if (EMAIL_PATTERN.test(val)) {
-        // Update coordinates to button center for exit
         const rect = button.getBoundingClientRect();
         document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
         document.documentElement.style.setProperty('--clip-y', `${rect.top + rect.height / 2}px`);
@@ -205,7 +211,6 @@
         overlay.classList.remove('revealed');
 
         setTimeout(() => {
-          // Store button coordinates before redirect
           const styles = getComputedStyle(document.documentElement);
           sessionStorage.setItem('clip-x', styles.getPropertyValue('--clip-x'));
           sessionStorage.setItem('clip-y', styles.getPropertyValue('--clip-y'));
