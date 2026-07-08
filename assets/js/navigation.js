@@ -99,10 +99,11 @@
   }
 
   // Initialize state
-  var currentPath = window.location.pathname.split('/').pop() || 'main.html';
+  var currentPath = window.location.pathname;
   var initialIndex = 0;
   links.forEach(function(l, i) {
-    if (l.getAttribute('href') === currentPath) {
+    var href = l.getAttribute('href');
+    if (currentPath.includes(href) || (currentPath === '/' && href === 'main.html')) {
       initialIndex = i;
     }
   });
