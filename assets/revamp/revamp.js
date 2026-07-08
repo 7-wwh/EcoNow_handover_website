@@ -400,48 +400,66 @@
     setTimeout(sampleContrast, 50);
   })();
 
-  // ---------- Mobile Burger Dropdown Controller ----------
+  
+  // ---------- Gate logic ----------
   (function(){
-    var nav = document.getElementById('liquidNav');
-    var burger = document.getElementById('navBurger');
-    var dropdown = document.getElementById('navDropdown');
-    if(!nav || !burger || !dropdown) return;
+    const DESTINATION_URL = "main.html";
+    const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+\.enactusunm@gmail\.com$/i;
 
-    var closingTimeout = null;
+    const form = document.getElementById('gateForm');
+    if (!form) return;
+    const receipt = document.querySelector('.receipt');
+    const input = document.getElementById('emailInput');
+    const status = document.getElementById('statusMsg');
+    const candleWrap = document.getElementById('candleWrap');
+    const flameGroup = document.querySelector('.flame-group');
 
-    function openDropdown() {
-      clearTimeout(closingTimeout);
-      dropdown.classList.remove('closing');
-      burger.setAttribute('aria-expanded', 'true');
-      dropdown.classList.add('open');
-      dropdown.setAttribute('aria-hidden', 'false');
-    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const value = input.value.trim();
 
-    function closeDropdown() {
-      if (!dropdown.classList.contains('open')) return;
-      burger.setAttribute('aria-expanded', 'false');
-      dropdown.classList.remove('open');
-      dropdown.classList.add('closing');
-      dropdown.setAttribute('aria-hidden', 'true');
-
-      closingTimeout = setTimeout(function(){
-        dropdown.classList.remove('closing');
-      }, 480);
-    }
-
-    burger.addEventListener('click', function(e){
-      e.stopPropagation();
-      var expanded = burger.getAttribute('aria-expanded') === 'true';
-      if (expanded) {
-        closeDropdown();
+      if (EMAIL_PATTERN.test(value)) {
+        status.textContent = 'Approved';
+        status.className = 'status show approve';
+        input.disabled = true;
+        sessionStorage.setItem('authorized', 'true');
+        setTimeout(function () {
+          window.location.href = DESTINATION_URL;
+        }, 700);
       } else {
-        openDropdown();
+        status.textContent = 'Declined';
+        status.className = 'status show reject';
+        receipt.classList.remove('shake');
+        void receipt.offsetWidth;
+        receipt.classList.add('shake');
       }
     });
 
-    document.addEventListener('click', function(e){
-      if(!nav.contains(e.target) && !dropdown.contains(e.target)){
-        closeDropdown();
-      }
+    input.addEventListener('input', function () {
+      status.className = 'status';
+    });
+
+    input.addEventListener('focus', function () {
+      const cursorElements = document.querySelectorAll('.water-cursor');
+      cursorElements.forEach(el => el.style.display = 'none');
+    });
+
+    input.addEventListener('blur', function () {
+      const cursorElements = document.querySelectorAll('.water-cursor');
+      cursorElements.forEach(el => el.style.display = 'block');
+    });
+
+    // Candle interaction
+    candleWrap.addEventListener('mouseenter', function () {
+      flameGroup.style.animation = 'none';
+      candleWrap.classList.add('out');
+    });
+
+    candleWrap.addEventListener('mouseleave', function () {
+      candleWrap.classList.remove('out');
+      flameGroup.style.animation = 'none';
+      void flameGroup.offsetWidth;
+      flameGroup.style.animation = 'relight 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards, flicker 3.4s ease-in-out 0.5s infinite';
     });
   })();
+

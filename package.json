@@ -1,0 +1,9 @@
+{
+  "name": "econow-website",
+  "version": "1.0.0",
+  "description": "EcoNow handover website",
+  "scripts": {
+    "build": "cat assets/revamp/revamp.css > dist/main.css && cat assets/revamp/revamp.js > dist/main.js",
+    "prebuild": "mkdir -p dist"
+  }
+}
