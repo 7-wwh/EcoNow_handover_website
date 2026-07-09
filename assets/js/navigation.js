@@ -120,6 +120,24 @@
     });
   });
 
+  // Fallback to window load to ensure accurate positioning after all assets render
+  window.addEventListener('load', function() {
+    var bodyDataPage = document.body.getAttribute('data-page');
+    var initialIndex = 0;
+    
+    if (bodyDataPage) {
+      links.forEach(function(l, i) {
+        if (l.getAttribute('data-page') === bodyDataPage) {
+          initialIndex = i;
+        }
+      });
+    }
+
+    requestAnimationFrame(function() {
+      window.syncActiveIndicators(initialIndex, true);
+    });
+  });
+
   links.forEach(function(link, i) {
     link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
   });
