@@ -154,12 +154,43 @@
 
   <div id="transition-overlay"></div>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDQNd1bQWwvkeOud5ROhlLiCUGTchJTblM",
+      authDomain: "econow2526.firebaseapp.com",
+      projectId: "econow2526",
+      storageBucket: "econow2526.firebasestorage.app",
+      messagingSenderId: "514653585801",
+      appId: "1:514653585801:web:25021a25966df011f76158",
+      measurementId: "G-ZHPJDXJ65H"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
     const button = document.getElementById('cta-button');
     const overlay = document.getElementById('transition-overlay');
     const emailInput = document.getElementById('emailInput');
     const statusMsg = document.getElementById('statusMsg');
-    const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+\.enactusunm@gmail\.com$/i;
+    const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    async function saveEmailToFirestore(email) {
+      const emailRef = doc(db, "user_emails", email);
+      const docSnap = await getDoc(emailRef);
+
+      if (docSnap.exists()) {
+        throw new Error("This email has already been registered.");
+      }
+
+      await setDoc(emailRef, {
+        email,
+        timestamp: new Date(),
+        userAgent: navigator.userAgent
+      });
+    }
 
     // Track cursor for entry animation
     window.addEventListener('mousemove', (e) => {
@@ -177,24 +208,35 @@
       }, 500);
     });
 
-    // Button exit animation
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
       const val = emailInput.value.trim();
-      if (EMAIL_PATTERN.test(val)) {
-        // Update coordinates to button center for exit
+
+      if (!EMAIL_PATTERN.test(val)) {
+        statusMsg.textContent = "Invalid credential format.";
+        emailInput.classList.add('border-red-500');
+        return;
+      }
+
+      try {
+        button.disabled = true;
+        button.textContent = "Verifying...";
+        statusMsg.textContent = "";
+        emailInput.classList.remove('border-red-500');
+
+        await saveEmailToFirestore(val);
+
         const rect = button.getBoundingClientRect();
         document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
         document.documentElement.style.setProperty('--clip-y', `${rect.top + rect.height / 2}px`);
-
-        statusMsg.textContent = "";
         overlay.classList.remove('revealed');
 
         setTimeout(() => {
           window.location.href = 'main.html';
         }, 1200);
-      } else {
-        statusMsg.textContent = "Invalid credential format.";
-        emailInput.classList.add('border-red-500');
+      } catch (err) {
+        statusMsg.textContent = err?.message || "Unable to save email.";
+        button.disabled = false;
+        button.textContent = "Enter Booklet";
       }
     });
 
