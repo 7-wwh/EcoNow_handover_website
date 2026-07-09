@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Off the Grid | EcoNow</title>
+
+    <!-- Premium & Ultra-Legible Screen Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Montserrat:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
+                        serif: ['Baskervville', 'Georgia', 'serif'],
+                        mono: ['Space Mono', 'monospace'],
+                        hand: ['Caveat', 'cursive'],
+                    },
+                    colors: {
+                        paper: '#FAF9EE',
+                        ink: '#1E2115',
+                        lead: '#585C4C',
+                        accent: '#556B2F',
+                        stamp: '#C72C1E'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @media (pointer: fine) {
+
+            html,
+            body,
+            a,
+            button {
+                cursor: none !important;
+            }
+
+            .water-cursor {
+                display: block !important;
+            }
+        }
+
+        @media (pointer: coarse) {
+            .water-cursor {
+                display: none !important;
+            }
+        }
+
+        .water-cursor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 28px;
+            height: 28px;
+            margin-left: -14px;
+            margin-top: -14px;
+            z-index: 99999;
+            pointer-events: none;
+            transform-origin: center center;
+            will-change: transform;
+            opacity: 0;
+            transition: opacity 400ms ease;
+        }
+
+        .water-cursor__lens {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.005);
+            backdrop-filter: blur(4px) saturate(160%);
+            -webkit-backdrop-filter: blur(4px) saturate(160%);
+            box-shadow:
+                inset 1.2px 1.2px 1.8px 0px rgba(255, 255, 255, 0.85),
+                inset -1.2px -1.2px 2.2px 0px rgba(0, 0, 0, 0.06),
+                0 0 0 0.8px rgba(85, 107, 47, 0.32),
+                0 0 0 1.6px rgba(0, 220, 255, 0.18),
+                0 0 0 0.5px rgba(30, 33, 21, 0.1),
+                0 0 0 2px rgba(255, 255, 255, 0.1),
+                0 6px 15px -4px rgba(16, 19, 10, 0.12),
+                0 0 6px 0.5px rgba(85, 107, 47, 0.12);
+            transition:
+                transform 300ms cubic-bezier(0.19, 1, 0.22, 1),
+                background-color 300ms ease,
+                box-shadow 300ms cubic-bezier(0.19, 1, 0.22, 1);
+            transform-origin: center center;
+        }
+
+        .water-cursor.is-hovering .water-cursor__lens {
+            transform: scale(1.35);
+            background-color: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(5px) saturate(180%);
+            -webkit-backdrop-filter: blur(5px) saturate(180%);
+            box-shadow:
+                inset 1.8px 1.8px 2.2px 0px rgba(255, 255, 255, 0.95),
+                inset -1.5px -1.5px 3.5px 0px rgba(0, 0, 0, 0.05),
+                0 0 0 1.2px rgba(85, 107, 47, 0.45),
+                0 0 0 2.2px rgba(0, 220, 255, 0.28),
+                0 0 0 0.6px rgba(30, 33, 21, 0.12),
+                0 0 0 2.5px rgba(255, 255, 255, 0.1),
+                0 8px 18px -4px rgba(16, 19, 10, 0.15);
+        }
+
+        .water-cursor.is-clicking .water-cursor__lens {
+            transform: scale(0.85);
+            box-shadow:
+                inset 1px 1px 1.2px 0px rgba(255, 255, 255, 0.8),
+                inset -1px -1px 1.8px 0px rgba(0, 0, 0, 0.1),
+                0 0 0 0.6px rgba(85, 107, 47, 0.4),
+                0 0 0 1.4px rgba(0, 220, 255, 0.25);
+        }
+
+        @keyframes slow-sway {
+
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        .sway-indicator {
+            animation: slow-sway 7s ease-in-out infinite;
+            transform-origin: center;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-[#FAF9EE] text-ink font-sans antialiased min-h-screen flex flex-col justify-center p-6 md:p-12 relative select-none">
+
+    <!-- Header -->
+    <header class="absolute top-6 left-6 md:top-12 md:left-12 z-10">
+        <a href="main.html"
+            class="font-serif uppercase tracking-[0.2em] text-[14px] font-bold text-accent hover:opacity-80 transition-opacity">
+            ECONOW
+        </a>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col items-center justify-center text-center max-w-xl mx-auto z-10">
+
+        <div class="w-24 h-24 mb-10 flex items-center justify-center text-accent/60 hover:text-accent transition-colors duration-500 cursor-pointer"
+            id="minimalPivot">
+            <svg class="w-full h-full stroke-current" fill="none" viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="42" stroke-width="0.75" stroke-dasharray="2 4" />
+                <circle cx="50" cy="50" r="38" stroke-width="0.5" class="opacity-50" />
+                <line x1="50" y1="8" x2="50" y2="20" stroke-width="0.75" />
+                <line x1="50" y1="80" x2="50" y2="92" stroke-width="0.75" />
+                <line x1="8" y1="50" x2="20" y2="50" stroke-width="0.75" />
+                <line x1="80" y1="50" x2="92" y2="50" stroke-width="0.75" />
+                <g class="sway-indicator">
+                    <line x1="50" y1="18" x2="50" y2="82" stroke-width="1" />
+                    <path d="M47 30 L50 18 L53 30 Z" fill="currentColor" stroke="none" />
+                    <circle cx="50" cy="82" r="2.5" stroke-width="1" fill="#FAF9EE" />
+                    <circle cx="50" cy="50" r="3" fill="#1E2115" stroke="none" />
+                </g>
+            </svg>
+        </div>
+
+        <span class="font-mono text-[11px] text-stamp uppercase tracking-[0.25em] font-semibold mb-3 block">
+            Error 404
+        </span>
+
+        <h1 class="font-serif italic text-3xl md:text-4xl text-ink tracking-tight mb-4">
+            Off the map.
+        </h1>
+
+        <p class="font-serif text-[15px] leading-relaxed text-lead max-w-md mb-10">
+            You have wandered into unstructured coordinates. This pathway is either under reconstruction or has drifted
+            off the official organizational ledger.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center gap-6 justify-center">
+            <a href="main.html"
+                class="text-xs uppercase font-bold tracking-[0.15em] text-ink hover:text-accent pb-1 border-b border-ink/35 hover:border-accent transition-all duration-300">
+                Return Home
+            </a>
+            <span class="hidden sm:inline text-lead/40 font-mono text-[10px]">/</span>
+            <a href="main.html#item02"
+                class="text-xs uppercase font-bold tracking-[0.15em] text-lead hover:text-ink pb-1 border-b border-transparent hover:border-ink transition-all duration-300">
+                Trace Timeline
+            </a>
+        </div>
+    </main>
+
+    <script>
+            (function () {
+                var isFinePointer = window.matchMedia('(pointer: fine)').matches;
+                if (!isFinePointer) return;
+
+                var mouseX = 0, mouseY = 0;
+                var hasMoved = false;
+
+                window.addEventListener('mousemove', function (e) {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (!hasMoved) {
+                        hasMoved = true;
+                        segments.forEach(function (seg) {
+                            seg.el.style.opacity = '1';
+                            seg.x = mouseX;
+                            seg.y = mouseY;
+                        });
+                    }
+                }, { passive: true });
+
+                window.addEventListener('mouseleave', function () {
+                    segments.forEach(function (s) { s.el.style.opacity = '0'; });
+                });
+
+                window.addEventListener('mouseenter', function () {
+                    if (hasMoved) {
+                        segments.forEach(function (seg) {
+                            seg.el.style.opacity = '1';
+                        });
+                    }
+                });
+
+                var numSegments = 8;
+                var segments = [];
+                var container = document.createElement('div');
+                container.style.pointerEvents = 'none';
+                document.body.appendChild(container);
+
+                for (var i = 0; i < numSegments; i++) {
+                    var segEl = document.createElement('div');
+                    segEl.className = 'water-cursor';
+
+                    var lens = document.createElement('div');
+                    lens.className = 'water-cursor__lens';
+
+                    var sizeMultiplier = Math.pow(0.82, i);
+                    var baseOpacity = 0.9 * Math.pow(0.65, i);
+
+                    if (i > 0) {
+                        lens.style.transform = 'scale(' + sizeMultiplier.toFixed(3) + ')';
+                        segEl.style.opacity = '0';
+                        lens.style.boxShadow =
+                            'inset 1px 1px 1.5px 0px rgba(255, 255, 255, 0.75), ' +
+                            'inset -1px -1px 2px 0px rgba(0, 0, 0, 0.04), ' +
+                            '0 0 0 0.5px rgba(85, 107, 47, 0.25), ' +
+                            '0 0 0 1px rgba(0, 220, 255, 0.12)';
+                    }
+
+                    segEl.appendChild(lens);
+                    container.appendChild(segEl);
+
+                    segments.push({
+                        el: segEl,
+                        lens: lens,
+                        x: 0,
+                        y: 0,
+                        sizeMultiplier: sizeMultiplier,
+                        baseOpacity: baseOpacity,
+                        index: i
+                    });
+                }
+
+                document.addEventListener('mousedown', function () {
+                    segments[0].el.classList.add('is-clicking');
+                    for (var i = 1; i < segments.length; i++) {
+                        segments[i].el.classList.add('is-clicking');
+                    }
+                });
+
+                document.addEventListener('mouseup', function () {
+                    segments.forEach(function (seg) {
+                        seg.el.classList.remove('is-clicking');
+                    });
+                });
+
+                document.addEventListener('mouseover', function (e) {
+                    var target = e.target;
+                    if (!target) return;
+                    var clickable = target.closest('a, button, #minimalPivot');
+                    if (clickable) {
+                        segments[0].el.classList.add('is-hovering');
+                    } else {
+                        segments[0].el.classList.remove('is-hovering');
+                    }
+                });
+
+                function tick() {
+                    for (var i = 0; i < segments.length; i++) {
+                        var seg = segments[i];
+                        var targetX = (i === 0) ? mouseX : segments[i - 1].x;
+                        var targetY = (i === 0) ? mouseY : segments[i - 1].y;
+
+                        var delay = (i === 0) ? 0.08 : 0.25;
+
+                        var dx = targetX - seg.x;
+                        var dy = targetY - seg.y;
+
+                        seg.x += dx * delay;
+                        seg.y += dy * delay;
+
+                        var velX = dx * delay;
+                        var velY = dy * delay;
+                        var speed = Math.sqrt(velX * velX + velY * velY);
+
+                        var angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+                        var maxStretch = (i === 0) ? 0.45 : 0.60;
+                        var stretchCoeff = (i === 0) ? 0.07 : 0.10;
+                        var stretch = Math.min(speed * stretchCoeff, maxStretch);
+
+                        var scaleX = seg.sizeMultiplier * (1 + stretch);
+                        var scaleY = seg.sizeMultiplier * (1 - (stretch * 0.4));
+
+                        var movementAlphaModifier = Math.max(0.4, 1 - (speed * 0.012));
+                        var finalOpacity = seg.baseOpacity * movementAlphaModifier;
+
+                        seg.el.style.opacity = hasMoved ? finalOpacity : '0';
+                        seg.el.style.transform = 'translate3d(' + seg.x.toFixed(2) + 'px, ' + seg.y.toFixed(2) + 'px, 0) rotate(' + angle.toFixed(1) + 'deg) scale(' + scaleX.toFixed(3) + ', ' + scaleY.toFixed(3) + ')';
+                    }
+
+                    window.requestAnimationFrame(tick);
+                }
+                window.requestAnimationFrame(tick);
+            })();
+    </script>
+</body>
+
+</html>
