@@ -80,7 +80,7 @@
   }
 
   // Set layout positions initially
-  function syncActiveIndicators(index, instant = false){
+  window.syncActiveIndicators = function(index, instant = false){
     links.forEach(function(l, i){
       if(i === index){
         l.classList.add('active');
@@ -104,40 +104,21 @@
 
   // Initialize state
   window.addEventListener('DOMContentLoaded', function() {
-    var currentPath = window.location.pathname;
+    var bodyDataPage = document.body.getAttribute('data-page');
     var initialIndex = 0;
-    links.forEach(function(l, i) {
-      var href = l.getAttribute('href');
-      if (currentPath.includes(href) || (currentPath === '/' && href === 'main.html')) {
-        initialIndex = i;
-      }
-    });
-
-    requestAnimationFrame(function() {
-      syncActiveIndicators(initialIndex, true);
-    });
-  });
-
-  // Interactive Scroll Navigation Links
-  function handleAnchorClick(e, linkElement, index){
-    e.preventDefault();
-    var targetId = linkElement.getAttribute('href');
-    var targetSection = document.querySelector(targetId);
-    if (targetSection) {
-      syncActiveIndicators(index);
-      
-      // Let liquid menu snap shut if on mobile
-      var burger = document.getElementById('navBurger');
-      if(burger && burger.getAttribute('aria-expanded') === 'true') {
-        burger.click();
-      }
-
-      window.scrollTo({
-        top: targetSection.offsetTop - 60,
-        behavior: 'smooth'
+    
+    if (bodyDataPage) {
+      links.forEach(function(l, i) {
+        if (l.getAttribute('data-page') === bodyDataPage) {
+          initialIndex = i;
+        }
       });
     }
-  }
+
+    requestAnimationFrame(function() {
+      window.syncActiveIndicators(initialIndex, true);
+    });
+  });
 
   links.forEach(function(link, i) {
     link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
@@ -146,6 +127,30 @@
   dropdownLinks.forEach(function(link, i) {
     link.addEventListener('click', function(e) { handleAnchorClick(e, link, i); });
   });
+
+  // Interactive Scroll Navigation Links
+  function handleAnchorClick(e, linkElement, index){
+    // If it's a page navigation (not an internal hash link), let the browser handle the navigation
+    var href = linkElement.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      var targetSection = document.querySelector(href);
+      if (targetSection) {
+        window.syncActiveIndicators(index);
+        
+        // Let liquid menu snap shut if on mobile
+        var burger = document.getElementById('navBurger');
+        if(burger && burger.getAttribute('aria-expanded') === 'true') {
+          burger.click();
+        }
+
+        window.scrollTo({
+          top: targetSection.offsetTop - 60,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
 
   // Scroll active tracking logic
   var sections = document.querySelectorAll('section');

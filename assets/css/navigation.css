@@ -335,6 +335,7 @@
     .liquid-nav__link { display: none; }
     .liquid-nav__indicator { display: none; }
     .nav-burger { display: flex; }
+    .top-bar { display: none; }
   }
 
   /* Spread Top Bar */
