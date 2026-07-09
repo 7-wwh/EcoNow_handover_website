@@ -156,7 +156,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDQNd1bQWwvkeOud5ROhlLiCUGTchJTblM",
@@ -178,14 +178,7 @@
     const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     async function saveEmailToFirestore(email) {
-      const emailRef = doc(db, "user_emails", email);
-      const docSnap = await getDoc(emailRef);
-
-      if (docSnap.exists()) {
-        throw new Error("This email has already been registered.");
-      }
-
-      await setDoc(emailRef, {
+      await addDoc(collection(db, "user_emails"), {
         email,
         timestamp: new Date(),
         userAgent: navigator.userAgent
