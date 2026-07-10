@@ -15,6 +15,11 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>document.documentElement.classList.add('econow-gate-locked');</script>
+  <script src="assets/js/gatekeeper.js"></script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=index.html">
+  </noscript>
 
   <script>
     tailwind.config = {
@@ -1041,6 +1046,10 @@
     .liquid-beaker {
       animation: beakerFill 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
     }
+
+    html.econow-gate-locked body {
+      visibility: hidden;
+    }
   </style>
 </head>
 
@@ -1049,22 +1058,22 @@
 
   <!-- Spread Top Bar (Fades out and merges into Liquid Nav on scroll) -->
   <header class="top-bar" id="topBar">
-    <a class="top-bar__brand" href="#" id="topBarBrand" aria-label="EcoNow — Home">
+    <a class="top-bar__brand" href="main.html" id="topBarBrand" aria-label="EcoNow — Home">
       <span class="font-serif uppercase tracking-[0.176em] text-[18px] font-bold text-[#556B2F]">ECONOW</span>
     </a>
     <div class="flex items-center gap-6">
       <ul class="top-bar__menu">
-        <li><a href="#" data-page="background">Background</a></li>
-        <li><a href="#" class="active" data-page="year2526">Year 25/26</a></li>
-        <li><a href="#" data-page="future">Future</a></li>
-        <li><a href="#" data-page="memories">Memories</a></li>
+        <li><a href="main.html" data-page="background">Background</a></li>
+        <li><a href="year2526.html" class="active" data-page="year2526">Year 25/26</a></li>
+        <li><a href="future.html" data-page="future">Future</a></li>
+        <li><a href="memories.html" data-page="memories">Memories</a></li>
       </ul>
     </div>
   </header>
 
   <!-- Floating Pill Liquid Nav -->
   <nav class="liquid-nav" id="liquidNav" aria-label="Page navigation">
-    <a class="nav-brand" href="#" id="navBrand" aria-label="EcoNow — Home">
+    <a class="nav-brand" href="main.html" id="navBrand" aria-label="EcoNow — Home">
       <span
         class="font-serif uppercase tracking-[0.176em] text-[18px] font-bold text-[#556B2F] leading-none">ECONOW</span>
     </a>
@@ -1072,10 +1081,10 @@
     <!-- Desktop Liquid Indicator -->
     <div class="liquid-nav__indicator" id="navIndicator"></div>
 
-    <a class="liquid-nav__link" href="#" data-page="background">Background</a>
-    <a class="liquid-nav__link active" href="#" data-page="year2526">Year 25/26</a>
-    <a class="liquid-nav__link" href="#" data-page="future">Future</a>
-    <a class="liquid-nav__link" href="#" data-page="memories">Memories</a>
+    <a class="liquid-nav__link" href="main.html" data-page="background">Background</a>
+    <a class="liquid-nav__link active" href="year2526.html" data-page="year2526">Year 25/26</a>
+    <a class="liquid-nav__link" href="future.html" data-page="future">Future</a>
+    <a class="liquid-nav__link" href="memories.html" data-page="memories">Memories</a>
 
     <!-- Mobile Burger Toggle Button -->
     <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false"
@@ -1091,10 +1100,10 @@
     <!-- Mobile Fluid Active Indicator -->
     <div class="nav-dropdown__indicator" id="dropdownIndicator"></div>
 
-    <a class="nav-dropdown__link" href="#" data-page="background" role="menuitem">Background</a>
-    <a class="nav-dropdown__link active" href="#" data-page="year2526" role="menuitem">Year 25/26</a>
-    <a class="nav-dropdown__link" href="#" data-page="future" role="menuitem">Future</a>
-    <a class="nav-dropdown__link" href="#" data-page="memories" role="menuitem">Memories</a>
+    <a class="nav-dropdown__link" href="main.html" data-page="background" role="menuitem">Background</a>
+    <a class="nav-dropdown__link active" href="year2526.html" data-page="year2526" role="menuitem">Year 25/26</a>
+    <a class="nav-dropdown__link" href="future.html" data-page="future" role="menuitem">Future</a>
+    <a class="nav-dropdown__link" href="memories.html" data-page="memories" role="menuitem">Memories</a>
   </div>
 
   <!-- Glass Progress Rail -->

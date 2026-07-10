@@ -12,6 +12,11 @@
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>document.documentElement.classList.add('econow-gate-locked');</script>
+  <script src="assets/js/gatekeeper.js"></script>
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=index.html">
+  </noscript>
 
   <script>
     tailwind.config = {
@@ -771,6 +776,10 @@
   .count-pulsing {
     animation: count-pulse 0.4s ease-out;
   }
+
+  html.econow-gate-locked body {
+    visibility: hidden;
+  }
   </style>
 </head>
 
@@ -778,7 +787,7 @@
 
 <!-- Spread Top Bar (Fades out and merges into Liquid Nav on scroll) -->
 <header class="top-bar" id="topBar">
-  <a class="top-bar__brand" href="background.html" id="topBarBrand" aria-label="EcoNow — Home">
+  <a class="top-bar__brand" href="main.html" id="topBarBrand" aria-label="EcoNow — Home">
     <span class="font-serif uppercase tracking-[0.176em] text-[18px] font-bold text-[#556B2F]">ECONOW</span>
   </a>
   <ul class="top-bar__menu">

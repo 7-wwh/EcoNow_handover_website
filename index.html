@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoNow 25/26 | My experience with </title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/gatekeeper.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -135,7 +136,7 @@
 
       <p
         class="reveal-item delay-2 text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed">
-        A documentaion on my plans, thoughts, people and memories with my wonderful team.
+        A documentation on my plans, thoughts, people and memories with my wonderful team.
       </p>
     </div>
 
@@ -178,11 +179,39 @@
     const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const ALLOWED_EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+\.enactusunm@gmail\.com$/i;
 
-    async function saveEmailToFirestore(email) {
+    // Helper: Fetches user's public IP address via ipify API
+    async function fetchUserIp() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        if (response.ok) {
+          const data = await response.json();
+          return data.ip || 'Unknown';
+        }
+      } catch (error) {
+        console.warn("Failed to fetch public IP (Likely blocked by browser extension/adblocker). Proceeding with fallback.", error);
+      }
+      return 'Unknown';
+    }
+
+    // Helper: Gets or generates a unique long-term device ID saved in localStorage
+    function getDeviceID() {
+      let deviceId = localStorage.getItem('econow_device_id');
+      if (!deviceId) {
+        // Generate a random ID prefixed with dev_ and timestamp
+        deviceId = 'dev_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        localStorage.setItem('econow_device_id', deviceId);
+      }
+      return deviceId;
+    }
+
+    // Save payload to firestore containing the email, timestamp, user agent, ip and deviceId
+    async function saveEmailToFirestore(email, ipAddress, deviceId) {
       await addDoc(collection(db, "user_emails"), {
         email,
         timestamp: new Date(),
-        userAgent: navigator.userAgent
+        userAgent: navigator.userAgent,
+        ipAddress,
+        deviceId
       });
     }
 
@@ -223,7 +252,20 @@
         statusMsg.textContent = "";
         emailInput.classList.remove('border-red-500');
 
-        await saveEmailToFirestore(val);
+        // Fetch user context parameters
+        const userIp = await fetchUserIp();
+        const userDeviceId = getDeviceID();
+
+        // Submit to database
+        await saveEmailToFirestore(val, userIp, userDeviceId);
+
+        if (window.EcoNowGatekeeper) {
+          window.EcoNowGatekeeper.grantAccess({
+            email: val,
+            ipAddress: userIp,
+            deviceId: userDeviceId
+          });
+        }
 
         const rect = button.getBoundingClientRect();
         document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
@@ -231,10 +273,18 @@
         overlay.classList.remove('revealed');
 
         setTimeout(() => {
-          window.location.href = 'main.html';
+          const nextTarget = window.EcoNowGatekeeper
+            ? window.EcoNowGatekeeper.getNextTargetFromUrl()
+            : 'main.html';
+          window.location.href = nextTarget;
         }, 1200);
       } catch (err) {
-        statusMsg.textContent = err?.message || "Unable to save email.";
+        // If Firestore rules deny access (due to banned IP or Device ID), intercept it
+        if (err.code === 'permission-denied') {
+          statusMsg.textContent = "Your access has been restricted.";
+        } else {
+          statusMsg.textContent = err?.message || "Unable to save email.";
+        }
         button.disabled = false;
         button.textContent = "Enter Booklet";
       }
