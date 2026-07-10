@@ -176,6 +176,7 @@
     const emailInput = document.getElementById('emailInput');
     const statusMsg = document.getElementById('statusMsg');
     const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const ALLOWED_EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+\.enactusunm@gmail\.com$/i;
 
     async function saveEmailToFirestore(email) {
       await addDoc(collection(db, "user_emails"), {
@@ -206,6 +207,12 @@
 
       if (!EMAIL_PATTERN.test(val)) {
         statusMsg.textContent = "Invalid credential format.";
+        emailInput.classList.add('border-red-500');
+        return;
+      }
+
+      if (!ALLOWED_EMAIL_PATTERN.test(val)) {
+        statusMsg.textContent = "Only official EcoNow (.enactusunm@gmail.com) emails are permitted.";
         emailInput.classList.add('border-red-500');
         return;
       }
