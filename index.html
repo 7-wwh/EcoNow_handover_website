@@ -7,11 +7,14 @@
   <title>EcoNow 25/26 | My experience with </title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="assets/js/gatekeeper.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700;900&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --accent-color: #556b2f;
+      --accent-muted: rgba(85, 107, 47, 0.15);
       --text-color: #1a1a1a;
+      --bg-color: #FCFBF9; /* Warm, premium alabaster */
       /* Default entrance point */
       --clip-x: 50vw;
       --clip-y: 50vh;
@@ -19,7 +22,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
+      background-color: var(--bg-color);
       color: var(--text-color);
       overflow-x: hidden;
       min-height: 100vh;
@@ -28,8 +31,8 @@
     /* Typography Animations */
     .reveal-item {
       opacity: 0;
-      transform: translateY(30px);
-      animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform: translateY(20px);
+      animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes revealUp {
@@ -39,38 +42,33 @@
       }
     }
 
-    .delay-1 {
-      animation-delay: 0.2s;
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+
+    /* Elegant Input Interaction */
+    .input-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: var(--accent-color);
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    .delay-2 {
-      animation-delay: 0.4s;
+    .input-wrapper:focus-within::after {
+      width: 100%;
+      left: 0;
     }
 
-    .delay-3 {
-      animation-delay: 0.6s;
-    }
-
-    /* Input Field Animation */
     #emailInput {
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      letter-spacing: 0.05em;
+      transition: all 0.4s ease;
     }
 
     #emailInput:focus {
-      letter-spacing: 0.15em;
-      border-color: var(--accent-color);
-    }
-
-    /* Candle Interaction */
-    .flame-group {
-      transition: opacity 0.3s ease;
-      transform-origin: 50% 100%;
-    }
-
-    .candle-wrap:hover .flame-group {
-      opacity: 0.4;
-      transform: scale(0.9);
+      padding-left: 4px;
     }
 
     /* Transition Overlay */
@@ -83,72 +81,81 @@
       background-color: var(--accent-color);
       z-index: 1000;
       pointer-events: none;
-      /* Initially covers the screen */
       clip-path: circle(150% at var(--clip-x) var(--clip-y));
-      transition: clip-path 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+      transition: clip-path 1.2s cubic-bezier(0.76, 0, 0.24, 1);
     }
 
-    /* When 'revealed' class is added, it shrinks to 0 (shows page) */
     #transition-overlay.revealed {
       clip-path: circle(0% at var(--clip-x) var(--clip-y));
     }
 
+    /* Editorial Style Button */
     .btn-interact {
-      border: 2px solid var(--accent-color);
+      border: 1px solid var(--accent-color);
       color: var(--accent-color);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: transparent;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .btn-interact:hover {
       background-color: var(--accent-color);
-      color: white;
-      letter-spacing: 0.2em;
+      color: var(--bg-color);
+      letter-spacing: 0.15em;
+      box-shadow: 0 4px 20px var(--accent-muted);
+    }
+
+    .btn-interact:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      background-color: transparent;
+      color: var(--accent-color);
+    }
+
+    /* Smooth Spinner Fade */
+    #btn-spinner {
+      transition: opacity 0.3s ease, width 0.3s ease;
     }
   </style>
 </head>
 
 <body class="flex flex-col justify-center px-8 md:px-24">
 
-  <!-- Ambient Candle -->
-  <div class="fixed top-8 right-8 candle-wrap cursor-pointer" id="candleWrap">
-    <svg width="40" height="50" viewBox="0 0 74 90">
-      <g class="flame-group">
-        <path
-          d="M37,66 C24,66 14,56 15,42 C16,32 24,28 20,16 C28,20 30,28 27,34 C34,18 40,10 36,0 C50,10 54,24 46,34 C56,32 60,42 52,52 C48,60 42,66 37,66 Z"
-          fill="#556b2f" />
-      </g>
-    </svg>
-  </div>
-
   <main class="max-w-xl">
     <div class="space-y-6">
       <div class="reveal-item flex items-center gap-4">
-        <div class="w-12 h-[2px] bg-[var(--accent-color)]"></div>
-        <span class="text-xs font-bold tracking-[0.3em] uppercase text-[var(--accent-color)]">
+        <div class="w-8 h-[1px] bg-[var(--accent-color)] opacity-60"></div>
+        <span class="text-[10px] font-bold tracking-[0.4em] uppercase text-[var(--accent-color)]">
           Looking back at
         </span>
       </div>
 
-      <h1 class="reveal-item delay-1 text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-gray-900">
+      <h1 class="reveal-item delay-1 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-stone-900">
         ECONOW <br>
-        <span class="text-[var(--accent-color)]">25/26</span>
+        <span class="text-[var(--accent-color)] font-light">25/26</span>
       </h1>
 
       <p
-        class="reveal-item delay-2 text-lg md:text-xl font-light text-gray-600 tracking-tight max-w-md leading-relaxed">
-        A documentation on my plans, thoughts, people and memories with my wonderful team.
+        class="reveal-item delay-2 text-base md:text-lg font-light text-stone-500 tracking-tight max-w-sm leading-relaxed">
+        A quiet space documenting plans, thoughts, people, and archival memories with my wonderful team.
       </p>
     </div>
 
-    <div class="reveal-item delay-3 mt-12 space-y-6 max-w-sm">
-      <div class="relative">
+    <div class="reveal-item delay-3 mt-14 space-y-5 max-w-xs">
+      <div class="relative input-wrapper border-b border-stone-200 pb-1">
         <input type="text" id="emailInput" placeholder="Enactus Email Address"
-          class="w-full bg-transparent border-b-2 border-gray-300 py-3 text-lg outline-none focus:border-[var(--accent-color)] placeholder-gray-400 transition-all">
+          class="w-full bg-transparent py-2 text-sm outline-none placeholder-stone-400 text-stone-800 tracking-wide">
       </div>
-      <div id="statusMsg" class="text-sm font-medium text-red-600 h-6"></div>
+      
+      <!-- Subtle Error Message Area -->
+      <div id="statusMsg" class="text-xs font-medium text-red-700/80 h-4 transition-all duration-300"></div>
 
-      <button id="cta-button" class="px-8 py-4 font-bold tracking-widest uppercase btn-interact w-full">
-        Enter Booklet
+      <button id="cta-button" class="py-3.5 text-xs font-semibold tracking-widest uppercase btn-interact w-full flex items-center justify-center gap-2 rounded-sm">
+        <svg id="btn-spinner" class="animate-spin h-3.5 w-3.5 text-current hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+          <path class="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span id="btn-text">Enter Booklet</span>
       </button>
     </div>
   </main>
@@ -173,6 +180,8 @@
     const db = getFirestore(app);
 
     const button = document.getElementById('cta-button');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const btnText = document.getElementById('btn-text');
     const overlay = document.getElementById('transition-overlay');
     const emailInput = document.getElementById('emailInput');
     const statusMsg = document.getElementById('statusMsg');
@@ -236,21 +245,22 @@
 
       if (!EMAIL_PATTERN.test(val)) {
         statusMsg.textContent = "Invalid credential format.";
-        emailInput.classList.add('border-red-500');
+        emailInput.classList.add('border-red-700/50');
         return;
       }
 
       if (!ALLOWED_EMAIL_PATTERN.test(val)) {
-        statusMsg.textContent = "Only official Enactus Email is permitted";
-        emailInput.classList.add('border-red-500');
+        statusMsg.textContent = "Only official Enactus Email is permitted.";
+        emailInput.classList.add('border-red-700/50');
         return;
       }
 
       try {
         button.disabled = true;
-        button.textContent = "Verifying...";
+        btnSpinner.classList.remove('hidden');
+        btnText.textContent = "Verifying...";
         statusMsg.textContent = "";
-        emailInput.classList.remove('border-red-500');
+        emailInput.classList.remove('border-red-700/50');
 
         // Fetch user context parameters
         const userIp = await fetchUserIp();
@@ -281,7 +291,8 @@
           }
           statusMsg.textContent = "Your access has been restricted.";
           button.disabled = false;
-          button.textContent = "Enter Booklet";
+          btnSpinner.classList.add('hidden');
+          btnText.textContent = "Enter Booklet";
           return;
         }
 
@@ -304,12 +315,13 @@
           statusMsg.textContent = err?.message || "Unable to save email.";
         }
         button.disabled = false;
-        button.textContent = "Enter Booklet";
+        btnSpinner.classList.add('hidden');
+        btnText.textContent = "Enter Booklet";
       }
     });
 
     emailInput.addEventListener('input', () => {
-      emailInput.classList.remove('border-red-500');
+      emailInput.classList.remove('border-red-700/50');
       statusMsg.textContent = "";
     });
   </script>
