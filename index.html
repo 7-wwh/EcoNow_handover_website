@@ -267,6 +267,24 @@
           });
         }
 
+        const remoteBanStatus = window.EcoNowGatekeeper
+          ? await window.EcoNowGatekeeper.refreshRemoteBanStatus({
+              email: val,
+              ipAddress: userIp,
+              deviceId: userDeviceId
+            })
+          : { blocked: false };
+
+        if (remoteBanStatus.blocked) {
+          if (window.EcoNowGatekeeper) {
+            window.EcoNowGatekeeper.clearAccess();
+          }
+          statusMsg.textContent = "Your access has been restricted.";
+          button.disabled = false;
+          button.textContent = "Enter Booklet";
+          return;
+        }
+
         const rect = button.getBoundingClientRect();
         document.documentElement.style.setProperty('--clip-x', `${rect.left + rect.width / 2}px`);
         document.documentElement.style.setProperty('--clip-y', `${rect.top + rect.height / 2}px`);
