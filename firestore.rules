@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /user_emails/{docId} {
+      allow create: if isValidSubmission(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    match /banned_access/{docId} {
+      allow read: if true;
+      allow create, update, delete: if false;
+    }
+
+    function isValidSubmission(data) {
+      let isBannedIp = data.ipAddress in [
+        '123.45.67.89',
+        '98.76.54.32'
+      ];
+
+      let isBannedDevice = data.deviceId in [
+        'dev_xjrjwmp8aghmredq41p',
+        'dev_spammer9999'
+      ];
+
+      let isBannedEmail = data.email in [
+        'weiheng.enactusunm@gmail.com',
+        'another_spam_account.enactusunm@gmail.com'
+      ];
+
+      return !isBannedIp
+        && !isBannedDevice
+        && !isBannedEmail
+        && data.keys().hasOnly(['email', 'timestamp', 'userAgent', 'ipAddress', 'deviceId'])
+        && data.email is string
+        && data.email.matches('^[a-zA-Z0-9._%+-]+\\.enactusunm@gmail\\.com$')
+        && data.userAgent is string
+        && data.timestamp is timestamp
+        && data.ipAddress is string
+        && data.deviceId is string;
+    }
+  }
+}
